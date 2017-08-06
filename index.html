@@ -1531,234 +1531,6 @@ div {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/有关session、cookie、jwt/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fwp">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwp个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/21/有关session、cookie、jwt/" itemprop="url">有关session、cookie和jwt验证</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T16:20:11+08:00">
-                2017-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/05/21/有关session、cookie、jwt/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/05/21/有关session、cookie、jwt/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/05/21/有关session、cookie、jwt/" class="leancloud_visitors" data-flag-title="有关session、cookie和jwt验证">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>session指的是一个终端用户与交互系统进行通信的时间间隔（会话）<br>例如：用户访问某个网站，从他登录到退出的时间段就是session<br>由于http是是一种无状态的协议，故有这样一个情况：<br>用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。<br>其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用户进行登录验证。</p>
-<h3 id="一-基于session的验证"><a href="#一-基于session的验证" class="headerlink" title="一 基于session的验证"></a>一 基于session的验证</h3><h4 id="1-简要过程"><a href="#1-简要过程" class="headerlink" title="1. 简要过程"></a>1. 简要过程</h4><ol>
-<li>生成全局唯一标识符（sessionid）；</li>
-<li>开辟数据存储空间。一般会在内存中创建相应的数据结构，但这种情况下，系统一旦掉电，所有的会话数据就会丢失，如果是电子商务网站，这种事故会造成严重的后果。不过也可以写到文件里甚至存储在数据库中，这样虽然会增加I/O开销，但session可以实现某种程度的持久化，而且更有利于session的共享；</li>
-<li><p>将session的全局唯一标示符发送给客户端。<br>问题的关键就在服务端如何发送这个session的唯一标识上。联系到HTTP协议，数据无非可以放到请求行、头域或Body里，基于此，一般来说会有两种常用的方式：cookie和URL重写。</p>
-<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie　"></a>Cookie　</h4><p>服务端只要设置Set-cookie头就可以将session的标识符传送到客户端，而客户端此后的每一次请求都会带上这个标识符，服务器端可以为cookie设置失效时间，一般会设置失效时间为0，即浏览器进程有效时间。至于浏览器怎么处理这个0，每个浏览器都有自己的方案，但差别都不会太大（一般体现在新建浏览器窗口的时候）。</p>
-<h4 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h4><p>所谓URL重写就是重写URL。在返回用户请求的页面之前，将页面内所有的URL后面全部以get参数的方式加上session标识符（或者加在path info部分等等），这样用户在收到响应之后，无论点击哪个链接或提交表单，都会在再带上session的标识符，从而就实现了会话的保持。这样做可以在客户端禁止使用cookie的时候也进行session认证。</p>
-<h4 id="2-在express中使用session"><a href="#2-在express中使用session" class="headerlink" title="2. 在express中使用session"></a>2. 在express中使用session</h4><p>express-session 是基于express框专门用于处理session的中间件。由于session的认证机制离不开cookie，需要同时使用cookieParser 中间件。<br>express-session的常用参数:<br>secret:一个String类型的字符串，作为服务器端生成session的签名<br>name:返回客户端的key的名称，默认为connect.sid,也可以自己设置<br>resave:(是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。默认为true。但是(后续版本)有可能默认失效，所以最好手动添加。<br>saveUninitialized:初始化session时是否保存到存储。默认为true，但是(后续版本)有可能默认失效，所以最好手动添加。<br>cookie:设置返回到前端key的属性，默认值为{ path: ‘/’, httpOnly: true, secure: false, maxAge: null }。<br><strong>express-session的一些方法:</strong><br>Session.destroy():删除session，当检测到客户端关闭时调用。<br>Session.reload():当session有修改时，刷新session。<br>Session.regenerate()：将已有session初始化。<br>Session.save()：保存session。 </p>
-<h4 id="3-基于session验证存在的问题"><a href="#3-基于session验证存在的问题" class="headerlink" title="3. 基于session验证存在的问题"></a>3. 基于session验证存在的问题</h4><p><strong>1）存储:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存或文件、数据库中，而随着认证用户的增多，服务端的开销会明显增大。<br><strong>2）扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在特定的这台服务器上,才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡器的能力。这也限制了应用的扩展能力。<br><strong>3）CSRF:</strong> 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</p>
-<h3 id="二-基于token的验证（jwt）"><a href="#二-基于token的验证（jwt）" class="headerlink" title="二 基于token的验证（jwt）"></a>二 基于token的验证（jwt）</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br><strong>基本过程</strong><br>1）用户使用用户名密码来请求服务器<br>2）服务器进行验证用户的信息<br>3）服务器通过验证发送给用户一个token<br>4）客户端存储token(可采用cookie或sessionStorage、localStorage)，并在每次请求时附送上这个token值<br>5）服务端验证token值，并返回数据<br>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略。</p>
-<h4 id="1-JWT的构成"><a href="#1-JWT的构成" class="headerlink" title="1. JWT的构成"></a>1. JWT的构成</h4><p>JWT是由三段信息构成的，将这三段信息用.链接一起就构成了Jwt字符串。<br>第一部分称为头部（header), 第二部分称为载荷（payload), 第三部分是签证（signature).</p>
-<p> // 1. Headers<br> // 包括类别（typ）、加密算法（alg）；<br> {</p>
-<pre><code>&quot;alg&quot;: &quot;HS256&quot;,
-&quot;typ&quot;: &quot;JWT&quot;
-</code></pre><p> }<br> // 2. Claims<br> // 包括需要传递的用户信息；<br> {</p>
-<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
-&quot;name&quot;: &quot;John Doe&quot;,
-&quot;admin&quot;: true
-</code></pre><p> }<br> // 3. Signature<br> // 根据alg算法与私有秘钥进行加密得到的签名字串；<br> // 这一段是最重要的敏感信息，只能在服务端解密；<br> HMACSHA256(</p>
-<pre><code>base64UrlEncode(header) + &quot;.&quot; +
-base64UrlEncode(payload),
-SECREATE_KEY
-</code></pre><p> )<br><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
-<p> {</p>
-<pre><code>&apos;typ&apos;: &apos;JWT&apos;,
-&apos;alg&apos;: &apos;HS256&apos;
-</code></pre><p> }<br>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
-<p> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9<br><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
-<p> {</p>
-<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
-&quot;name&quot;: &quot;John Doe&quot;,
-&quot;admin&quot;: true
-</code></pre><p> }<br>然后将其进行base64加密，得到Jwt的第二部分。</p>
-<p> eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9<br><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
-<p> var encodedString = base64UrlEncode(header) + ‘.’ + base64UrlEncode(payload);<br> var signature = HMACSHA256(encodedString, ‘secret’); // TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</p>
-</li>
-</ol>
-<p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
-<h4 id="2-使用jwt"><a href="#2-使用jwt" class="headerlink" title="2. 使用jwt"></a>2. 使用jwt</h4><p>客户端发送请求，可以将token设为请求地址参数或请求body参数或在请求头部分设置Authorization字段（推荐）传给服务器：</p>
-<pre><code>fetch(&apos;api/user/1&apos;, {
-    headers: {
-        &apos;Authorization&apos;: &apos;Bearer &apos; + token
-    }
-})
-</code></pre><p>服务器端收到请求后，根据请求头部token的header部分的加密算法和plaload加上自己的secret生成第三部分内容。然后再与客户端发送过来的第三部分内容对比。<br><strong>express使用jwt</strong><br>服务器端在验证用户登录成功后，设置token，并返回给客户端：</p>
-<pre><code>var express = require(&apos;express&apos;);
-var jwt = require(&apos;jwt-simple&apos;);
-var app = express();
-app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);
-
-var expires = moment().add(&apos;days&apos;, 7).valueOf();
-var token = jwt.encode({
-    iss: user.id,
-    exp: expires
-}, app.get(&apos;jwtTokenSecret&apos;));
-
-res.json({
-    token : token,
-    expires: expires,
-    user: user.toJSON()
-});
-</code></pre><p>jwt.encode()函数有2个参数。第一个就是一个需要编码的token对象，第二个是一个编码的密钥。Moment.js被用来设置token将在7天之后失效。最后通过res.json()方法返回这个JSON对象给客户端。<br>客户端接受到token后存储，待下次请求时将token传给服务器端验证。</p>
-<h4 id="3-jwt的优点和安全相关问题"><a href="#3-jwt的优点和安全相关问题" class="headerlink" title="3. jwt的优点和安全相关问题"></a>3. jwt的优点和安全相关问题</h4><p><strong>优点：</strong><br>1）因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。<br>2）因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。<br>3）便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。<br>4）它不需要在服务端保存会话信息, 所以它易于应用的扩展。<br><strong>安全相关注意事项：</strong><br>1）不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。<br>2）保护好secret私钥，该私钥非常重要。<br>3）如果可以，请使用https协议。<br>4）使用jwe，及rsa加密。<br><strong>可能发生的安全问题：</strong><br><strong>XSS：</strong> XSS是Web中最常见的一种漏洞，其主要原因是对用户输入信息不加过滤，导致用户（被误导）恶意输入的Js代码在访问该网页时被执行，而Js可以读取当前网站域名下保存的Cookie信息。<br>针对这种攻击，无论将jwt存储在Cookie还是localStorage中，信息都有可能被窃取，为了防止XSS攻击，需要对用户输入的所有信息进行过滤。<br><strong>XSRF：</strong>主要利用Cookie是按照域名存储，同时访问某域名时浏览器会自动携带该域名所保存的Cookie信息这一特征。如果执意要将JWT存储在Cookie中，服务端则需要额外验证请求来源，或者在提交表单中加入随机签名并在处理表单时进行验证。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="external">什么是jwt</a><br><a href="http://blog.csdn.net/offbye/article/details/47617367" target="_blank" rel="external">nodejs中使用jwt</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/http缓存机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2130,6 +1902,234 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
 </code></pre><p>这样以后，9张图的角度虽然不一样，但是它们都站在同一个点上，早就挤作一团。9张图分别面朝东南西北等共9个不同方位，只要将它们都向前移动4~5步（即使用translateZ），它们之间的空间就会拉开了，呈现出圆形。<br>translateZ方法的参数通过计算得出，假设上述每个img的宽度都为178px，距离r的值则为：</p>
 <pre><code>r = （128 / 2) / Math.tan((40 / 2) / 180 * Math.PI) ≈ 175.8
 </code></pre><p>为了好看，图片之间可以留了点间距，则使用的translateZ的值为175.8 + 20 = 195.8<br>最后只要写js代码，每次点击让容器每次沿y轴旋转40度就可以了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/有关session、cookie、jwt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fwp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwp个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/21/有关session、cookie、jwt/" itemprop="url">有关session、cookie和jwt验证</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T16:20:11+08:00">
+                2017-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/21/有关session、cookie、jwt/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/05/21/有关session、cookie、jwt/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/21/有关session、cookie、jwt/" class="leancloud_visitors" data-flag-title="有关session、cookie和jwt验证">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>session指的是一个终端用户与交互系统进行通信的时间间隔（会话）<br>例如：用户访问某个网站，从他登录到退出的时间段就是session<br>由于http是是一种无状态的协议，故有这样一个情况：<br>用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。<br>其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用户进行登录验证。</p>
+<h3 id="一-基于session的验证"><a href="#一-基于session的验证" class="headerlink" title="一 基于session的验证"></a>一 基于session的验证</h3><h4 id="1-简要过程"><a href="#1-简要过程" class="headerlink" title="1. 简要过程"></a>1. 简要过程</h4><ol>
+<li>生成全局唯一标识符（sessionid）；</li>
+<li>开辟数据存储空间。一般会在内存中创建相应的数据结构，但这种情况下，系统一旦掉电，所有的会话数据就会丢失，如果是电子商务网站，这种事故会造成严重的后果。不过也可以写到文件里甚至存储在数据库中，这样虽然会增加I/O开销，但session可以实现某种程度的持久化，而且更有利于session的共享；</li>
+<li><p>将session的全局唯一标示符发送给客户端。<br>问题的关键就在服务端如何发送这个session的唯一标识上。联系到HTTP协议，数据无非可以放到请求行、头域或Body里，基于此，一般来说会有两种常用的方式：cookie和URL重写。</p>
+<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie　"></a>Cookie　</h4><p>服务端只要设置Set-cookie头就可以将session的标识符传送到客户端，而客户端此后的每一次请求都会带上这个标识符，服务器端可以为cookie设置失效时间，一般会设置失效时间为0，即浏览器进程有效时间。至于浏览器怎么处理这个0，每个浏览器都有自己的方案，但差别都不会太大（一般体现在新建浏览器窗口的时候）。</p>
+<h4 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h4><p>所谓URL重写就是重写URL。在返回用户请求的页面之前，将页面内所有的URL后面全部以get参数的方式加上session标识符（或者加在path info部分等等），这样用户在收到响应之后，无论点击哪个链接或提交表单，都会在再带上session的标识符，从而就实现了会话的保持。这样做可以在客户端禁止使用cookie的时候也进行session认证。</p>
+<h4 id="2-在express中使用session"><a href="#2-在express中使用session" class="headerlink" title="2. 在express中使用session"></a>2. 在express中使用session</h4><p>express-session 是基于express框专门用于处理session的中间件。由于session的认证机制离不开cookie，需要同时使用cookieParser 中间件。<br>express-session的常用参数:<br>secret:一个String类型的字符串，作为服务器端生成session的签名<br>name:返回客户端的key的名称，默认为connect.sid,也可以自己设置<br>resave:(是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。默认为true。但是(后续版本)有可能默认失效，所以最好手动添加。<br>saveUninitialized:初始化session时是否保存到存储。默认为true，但是(后续版本)有可能默认失效，所以最好手动添加。<br>cookie:设置返回到前端key的属性，默认值为{ path: ‘/’, httpOnly: true, secure: false, maxAge: null }。<br><strong>express-session的一些方法:</strong><br>Session.destroy():删除session，当检测到客户端关闭时调用。<br>Session.reload():当session有修改时，刷新session。<br>Session.regenerate()：将已有session初始化。<br>Session.save()：保存session。 </p>
+<h4 id="3-基于session验证存在的问题"><a href="#3-基于session验证存在的问题" class="headerlink" title="3. 基于session验证存在的问题"></a>3. 基于session验证存在的问题</h4><p><strong>1）存储:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存或文件、数据库中，而随着认证用户的增多，服务端的开销会明显增大。<br><strong>2）扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在特定的这台服务器上,才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡器的能力。这也限制了应用的扩展能力。<br><strong>3）CSRF:</strong> 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</p>
+<h3 id="二-基于token的验证（jwt）"><a href="#二-基于token的验证（jwt）" class="headerlink" title="二 基于token的验证（jwt）"></a>二 基于token的验证（jwt）</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br><strong>基本过程</strong><br>1）用户使用用户名密码来请求服务器<br>2）服务器进行验证用户的信息<br>3）服务器通过验证发送给用户一个token<br>4）客户端存储token(可采用cookie或sessionStorage、localStorage)，并在每次请求时附送上这个token值<br>5）服务端验证token值，并返回数据<br>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略。</p>
+<h4 id="1-JWT的构成"><a href="#1-JWT的构成" class="headerlink" title="1. JWT的构成"></a>1. JWT的构成</h4><p>JWT是由三段信息构成的，将这三段信息用.链接一起就构成了Jwt字符串。<br>第一部分称为头部（header), 第二部分称为载荷（payload), 第三部分是签证（signature).</p>
+<p> // 1. Headers<br> // 包括类别（typ）、加密算法（alg）；<br> {</p>
+<pre><code>&quot;alg&quot;: &quot;HS256&quot;,
+&quot;typ&quot;: &quot;JWT&quot;
+</code></pre><p> }<br> // 2. Claims<br> // 包括需要传递的用户信息；<br> {</p>
+<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
+&quot;name&quot;: &quot;John Doe&quot;,
+&quot;admin&quot;: true
+</code></pre><p> }<br> // 3. Signature<br> // 根据alg算法与私有秘钥进行加密得到的签名字串；<br> // 这一段是最重要的敏感信息，只能在服务端解密；<br> HMACSHA256(</p>
+<pre><code>base64UrlEncode(header) + &quot;.&quot; +
+base64UrlEncode(payload),
+SECREATE_KEY
+</code></pre><p> )<br><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
+<p> {</p>
+<pre><code>&apos;typ&apos;: &apos;JWT&apos;,
+&apos;alg&apos;: &apos;HS256&apos;
+</code></pre><p> }<br>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
+<p> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9<br><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
+<p> {</p>
+<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
+&quot;name&quot;: &quot;John Doe&quot;,
+&quot;admin&quot;: true
+</code></pre><p> }<br>然后将其进行base64加密，得到Jwt的第二部分。</p>
+<p> eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9<br><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
+<p> var encodedString = base64UrlEncode(header) + ‘.’ + base64UrlEncode(payload);<br> var signature = HMACSHA256(encodedString, ‘secret’); // TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</p>
+</li>
+</ol>
+<p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
+<h4 id="2-使用jwt"><a href="#2-使用jwt" class="headerlink" title="2. 使用jwt"></a>2. 使用jwt</h4><p>客户端发送请求，可以将token设为请求地址参数或请求body参数或在请求头部分设置Authorization字段（推荐）传给服务器：</p>
+<pre><code>fetch(&apos;api/user/1&apos;, {
+    headers: {
+        &apos;Authorization&apos;: &apos;Bearer &apos; + token
+    }
+})
+</code></pre><p>服务器端收到请求后，根据请求头部token的header部分的加密算法和plaload加上自己的secret生成第三部分内容。然后再与客户端发送过来的第三部分内容对比。<br><strong>express使用jwt</strong><br>服务器端在验证用户登录成功后，设置token，并返回给客户端：</p>
+<pre><code>var express = require(&apos;express&apos;);
+var jwt = require(&apos;jwt-simple&apos;);
+var app = express();
+app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);
+
+var expires = moment().add(&apos;days&apos;, 7).valueOf();
+var token = jwt.encode({
+    iss: user.id,
+    exp: expires
+}, app.get(&apos;jwtTokenSecret&apos;));
+
+res.json({
+    token : token,
+    expires: expires,
+    user: user.toJSON()
+});
+</code></pre><p>jwt.encode()函数有2个参数。第一个就是一个需要编码的token对象，第二个是一个编码的密钥。Moment.js被用来设置token将在7天之后失效。最后通过res.json()方法返回这个JSON对象给客户端。<br>客户端接受到token后存储，待下次请求时将token传给服务器端验证。</p>
+<h4 id="3-jwt的优点和安全相关问题"><a href="#3-jwt的优点和安全相关问题" class="headerlink" title="3. jwt的优点和安全相关问题"></a>3. jwt的优点和安全相关问题</h4><p><strong>优点：</strong><br>1）因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。<br>2）因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。<br>3）便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。<br>4）它不需要在服务端保存会话信息, 所以它易于应用的扩展。<br><strong>安全相关注意事项：</strong><br>1）不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。<br>2）保护好secret私钥，该私钥非常重要。<br>3）如果可以，请使用https协议。<br>4）使用jwe，及rsa加密。<br><strong>可能发生的安全问题：</strong><br><strong>XSS：</strong> XSS是Web中最常见的一种漏洞，其主要原因是对用户输入信息不加过滤，导致用户（被误导）恶意输入的Js代码在访问该网页时被执行，而Js可以读取当前网站域名下保存的Cookie信息。<br>针对这种攻击，无论将jwt存储在Cookie还是localStorage中，信息都有可能被窃取，为了防止XSS攻击，需要对用户输入的所有信息进行过滤。<br><strong>XSRF：</strong>主要利用Cookie是按照域名存储，同时访问某域名时浏览器会自动携带该域名所保存的Cookie信息这一特征。如果执意要将JWT存储在Cookie中，服务端则需要额外验证请求来源，或者在提交表单中加入随机签名并在处理表单时进行验证。</p>
+<p>参考链接：</p>
+<p><a href="http://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="external">什么是jwt</a><br><a href="http://blog.csdn.net/offbye/article/details/47617367" target="_blank" rel="external">nodejs中使用jwt</a></p>
 
           
         
