@@ -106,10 +106,12 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： /* 应用于">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:48:46.791Z">
+<meta property="og:image" content="http://i.imgur.com/esac958.png">
+<meta property="og:updated_time" content="2017-08-06T12:17:25.966Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css3 transition">
 <meta name="twitter:description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： /* 应用于">
+<meta name="twitter:image" content="http://i.imgur.com/esac958.png">
 
 
 
@@ -486,8 +488,7 @@ div {
     transition-duration: 3s, 5s;
 }
 </code></pre><h3 id="执行效果触发"><a href="#执行效果触发" class="headerlink" title="执行效果触发"></a>执行效果触发</h3><h4 id="1-通过css伪类"><a href="#1-通过css伪类" class="headerlink" title="1. 通过css伪类"></a>1. 通过css伪类</h4><p>CSS中伪类执行动画包括：</p>
-<table><br>    <tr><br>        <th>动态伪类</th><th>起作用的元素</th><th>描述</th><br>    </tr><br>    <tr><br>        <td>:link</td><td>只有链接</td><td>未访问的链接</td><br>    </tr><br>    <tr><br>        <td>:visited</td><td>只有链接</td><td>访问过的链接</td><br>    </tr><br>    <tr><br>        <td>:hover</td><td>所有元素</td><td>鼠标经过元素</td><br>    </tr><br>    <tr><br>        <td>:active</td><td>所有元素</td><td>    鼠标点击元素</td><br>    </tr><br>     <tr><br>        <td>:focus</td><td>所有可被选中的元素</td><td>元素获得焦点</td><br>    </tr><br></table>
-
+<p><img src="http://i.imgur.com/esac958.png" alt=""></p>
 <h4 id="2-通过js修改样式或追加删除样式"><a href="#2-通过js修改样式或追加删除样式" class="headerlink" title="2. 通过js修改样式或追加删除样式"></a>2. 通过js修改样式或追加删除样式</h4><p>一般是鼠标事件操作和定时操作（window.setTimeout()，window.setInterval()</p>
 <p>还应注意当一个元素使用过渡（transition）后，立即使用.appendChild()将其加入到DOM中或删除其display: none;。这被视为如果初始状态从来没有存在过那么元素总是在它的最终状态。克服这个限制最简单的办法是使用极少毫米数的window.setTimeout()</p>
 <h3 id="transitionend事件"><a href="#transitionend事件" class="headerlink" title="transitionend事件"></a>transitionend事件</h3><p>transitionend 事件会在 CSS transition 过渡完成时触发. 当transition完成前被移除或者取消，比如移除css的transition-property 属性，此事件将不会被触发。<br>各个浏览器下事件的支持情况如下：</p>

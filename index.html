@@ -1258,8 +1258,7 @@ div {
     transition-duration: 3s, 5s;
 }
 </code></pre><h3 id="执行效果触发"><a href="#执行效果触发" class="headerlink" title="执行效果触发"></a>执行效果触发</h3><h4 id="1-通过css伪类"><a href="#1-通过css伪类" class="headerlink" title="1. 通过css伪类"></a>1. 通过css伪类</h4><p>CSS中伪类执行动画包括：</p>
-<table><br>    <tr><br>        <th>动态伪类</th><th>起作用的元素</th><th>描述</th><br>    </tr><br>    <tr><br>        <td>:link</td><td>只有链接</td><td>未访问的链接</td><br>    </tr><br>    <tr><br>        <td>:visited</td><td>只有链接</td><td>访问过的链接</td><br>    </tr><br>    <tr><br>        <td>:hover</td><td>所有元素</td><td>鼠标经过元素</td><br>    </tr><br>    <tr><br>        <td>:active</td><td>所有元素</td><td>    鼠标点击元素</td><br>    </tr><br>     <tr><br>        <td>:focus</td><td>所有可被选中的元素</td><td>元素获得焦点</td><br>    </tr><br></table>
-
+<p><img src="http://i.imgur.com/esac958.png" alt=""></p>
 <h4 id="2-通过js修改样式或追加删除样式"><a href="#2-通过js修改样式或追加删除样式" class="headerlink" title="2. 通过js修改样式或追加删除样式"></a>2. 通过js修改样式或追加删除样式</h4><p>一般是鼠标事件操作和定时操作（window.setTimeout()，window.setInterval()</p>
 <p>还应注意当一个元素使用过渡（transition）后，立即使用.appendChild()将其加入到DOM中或删除其display: none;。这被视为如果初始状态从来没有存在过那么元素总是在它的最终状态。克服这个限制最简单的办法是使用极少毫米数的window.setTimeout()</p>
 <h3 id="transitionend事件"><a href="#transitionend事件" class="headerlink" title="transitionend事件"></a>transitionend事件</h3><p>transitionend 事件会在 CSS transition 过渡完成时触发. 当transition完成前被移除或者取消，比如移除css的transition-property 属性，此事件将不会被触发。<br>各个浏览器下事件的支持情况如下：</p>
@@ -1531,7 +1530,7 @@ div {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/http缓存机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/有关session、cookie、jwt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fwp">
@@ -1550,7 +1549,7 @@ div {
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/21/http缓存机制/" itemprop="url">http缓存机制</a></h1>
+                <a class="post-title-link" href="/2017/05/21/有关session、cookie、jwt/" itemprop="url">有关session、cookie和jwt验证</a></h1>
         
 
         <div class="post-meta">
@@ -1585,8 +1584,8 @@ div {
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络/" itemprop="url" rel="index">
-                    <span itemprop="name">网络</span>
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
                   </a>
                 </span>
 
@@ -1603,9 +1602,9 @@ div {
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/21/http缓存机制/#comments" itemprop="discussionUrl">
+                <a href="/2017/05/21/有关session、cookie、jwt/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/05/21/http缓存机制/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/05/21/有关session、cookie、jwt/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1613,7 +1612,7 @@ div {
 
           
           
-             <span id="/2017/05/21/http缓存机制/" class="leancloud_visitors" data-flag-title="http缓存机制">
+             <span id="/2017/05/21/有关session、cookie、jwt/" class="leancloud_visitors" data-flag-title="有关session、cookie和jwt验证">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1646,29 +1645,71 @@ div {
       
         
           
-            <h3 id="什么是cache？"><a href="#什么是cache？" class="headerlink" title="什么是cache？"></a>什么是cache？</h3><p>浏览器缓存（Browser Caching）是为了加速浏览，浏览器在用户磁盘上对最近请求过的文档进行存储，当访问者再次请求这个页面时，浏览器就可以从本地磁盘显示文档，这样就可以加速页面的阅览。<br>chrome控制台下的Frames即展示的是浏览器的http文件级缓存。<br><strong>cache的作用：</strong><br>1、减少延迟，让你的网站更快，提高用户体验。<br>2、避免网络拥塞，减少请求量，减少输出带宽。<br><strong>过程：</strong><br>主要是针对重复的http请求，在有缓存的情况下判断过程分3步：<br>1) 判断expires，如果未过期，直接读取http缓存文件，不发http请求，否则进入下一步。<br>2) 判断是否含有etag，有则带上if-none-match发送请求，未修改返回304，修改返回200，否则进入下一步。<br>3) 判断是否含有last-modified，有则带上if-modified-since发送请求，无效返回200，有效返回304，否则直接向服务器请求。 </p>
-<h3 id="200-OK-From-Cache"><a href="#200-OK-From-Cache" class="headerlink" title="200 OK(From Cache)"></a>200 OK(From Cache)</h3><p>浏览器没有向服务器端发送请求，而是直接使用了浏览器自己本地的缓存数据。200 OK指浏览器向服务器发送请求并获得了最新更新的数据。<br><strong>触发时机：</strong>直接点击链接访问或输入网址按回车访问</p>
-<h3 id="304-Not-Modified"><a href="#304-Not-Modified" class="headerlink" title="304(Not Modified)"></a>304(Not Modified)</h3><p>浏览器首先向服务器发送请求，确认数据是否发生改变，若没有改变，则加载浏览器自己的缓存数据。<br><strong>触发时机：</strong>刷新页面、设置了长缓存或ETags</p>
-<p>当你第一次访问时，服务器会返回给你200状态码，同时在头里追加ETag值给你。浏览器拿到后将其缓存。<br>下一次再访问时，因浏览器已经有该地址的ETag值了。会将其缓存的ETag值内容放在请求头的If-None-Match中，服务器检查其自身内容的ETag值是否与其一致，如果一致就会返回304状态码，告诉你内容和你保存的一致，没有发生改变过。</p>
-<h3 id="http缓存基础知识"><a href="#http缓存基础知识" class="headerlink" title="http缓存基础知识"></a>http缓存基础知识</h3><h4 id="http报文中与缓存相关的首部字段"><a href="#http报文中与缓存相关的首部字段" class="headerlink" title="http报文中与缓存相关的首部字段"></a>http报文中与缓存相关的首部字段</h4><p><strong>通用首部字段</strong><br>Cache-Control：控制缓存的行为<br>Pragma：http1.0，值为‘no-cache’禁用缓存<br><strong>请求首部字段</strong><br>if-Match：比较ETag是否一致<br>if-None-Match：比较ETag是否不一致<br>if-Modified-Since：比较资源最后更新时间是否一致<br>if-Unmodified-Since：比较资源最后更新时间是否不一致<br><strong>相应首部字段</strong><br>ETag：资源的匹配信息<br><strong>实体首部字段</strong><br>Expires：http1.0，实体主体过期的时间<br>last-Modified：资源最后一次修改的时间</p>
-<h4 id="设置缓存行为"><a href="#设置缓存行为" class="headerlink" title="设置缓存行为"></a>设置缓存行为</h4><ol>
-<li>http1.0通过Expires设置缓存过期时间（为一个GMT时间），如果还没过该时间点则不发送请求；通过Pragma来禁用缓存。优先级Pragma &gt; Expires</li>
-<li>http1.1新增Cache-Control字段来控制缓存，Cache-Control在请求和响应报文中都能使用。优先级Cache-Control &gt; Pragma &gt; Expires<br><strong>请求中的取值：</strong></li>
+            <p>session指的是一个终端用户与交互系统进行通信的时间间隔（会话）<br>例如：用户访问某个网站，从他登录到退出的时间段就是session<br>由于http是是一种无状态的协议，故有这样一个情况：<br>用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。<br>其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用户进行登录验证。</p>
+<h3 id="一-基于session的验证"><a href="#一-基于session的验证" class="headerlink" title="一 基于session的验证"></a>一 基于session的验证</h3><h4 id="1-简要过程"><a href="#1-简要过程" class="headerlink" title="1. 简要过程"></a>1. 简要过程</h4><ol>
+<li>生成全局唯一标识符（sessionid）；</li>
+<li>开辟数据存储空间。一般会在内存中创建相应的数据结构，但这种情况下，系统一旦掉电，所有的会话数据就会丢失，如果是电子商务网站，这种事故会造成严重的后果。不过也可以写到文件里甚至存储在数据库中，这样虽然会增加I/O开销，但session可以实现某种程度的持久化，而且更有利于session的共享；</li>
+<li><p>将session的全局唯一标示符发送给客户端。<br>问题的关键就在服务端如何发送这个session的唯一标识上。联系到HTTP协议，数据无非可以放到请求行、头域或Body里，基于此，一般来说会有两种常用的方式：cookie和URL重写。</p>
+<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie　"></a>Cookie　</h4><p>服务端只要设置Set-cookie头就可以将session的标识符传送到客户端，而客户端此后的每一次请求都会带上这个标识符，服务器端可以为cookie设置失效时间，一般会设置失效时间为0，即浏览器进程有效时间。至于浏览器怎么处理这个0，每个浏览器都有自己的方案，但差别都不会太大（一般体现在新建浏览器窗口的时候）。</p>
+<h4 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h4><p>所谓URL重写就是重写URL。在返回用户请求的页面之前，将页面内所有的URL后面全部以get参数的方式加上session标识符（或者加在path info部分等等），这样用户在收到响应之后，无论点击哪个链接或提交表单，都会在再带上session的标识符，从而就实现了会话的保持。这样做可以在客户端禁止使用cookie的时候也进行session认证。</p>
+<h4 id="2-在express中使用session"><a href="#2-在express中使用session" class="headerlink" title="2. 在express中使用session"></a>2. 在express中使用session</h4><p>express-session 是基于express框专门用于处理session的中间件。由于session的认证机制离不开cookie，需要同时使用cookieParser 中间件。<br>express-session的常用参数:<br>secret:一个String类型的字符串，作为服务器端生成session的签名<br>name:返回客户端的key的名称，默认为connect.sid,也可以自己设置<br>resave:(是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。默认为true。但是(后续版本)有可能默认失效，所以最好手动添加。<br>saveUninitialized:初始化session时是否保存到存储。默认为true，但是(后续版本)有可能默认失效，所以最好手动添加。<br>cookie:设置返回到前端key的属性，默认值为{ path: ‘/’, httpOnly: true, secure: false, maxAge: null }。<br><strong>express-session的一些方法:</strong><br>Session.destroy():删除session，当检测到客户端关闭时调用。<br>Session.reload():当session有修改时，刷新session。<br>Session.regenerate()：将已有session初始化。<br>Session.save()：保存session。 </p>
+<h4 id="3-基于session验证存在的问题"><a href="#3-基于session验证存在的问题" class="headerlink" title="3. 基于session验证存在的问题"></a>3. 基于session验证存在的问题</h4><p><strong>1）存储:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存或文件、数据库中，而随着认证用户的增多，服务端的开销会明显增大。<br><strong>2）扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在特定的这台服务器上,才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡器的能力。这也限制了应用的扩展能力。<br><strong>3）CSRF:</strong> 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</p>
+<h3 id="二-基于token的验证（jwt）"><a href="#二-基于token的验证（jwt）" class="headerlink" title="二 基于token的验证（jwt）"></a>二 基于token的验证（jwt）</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br><strong>基本过程</strong><br>1）用户使用用户名密码来请求服务器<br>2）服务器进行验证用户的信息<br>3）服务器通过验证发送给用户一个token<br>4）客户端存储token(可采用cookie或sessionStorage、localStorage)，并在每次请求时附送上这个token值<br>5）服务端验证token值，并返回数据<br>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略。</p>
+<h4 id="1-JWT的构成"><a href="#1-JWT的构成" class="headerlink" title="1. JWT的构成"></a>1. JWT的构成</h4><p>JWT是由三段信息构成的，将这三段信息用.链接一起就构成了Jwt字符串。<br>第一部分称为头部（header), 第二部分称为载荷（payload), 第三部分是签证（signature).</p>
+<p> // 1. Headers<br> // 包括类别（typ）、加密算法（alg）；<br> {</p>
+<pre><code>&quot;alg&quot;: &quot;HS256&quot;,
+&quot;typ&quot;: &quot;JWT&quot;
+</code></pre><p> }<br> // 2. Claims<br> // 包括需要传递的用户信息；<br> {</p>
+<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
+&quot;name&quot;: &quot;John Doe&quot;,
+&quot;admin&quot;: true
+</code></pre><p> }<br> // 3. Signature<br> // 根据alg算法与私有秘钥进行加密得到的签名字串；<br> // 这一段是最重要的敏感信息，只能在服务端解密；<br> HMACSHA256(</p>
+<pre><code>base64UrlEncode(header) + &quot;.&quot; +
+base64UrlEncode(payload),
+SECREATE_KEY
+</code></pre><p> )<br><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
+<p> {</p>
+<pre><code>&apos;typ&apos;: &apos;JWT&apos;,
+&apos;alg&apos;: &apos;HS256&apos;
+</code></pre><p> }<br>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
+<p> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9<br><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
+<p> {</p>
+<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
+&quot;name&quot;: &quot;John Doe&quot;,
+&quot;admin&quot;: true
+</code></pre><p> }<br>然后将其进行base64加密，得到Jwt的第二部分。</p>
+<p> eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9<br><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
+<p> var encodedString = base64UrlEncode(header) + ‘.’ + base64UrlEncode(payload);<br> var signature = HMACSHA256(encodedString, ‘secret’); // TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</p>
+</li>
 </ol>
-<blockquote>
-<p><strong>no-cache：</strong>告知服务器不使用缓存，要求向原服务器发起请求<br>  <strong>no-store：</strong>所有内容都不会被保存到缓存或Internet临时文件中<br>  <strong>max-age=delta-seconds：</strong>告知服务器希望接收一个存在时间不大于delta-seconds秒的资源<br>  <strong>max-stale[=delta-seconds]：</strong>告知服务器愿意接收一个超过缓存时间的资源，若没有设置delta-seconds表示任意超出时间<br>  <strong>min-fresh=delta-seconds：</strong>告知服务器希望接收一个在小于delta-seconds秒内更新过的资源<br>  <strong>no-transform：</strong>告知服务器希望获取的数据没有被转换（如压缩）<br>  <strong>only-if-cached：</strong>告知服务器希望获取缓存的内容，而不向原服务器发送请求<br>  <strong>cache-extension：</strong>自定义扩展值，若服务器不识别该值将被忽略</p>
-</blockquote>
-<p><strong>响应中的取值</strong></p>
-<blockquote>
-<p><strong>public：</strong>表明任何情况下都得缓存该资源（即使是需要http认证的资源）<br>  <strong>Private[=”field-name”]：</strong>表面报文中field-name（若没有设置则为全部）中的数据开放给某些用户（服务器指定的share-user，如代理服务器）做缓存使用，其他用户不能缓存这些数据<br>  <strong>no-cache：</strong>不直接使用缓存，要求向服务器发起请求<br>  <strong>no-store：</strong>所有内容都不会被保存到缓存或Internet临时文件中<br>  <strong>no-transform：</strong>告知客户端缓存文件时不得对实体数据做任何转换<br>  <strong>only-if-cached：</strong>告知（代理）服务器客户端希望获取缓存的内容，不向原服务器发送请求<br>  <strong>must-revalidate：</strong>当前资源一定是向原服务器发送验证请求的，若请求失败会返回504<br>  <strong>proxy-revalidate：</strong>与must-revalidate类似，指仅能用于共享缓存（如代理）<br>  <strong>max-age=delta-seconds：</strong>告知客户端该资源在delta-seconds秒内是新鲜的，无需向服务器发送请求<br>  <strong>s-maxage=delta-seconds：</strong>同max-age，但仅用于共享缓存<br>  <strong>cache-extension：</strong>自定义扩展值</p>
-</blockquote>
-<p>以上取值能组合起来使用，如：Cache-Control: max-age=3600, must-revalidate<br>组合的形式还能做一些浏览器行为不一致的兼容处理。例如在IE我们可以使用 no-cache 来防止点击“后退”按钮时页面资源从缓存加载，但在 Firefox 中，需要使用 no-store 才能防止历史回退时浏览器不从缓存中去读取数据，故我们在响应报头加上如下组合值即可做兼容处理：Cache-Control: no-cache, no-store</p>
-<h3 id="http缓存策略"><a href="#http缓存策略" class="headerlink" title="http缓存策略"></a>http缓存策略</h3><h4 id="max-age与last-modified（if-modified-since）结合"><a href="#max-age与last-modified（if-modified-since）结合" class="headerlink" title="max-age与last-modified（if-modified-since）结合"></a>max-age与last-modified（if-modified-since）结合</h4><p><strong>1. 浏览器第一次请求资源</strong><br>1）浏览器查询无cache内容，发送请求到服务器<br>2）服务器接收到请求，响应并设置Cache-Control：max-age=XXX，Last-Modified：XXX GMT<br>3）浏览器接收到响应，展示内容并缓存响应内容（状态码为200 ok）<br><strong>2. 浏览器在max-age时间内请求资源</strong><br>浏览器查询有缓存，于是检查max-age，还未过期直接读取响应给用户（状态码为200 ok form XX cache）<br><strong>3. 浏览器在max-age时间外请求资源</strong><br>1）浏览器查询有缓存，于是检查max-age，发现已经过期，发现资源带有Last-Modified，于是在请求首部加上If-Modified-Since字段（值为），发送请求给服务器<br>2）服务器接收到请求发现有If-Modified-Since，于是和被请求资源的最后修改时间进行比较。若修改时间较新则返回新资源内容（状态码为200 ok）；若发现时间一致，则只返回状态码304 Not Modified而不带整个资源<br>3）浏览器接收到响应，根据响应状态选择是否使用缓存</p>
-<h4 id="仅使用max-age"><a href="#仅使用max-age" class="headerlink" title="仅使用max-age"></a>仅使用max-age</h4><p>前两种情况和使用max-age和last-modified类似，服务器接收到请求后设置max-age，缓存过期后浏览器会再次向服务器发起请求</p>
-<h4 id="max-age与ETag结合"><a href="#max-age与ETag结合" class="headerlink" title="max-age与ETag结合"></a>max-age与ETag结合</h4><p>前两种情况和使用max-age和last-modified类似，服务器接收到请求后设置max-age和ETag（由开发者自己确定的验证标识）<br>第三种：缓存过期后，发现资源带有ETag，于是在请求头中添加If-None-Match（和ETag值相同），发送请求给服务器，服务器收到请求后将If-None-Match的值与被请求资源的验证串进行对比。若不一致则返回新的资源（状态码200 ok）；若一致则只返回状态码304 Not Modified，不返回资源<br>浏览器接收到服务器的响应后，根据响应状态决定是否使用缓存</p>
-<h3 id="浏览器缓存兼容及不同操作"><a href="#浏览器缓存兼容及不同操作" class="headerlink" title="浏览器缓存兼容及不同操作"></a>浏览器缓存兼容及不同操作</h3><p>参考<a href="http://blog.csdn.net/longxibendi/article/details/41630389" target="_blank" rel="external">浏览器缓存详解</a></p>
-<p><strong>参考链接</strong></p>
-<p><a href="http://blog.csdn.net/dinglang_2009/article/details/38142641" target="_blank" rel="external">cache策略实现原理</a><br><a href="http://www.cnblogs.com/cb0327/p/5400901.html" target="_blank" rel="external">浅谈浏览器http的缓存机制</a></p>
+<p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
+<h4 id="2-使用jwt"><a href="#2-使用jwt" class="headerlink" title="2. 使用jwt"></a>2. 使用jwt</h4><p>客户端发送请求，可以将token设为请求地址参数或请求body参数或在请求头部分设置Authorization字段（推荐）传给服务器：</p>
+<pre><code>fetch(&apos;api/user/1&apos;, {
+    headers: {
+        &apos;Authorization&apos;: &apos;Bearer &apos; + token
+    }
+})
+</code></pre><p>服务器端收到请求后，根据请求头部token的header部分的加密算法和plaload加上自己的secret生成第三部分内容。然后再与客户端发送过来的第三部分内容对比。<br><strong>express使用jwt</strong><br>服务器端在验证用户登录成功后，设置token，并返回给客户端：</p>
+<pre><code>var express = require(&apos;express&apos;);
+var jwt = require(&apos;jwt-simple&apos;);
+var app = express();
+app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);
+
+var expires = moment().add(&apos;days&apos;, 7).valueOf();
+var token = jwt.encode({
+    iss: user.id,
+    exp: expires
+}, app.get(&apos;jwtTokenSecret&apos;));
+
+res.json({
+    token : token,
+    expires: expires,
+    user: user.toJSON()
+});
+</code></pre><p>jwt.encode()函数有2个参数。第一个就是一个需要编码的token对象，第二个是一个编码的密钥。Moment.js被用来设置token将在7天之后失效。最后通过res.json()方法返回这个JSON对象给客户端。<br>客户端接受到token后存储，待下次请求时将token传给服务器端验证。</p>
+<h4 id="3-jwt的优点和安全相关问题"><a href="#3-jwt的优点和安全相关问题" class="headerlink" title="3. jwt的优点和安全相关问题"></a>3. jwt的优点和安全相关问题</h4><p><strong>优点：</strong><br>1）因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。<br>2）因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。<br>3）便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。<br>4）它不需要在服务端保存会话信息, 所以它易于应用的扩展。<br><strong>安全相关注意事项：</strong><br>1）不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。<br>2）保护好secret私钥，该私钥非常重要。<br>3）如果可以，请使用https协议。<br>4）使用jwe，及rsa加密。<br><strong>可能发生的安全问题：</strong><br><strong>XSS：</strong> XSS是Web中最常见的一种漏洞，其主要原因是对用户输入信息不加过滤，导致用户（被误导）恶意输入的Js代码在访问该网页时被执行，而Js可以读取当前网站域名下保存的Cookie信息。<br>针对这种攻击，无论将jwt存储在Cookie还是localStorage中，信息都有可能被窃取，为了防止XSS攻击，需要对用户输入的所有信息进行过滤。<br><strong>XSRF：</strong>主要利用Cookie是按照域名存储，同时访问某域名时浏览器会自动携带该域名所保存的Cookie信息这一特征。如果执意要将JWT存储在Cookie中，服务端则需要额外验证请求来源，或者在提交表单中加入随机签名并在处理表单时进行验证。</p>
+<p>参考链接：</p>
+<p><a href="http://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="external">什么是jwt</a><br><a href="http://blog.csdn.net/offbye/article/details/47617367" target="_blank" rel="external">nodejs中使用jwt</a></p>
 
           
         
@@ -1950,7 +1991,7 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/有关session、cookie、jwt/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/http缓存机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fwp">
@@ -1969,7 +2010,7 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/21/有关session、cookie、jwt/" itemprop="url">有关session、cookie和jwt验证</a></h1>
+                <a class="post-title-link" href="/2017/05/21/http缓存机制/" itemprop="url">http缓存机制</a></h1>
         
 
         <div class="post-meta">
@@ -2004,8 +2045,8 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
+                  <a href="/categories/网络/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
                   </a>
                 </span>
 
@@ -2022,9 +2063,9 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/21/有关session、cookie、jwt/#comments" itemprop="discussionUrl">
+                <a href="/2017/05/21/http缓存机制/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/05/21/有关session、cookie、jwt/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/05/21/http缓存机制/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2032,7 +2073,7 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
 
           
           
-             <span id="/2017/05/21/有关session、cookie、jwt/" class="leancloud_visitors" data-flag-title="有关session、cookie和jwt验证">
+             <span id="/2017/05/21/http缓存机制/" class="leancloud_visitors" data-flag-title="http缓存机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -2065,71 +2106,29 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
       
         
           
-            <p>session指的是一个终端用户与交互系统进行通信的时间间隔（会话）<br>例如：用户访问某个网站，从他登录到退出的时间段就是session<br>由于http是是一种无状态的协议，故有这样一个情况：<br>用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。<br>其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用户进行登录验证。</p>
-<h3 id="一-基于session的验证"><a href="#一-基于session的验证" class="headerlink" title="一 基于session的验证"></a>一 基于session的验证</h3><h4 id="1-简要过程"><a href="#1-简要过程" class="headerlink" title="1. 简要过程"></a>1. 简要过程</h4><ol>
-<li>生成全局唯一标识符（sessionid）；</li>
-<li>开辟数据存储空间。一般会在内存中创建相应的数据结构，但这种情况下，系统一旦掉电，所有的会话数据就会丢失，如果是电子商务网站，这种事故会造成严重的后果。不过也可以写到文件里甚至存储在数据库中，这样虽然会增加I/O开销，但session可以实现某种程度的持久化，而且更有利于session的共享；</li>
-<li><p>将session的全局唯一标示符发送给客户端。<br>问题的关键就在服务端如何发送这个session的唯一标识上。联系到HTTP协议，数据无非可以放到请求行、头域或Body里，基于此，一般来说会有两种常用的方式：cookie和URL重写。</p>
-<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie　"></a>Cookie　</h4><p>服务端只要设置Set-cookie头就可以将session的标识符传送到客户端，而客户端此后的每一次请求都会带上这个标识符，服务器端可以为cookie设置失效时间，一般会设置失效时间为0，即浏览器进程有效时间。至于浏览器怎么处理这个0，每个浏览器都有自己的方案，但差别都不会太大（一般体现在新建浏览器窗口的时候）。</p>
-<h4 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h4><p>所谓URL重写就是重写URL。在返回用户请求的页面之前，将页面内所有的URL后面全部以get参数的方式加上session标识符（或者加在path info部分等等），这样用户在收到响应之后，无论点击哪个链接或提交表单，都会在再带上session的标识符，从而就实现了会话的保持。这样做可以在客户端禁止使用cookie的时候也进行session认证。</p>
-<h4 id="2-在express中使用session"><a href="#2-在express中使用session" class="headerlink" title="2. 在express中使用session"></a>2. 在express中使用session</h4><p>express-session 是基于express框专门用于处理session的中间件。由于session的认证机制离不开cookie，需要同时使用cookieParser 中间件。<br>express-session的常用参数:<br>secret:一个String类型的字符串，作为服务器端生成session的签名<br>name:返回客户端的key的名称，默认为connect.sid,也可以自己设置<br>resave:(是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。默认为true。但是(后续版本)有可能默认失效，所以最好手动添加。<br>saveUninitialized:初始化session时是否保存到存储。默认为true，但是(后续版本)有可能默认失效，所以最好手动添加。<br>cookie:设置返回到前端key的属性，默认值为{ path: ‘/’, httpOnly: true, secure: false, maxAge: null }。<br><strong>express-session的一些方法:</strong><br>Session.destroy():删除session，当检测到客户端关闭时调用。<br>Session.reload():当session有修改时，刷新session。<br>Session.regenerate()：将已有session初始化。<br>Session.save()：保存session。 </p>
-<h4 id="3-基于session验证存在的问题"><a href="#3-基于session验证存在的问题" class="headerlink" title="3. 基于session验证存在的问题"></a>3. 基于session验证存在的问题</h4><p><strong>1）存储:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存或文件、数据库中，而随着认证用户的增多，服务端的开销会明显增大。<br><strong>2）扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在特定的这台服务器上,才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡器的能力。这也限制了应用的扩展能力。<br><strong>3）CSRF:</strong> 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</p>
-<h3 id="二-基于token的验证（jwt）"><a href="#二-基于token的验证（jwt）" class="headerlink" title="二 基于token的验证（jwt）"></a>二 基于token的验证（jwt）</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br><strong>基本过程</strong><br>1）用户使用用户名密码来请求服务器<br>2）服务器进行验证用户的信息<br>3）服务器通过验证发送给用户一个token<br>4）客户端存储token(可采用cookie或sessionStorage、localStorage)，并在每次请求时附送上这个token值<br>5）服务端验证token值，并返回数据<br>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略。</p>
-<h4 id="1-JWT的构成"><a href="#1-JWT的构成" class="headerlink" title="1. JWT的构成"></a>1. JWT的构成</h4><p>JWT是由三段信息构成的，将这三段信息用.链接一起就构成了Jwt字符串。<br>第一部分称为头部（header), 第二部分称为载荷（payload), 第三部分是签证（signature).</p>
-<p> // 1. Headers<br> // 包括类别（typ）、加密算法（alg）；<br> {</p>
-<pre><code>&quot;alg&quot;: &quot;HS256&quot;,
-&quot;typ&quot;: &quot;JWT&quot;
-</code></pre><p> }<br> // 2. Claims<br> // 包括需要传递的用户信息；<br> {</p>
-<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
-&quot;name&quot;: &quot;John Doe&quot;,
-&quot;admin&quot;: true
-</code></pre><p> }<br> // 3. Signature<br> // 根据alg算法与私有秘钥进行加密得到的签名字串；<br> // 这一段是最重要的敏感信息，只能在服务端解密；<br> HMACSHA256(</p>
-<pre><code>base64UrlEncode(header) + &quot;.&quot; +
-base64UrlEncode(payload),
-SECREATE_KEY
-</code></pre><p> )<br><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
-<p> {</p>
-<pre><code>&apos;typ&apos;: &apos;JWT&apos;,
-&apos;alg&apos;: &apos;HS256&apos;
-</code></pre><p> }<br>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
-<p> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9<br><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
-<p> {</p>
-<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
-&quot;name&quot;: &quot;John Doe&quot;,
-&quot;admin&quot;: true
-</code></pre><p> }<br>然后将其进行base64加密，得到Jwt的第二部分。</p>
-<p> eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9<br><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
-<p> var encodedString = base64UrlEncode(header) + ‘.’ + base64UrlEncode(payload);<br> var signature = HMACSHA256(encodedString, ‘secret’); // TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</p>
-</li>
+            <h3 id="什么是cache？"><a href="#什么是cache？" class="headerlink" title="什么是cache？"></a>什么是cache？</h3><p>浏览器缓存（Browser Caching）是为了加速浏览，浏览器在用户磁盘上对最近请求过的文档进行存储，当访问者再次请求这个页面时，浏览器就可以从本地磁盘显示文档，这样就可以加速页面的阅览。<br>chrome控制台下的Frames即展示的是浏览器的http文件级缓存。<br><strong>cache的作用：</strong><br>1、减少延迟，让你的网站更快，提高用户体验。<br>2、避免网络拥塞，减少请求量，减少输出带宽。<br><strong>过程：</strong><br>主要是针对重复的http请求，在有缓存的情况下判断过程分3步：<br>1) 判断expires，如果未过期，直接读取http缓存文件，不发http请求，否则进入下一步。<br>2) 判断是否含有etag，有则带上if-none-match发送请求，未修改返回304，修改返回200，否则进入下一步。<br>3) 判断是否含有last-modified，有则带上if-modified-since发送请求，无效返回200，有效返回304，否则直接向服务器请求。 </p>
+<h3 id="200-OK-From-Cache"><a href="#200-OK-From-Cache" class="headerlink" title="200 OK(From Cache)"></a>200 OK(From Cache)</h3><p>浏览器没有向服务器端发送请求，而是直接使用了浏览器自己本地的缓存数据。200 OK指浏览器向服务器发送请求并获得了最新更新的数据。<br><strong>触发时机：</strong>直接点击链接访问或输入网址按回车访问</p>
+<h3 id="304-Not-Modified"><a href="#304-Not-Modified" class="headerlink" title="304(Not Modified)"></a>304(Not Modified)</h3><p>浏览器首先向服务器发送请求，确认数据是否发生改变，若没有改变，则加载浏览器自己的缓存数据。<br><strong>触发时机：</strong>刷新页面、设置了长缓存或ETags</p>
+<p>当你第一次访问时，服务器会返回给你200状态码，同时在头里追加ETag值给你。浏览器拿到后将其缓存。<br>下一次再访问时，因浏览器已经有该地址的ETag值了。会将其缓存的ETag值内容放在请求头的If-None-Match中，服务器检查其自身内容的ETag值是否与其一致，如果一致就会返回304状态码，告诉你内容和你保存的一致，没有发生改变过。</p>
+<h3 id="http缓存基础知识"><a href="#http缓存基础知识" class="headerlink" title="http缓存基础知识"></a>http缓存基础知识</h3><h4 id="http报文中与缓存相关的首部字段"><a href="#http报文中与缓存相关的首部字段" class="headerlink" title="http报文中与缓存相关的首部字段"></a>http报文中与缓存相关的首部字段</h4><p><strong>通用首部字段</strong><br>Cache-Control：控制缓存的行为<br>Pragma：http1.0，值为‘no-cache’禁用缓存<br><strong>请求首部字段</strong><br>if-Match：比较ETag是否一致<br>if-None-Match：比较ETag是否不一致<br>if-Modified-Since：比较资源最后更新时间是否一致<br>if-Unmodified-Since：比较资源最后更新时间是否不一致<br><strong>相应首部字段</strong><br>ETag：资源的匹配信息<br><strong>实体首部字段</strong><br>Expires：http1.0，实体主体过期的时间<br>last-Modified：资源最后一次修改的时间</p>
+<h4 id="设置缓存行为"><a href="#设置缓存行为" class="headerlink" title="设置缓存行为"></a>设置缓存行为</h4><ol>
+<li>http1.0通过Expires设置缓存过期时间（为一个GMT时间），如果还没过该时间点则不发送请求；通过Pragma来禁用缓存。优先级Pragma &gt; Expires</li>
+<li>http1.1新增Cache-Control字段来控制缓存，Cache-Control在请求和响应报文中都能使用。优先级Cache-Control &gt; Pragma &gt; Expires<br><strong>请求中的取值：</strong></li>
 </ol>
-<p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
-<h4 id="2-使用jwt"><a href="#2-使用jwt" class="headerlink" title="2. 使用jwt"></a>2. 使用jwt</h4><p>客户端发送请求，可以将token设为请求地址参数或请求body参数或在请求头部分设置Authorization字段（推荐）传给服务器：</p>
-<pre><code>fetch(&apos;api/user/1&apos;, {
-    headers: {
-        &apos;Authorization&apos;: &apos;Bearer &apos; + token
-    }
-})
-</code></pre><p>服务器端收到请求后，根据请求头部token的header部分的加密算法和plaload加上自己的secret生成第三部分内容。然后再与客户端发送过来的第三部分内容对比。<br><strong>express使用jwt</strong><br>服务器端在验证用户登录成功后，设置token，并返回给客户端：</p>
-<pre><code>var express = require(&apos;express&apos;);
-var jwt = require(&apos;jwt-simple&apos;);
-var app = express();
-app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);
-
-var expires = moment().add(&apos;days&apos;, 7).valueOf();
-var token = jwt.encode({
-    iss: user.id,
-    exp: expires
-}, app.get(&apos;jwtTokenSecret&apos;));
-
-res.json({
-    token : token,
-    expires: expires,
-    user: user.toJSON()
-});
-</code></pre><p>jwt.encode()函数有2个参数。第一个就是一个需要编码的token对象，第二个是一个编码的密钥。Moment.js被用来设置token将在7天之后失效。最后通过res.json()方法返回这个JSON对象给客户端。<br>客户端接受到token后存储，待下次请求时将token传给服务器端验证。</p>
-<h4 id="3-jwt的优点和安全相关问题"><a href="#3-jwt的优点和安全相关问题" class="headerlink" title="3. jwt的优点和安全相关问题"></a>3. jwt的优点和安全相关问题</h4><p><strong>优点：</strong><br>1）因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。<br>2）因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。<br>3）便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。<br>4）它不需要在服务端保存会话信息, 所以它易于应用的扩展。<br><strong>安全相关注意事项：</strong><br>1）不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。<br>2）保护好secret私钥，该私钥非常重要。<br>3）如果可以，请使用https协议。<br>4）使用jwe，及rsa加密。<br><strong>可能发生的安全问题：</strong><br><strong>XSS：</strong> XSS是Web中最常见的一种漏洞，其主要原因是对用户输入信息不加过滤，导致用户（被误导）恶意输入的Js代码在访问该网页时被执行，而Js可以读取当前网站域名下保存的Cookie信息。<br>针对这种攻击，无论将jwt存储在Cookie还是localStorage中，信息都有可能被窃取，为了防止XSS攻击，需要对用户输入的所有信息进行过滤。<br><strong>XSRF：</strong>主要利用Cookie是按照域名存储，同时访问某域名时浏览器会自动携带该域名所保存的Cookie信息这一特征。如果执意要将JWT存储在Cookie中，服务端则需要额外验证请求来源，或者在提交表单中加入随机签名并在处理表单时进行验证。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="external">什么是jwt</a><br><a href="http://blog.csdn.net/offbye/article/details/47617367" target="_blank" rel="external">nodejs中使用jwt</a></p>
+<blockquote>
+<p><strong>no-cache：</strong>告知服务器不使用缓存，要求向原服务器发起请求<br>  <strong>no-store：</strong>所有内容都不会被保存到缓存或Internet临时文件中<br>  <strong>max-age=delta-seconds：</strong>告知服务器希望接收一个存在时间不大于delta-seconds秒的资源<br>  <strong>max-stale[=delta-seconds]：</strong>告知服务器愿意接收一个超过缓存时间的资源，若没有设置delta-seconds表示任意超出时间<br>  <strong>min-fresh=delta-seconds：</strong>告知服务器希望接收一个在小于delta-seconds秒内更新过的资源<br>  <strong>no-transform：</strong>告知服务器希望获取的数据没有被转换（如压缩）<br>  <strong>only-if-cached：</strong>告知服务器希望获取缓存的内容，而不向原服务器发送请求<br>  <strong>cache-extension：</strong>自定义扩展值，若服务器不识别该值将被忽略</p>
+</blockquote>
+<p><strong>响应中的取值</strong></p>
+<blockquote>
+<p><strong>public：</strong>表明任何情况下都得缓存该资源（即使是需要http认证的资源）<br>  <strong>Private[=”field-name”]：</strong>表面报文中field-name（若没有设置则为全部）中的数据开放给某些用户（服务器指定的share-user，如代理服务器）做缓存使用，其他用户不能缓存这些数据<br>  <strong>no-cache：</strong>不直接使用缓存，要求向服务器发起请求<br>  <strong>no-store：</strong>所有内容都不会被保存到缓存或Internet临时文件中<br>  <strong>no-transform：</strong>告知客户端缓存文件时不得对实体数据做任何转换<br>  <strong>only-if-cached：</strong>告知（代理）服务器客户端希望获取缓存的内容，不向原服务器发送请求<br>  <strong>must-revalidate：</strong>当前资源一定是向原服务器发送验证请求的，若请求失败会返回504<br>  <strong>proxy-revalidate：</strong>与must-revalidate类似，指仅能用于共享缓存（如代理）<br>  <strong>max-age=delta-seconds：</strong>告知客户端该资源在delta-seconds秒内是新鲜的，无需向服务器发送请求<br>  <strong>s-maxage=delta-seconds：</strong>同max-age，但仅用于共享缓存<br>  <strong>cache-extension：</strong>自定义扩展值</p>
+</blockquote>
+<p>以上取值能组合起来使用，如：Cache-Control: max-age=3600, must-revalidate<br>组合的形式还能做一些浏览器行为不一致的兼容处理。例如在IE我们可以使用 no-cache 来防止点击“后退”按钮时页面资源从缓存加载，但在 Firefox 中，需要使用 no-store 才能防止历史回退时浏览器不从缓存中去读取数据，故我们在响应报头加上如下组合值即可做兼容处理：Cache-Control: no-cache, no-store</p>
+<h3 id="http缓存策略"><a href="#http缓存策略" class="headerlink" title="http缓存策略"></a>http缓存策略</h3><h4 id="max-age与last-modified（if-modified-since）结合"><a href="#max-age与last-modified（if-modified-since）结合" class="headerlink" title="max-age与last-modified（if-modified-since）结合"></a>max-age与last-modified（if-modified-since）结合</h4><p><strong>1. 浏览器第一次请求资源</strong><br>1）浏览器查询无cache内容，发送请求到服务器<br>2）服务器接收到请求，响应并设置Cache-Control：max-age=XXX，Last-Modified：XXX GMT<br>3）浏览器接收到响应，展示内容并缓存响应内容（状态码为200 ok）<br><strong>2. 浏览器在max-age时间内请求资源</strong><br>浏览器查询有缓存，于是检查max-age，还未过期直接读取响应给用户（状态码为200 ok form XX cache）<br><strong>3. 浏览器在max-age时间外请求资源</strong><br>1）浏览器查询有缓存，于是检查max-age，发现已经过期，发现资源带有Last-Modified，于是在请求首部加上If-Modified-Since字段（值为），发送请求给服务器<br>2）服务器接收到请求发现有If-Modified-Since，于是和被请求资源的最后修改时间进行比较。若修改时间较新则返回新资源内容（状态码为200 ok）；若发现时间一致，则只返回状态码304 Not Modified而不带整个资源<br>3）浏览器接收到响应，根据响应状态选择是否使用缓存</p>
+<h4 id="仅使用max-age"><a href="#仅使用max-age" class="headerlink" title="仅使用max-age"></a>仅使用max-age</h4><p>前两种情况和使用max-age和last-modified类似，服务器接收到请求后设置max-age，缓存过期后浏览器会再次向服务器发起请求</p>
+<h4 id="max-age与ETag结合"><a href="#max-age与ETag结合" class="headerlink" title="max-age与ETag结合"></a>max-age与ETag结合</h4><p>前两种情况和使用max-age和last-modified类似，服务器接收到请求后设置max-age和ETag（由开发者自己确定的验证标识）<br>第三种：缓存过期后，发现资源带有ETag，于是在请求头中添加If-None-Match（和ETag值相同），发送请求给服务器，服务器收到请求后将If-None-Match的值与被请求资源的验证串进行对比。若不一致则返回新的资源（状态码200 ok）；若一致则只返回状态码304 Not Modified，不返回资源<br>浏览器接收到服务器的响应后，根据响应状态决定是否使用缓存</p>
+<h3 id="浏览器缓存兼容及不同操作"><a href="#浏览器缓存兼容及不同操作" class="headerlink" title="浏览器缓存兼容及不同操作"></a>浏览器缓存兼容及不同操作</h3><p>参考<a href="http://blog.csdn.net/longxibendi/article/details/41630389" target="_blank" rel="external">浏览器缓存详解</a></p>
+<p><strong>参考链接</strong></p>
+<p><a href="http://blog.csdn.net/dinglang_2009/article/details/38142641" target="_blank" rel="external">cache策略实现原理</a><br><a href="http://www.cnblogs.com/cb0327/p/5400901.html" target="_blank" rel="external">浅谈浏览器http的缓存机制</a></p>
 
           
         
