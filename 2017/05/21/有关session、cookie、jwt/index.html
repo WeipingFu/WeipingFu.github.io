@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="session,cookie,jwt," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="session指的是一个终端用户与交互系统进行通信的时间间隔（会话）例如：用户访问某个网站，从他登录到退出的时间段就是session由于http是是一种无状态的协议，故有这样一个情况：用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用">
+<meta name="keywords" content="session,cookie,jwt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有关session、cookie和jwt验证">
+<meta property="og:url" content="http://yoursite.com/2017/05/21/有关session、cookie、jwt/index.html">
+<meta property="og:site_name" content="fwp个人博客">
+<meta property="og:description" content="session指的是一个终端用户与交互系统进行通信的时间间隔（会话）例如：用户访问某个网站，从他登录到退出的时间段就是session由于http是是一种无状态的协议，故有这样一个情况：用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-06T09:55:26.445Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有关session、cookie和jwt验证">
+<meta name="twitter:description" content="session指的是一个终端用户与交互系统进行通信的时间间隔（会话）例如：用户访问某个网站，从他登录到退出的时间段就是session由于http是是一种无状态的协议，故有这样一个情况：用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/21/有关session、cookie、jwt/"/>
+
+
+
+
+
+  <title>有关session、cookie和jwt验证 | fwp个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fwp个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/有关session、cookie、jwt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fwp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwp个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">有关session、cookie和jwt验证</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T16:20:11+08:00">
+                2017-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/21/有关session、cookie、jwt/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/05/21/有关session、cookie、jwt/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/21/有关session、cookie、jwt/" class="leancloud_visitors" data-flag-title="有关session、cookie和jwt验证">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>session指的是一个终端用户与交互系统进行通信的时间间隔（会话）<br>例如：用户访问某个网站，从他登录到退出的时间段就是session<br>由于http是是一种无状态的协议，故有这样一个情况：<br>用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。<br>其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用户进行登录验证。</p>
+<h3 id="一-基于session的验证"><a href="#一-基于session的验证" class="headerlink" title="一 基于session的验证"></a>一 基于session的验证</h3><h4 id="1-简要过程"><a href="#1-简要过程" class="headerlink" title="1. 简要过程"></a>1. 简要过程</h4><ol>
+<li>生成全局唯一标识符（sessionid）；</li>
+<li>开辟数据存储空间。一般会在内存中创建相应的数据结构，但这种情况下，系统一旦掉电，所有的会话数据就会丢失，如果是电子商务网站，这种事故会造成严重的后果。不过也可以写到文件里甚至存储在数据库中，这样虽然会增加I/O开销，但session可以实现某种程度的持久化，而且更有利于session的共享；</li>
+<li><p>将session的全局唯一标示符发送给客户端。<br>问题的关键就在服务端如何发送这个session的唯一标识上。联系到HTTP协议，数据无非可以放到请求行、头域或Body里，基于此，一般来说会有两种常用的方式：cookie和URL重写。</p>
+<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie　"></a>Cookie　</h4><p>服务端只要设置Set-cookie头就可以将session的标识符传送到客户端，而客户端此后的每一次请求都会带上这个标识符，服务器端可以为cookie设置失效时间，一般会设置失效时间为0，即浏览器进程有效时间。至于浏览器怎么处理这个0，每个浏览器都有自己的方案，但差别都不会太大（一般体现在新建浏览器窗口的时候）。</p>
+<h4 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h4><p>所谓URL重写就是重写URL。在返回用户请求的页面之前，将页面内所有的URL后面全部以get参数的方式加上session标识符（或者加在path info部分等等），这样用户在收到响应之后，无论点击哪个链接或提交表单，都会在再带上session的标识符，从而就实现了会话的保持。这样做可以在客户端禁止使用cookie的时候也进行session认证。</p>
+<h4 id="2-在express中使用session"><a href="#2-在express中使用session" class="headerlink" title="2. 在express中使用session"></a>2. 在express中使用session</h4><p>express-session 是基于express框专门用于处理session的中间件。由于session的认证机制离不开cookie，需要同时使用cookieParser 中间件。<br>express-session的常用参数:<br>secret:一个String类型的字符串，作为服务器端生成session的签名<br>name:返回客户端的key的名称，默认为connect.sid,也可以自己设置<br>resave:(是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。默认为true。但是(后续版本)有可能默认失效，所以最好手动添加。<br>saveUninitialized:初始化session时是否保存到存储。默认为true，但是(后续版本)有可能默认失效，所以最好手动添加。<br>cookie:设置返回到前端key的属性，默认值为{ path: ‘/’, httpOnly: true, secure: false, maxAge: null }。<br><strong>express-session的一些方法:</strong><br>Session.destroy():删除session，当检测到客户端关闭时调用。<br>Session.reload():当session有修改时，刷新session。<br>Session.regenerate()：将已有session初始化。<br>Session.save()：保存session。 </p>
+<h4 id="3-基于session验证存在的问题"><a href="#3-基于session验证存在的问题" class="headerlink" title="3. 基于session验证存在的问题"></a>3. 基于session验证存在的问题</h4><p><strong>1）存储:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存或文件、数据库中，而随着认证用户的增多，服务端的开销会明显增大。<br><strong>2）扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在特定的这台服务器上,才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡器的能力。这也限制了应用的扩展能力。<br><strong>3）CSRF:</strong> 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</p>
+<h3 id="二-基于token的验证（jwt）"><a href="#二-基于token的验证（jwt）" class="headerlink" title="二 基于token的验证（jwt）"></a>二 基于token的验证（jwt）</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br><strong>基本过程</strong><br>1）用户使用用户名密码来请求服务器<br>2）服务器进行验证用户的信息<br>3）服务器通过验证发送给用户一个token<br>4）客户端存储token(可采用cookie或sessionStorage、localStorage)，并在每次请求时附送上这个token值<br>5）服务端验证token值，并返回数据<br>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略。</p>
+<h4 id="1-JWT的构成"><a href="#1-JWT的构成" class="headerlink" title="1. JWT的构成"></a>1. JWT的构成</h4><p>JWT是由三段信息构成的，将这三段信息用.链接一起就构成了Jwt字符串。<br>第一部分称为头部（header), 第二部分称为载荷（payload), 第三部分是签证（signature).</p>
+<p> // 1. Headers<br> // 包括类别（typ）、加密算法（alg）；<br> {</p>
+<pre><code>&quot;alg&quot;: &quot;HS256&quot;,
+&quot;typ&quot;: &quot;JWT&quot;
+</code></pre><p> }<br> // 2. Claims<br> // 包括需要传递的用户信息；<br> {</p>
+<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
+&quot;name&quot;: &quot;John Doe&quot;,
+&quot;admin&quot;: true
+</code></pre><p> }<br> // 3. Signature<br> // 根据alg算法与私有秘钥进行加密得到的签名字串；<br> // 这一段是最重要的敏感信息，只能在服务端解密；<br> HMACSHA256(</p>
+<pre><code>base64UrlEncode(header) + &quot;.&quot; +
+base64UrlEncode(payload),
+SECREATE_KEY
+</code></pre><p> )<br><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
+<p> {</p>
+<pre><code>&apos;typ&apos;: &apos;JWT&apos;,
+&apos;alg&apos;: &apos;HS256&apos;
+</code></pre><p> }<br>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
+<p> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9<br><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
+<p> {</p>
+<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
+&quot;name&quot;: &quot;John Doe&quot;,
+&quot;admin&quot;: true
+</code></pre><p> }<br>然后将其进行base64加密，得到Jwt的第二部分。</p>
+<p> eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9<br><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
+<p> var encodedString = base64UrlEncode(header) + ‘.’ + base64UrlEncode(payload);<br> var signature = HMACSHA256(encodedString, ‘secret’); // TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</p>
+</li>
+</ol>
+<p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
+<h4 id="2-使用jwt"><a href="#2-使用jwt" class="headerlink" title="2. 使用jwt"></a>2. 使用jwt</h4><p>客户端发送请求，可以将token设为请求地址参数或请求body参数或在请求头部分设置Authorization字段（推荐）传给服务器：</p>
+<pre><code>fetch(&apos;api/user/1&apos;, {
+    headers: {
+        &apos;Authorization&apos;: &apos;Bearer &apos; + token
+    }
+})
+</code></pre><p>服务器端收到请求后，根据请求头部token的header部分的加密算法和plaload加上自己的secret生成第三部分内容。然后再与客户端发送过来的第三部分内容对比。<br><strong>express使用jwt</strong><br>服务器端在验证用户登录成功后，设置token，并返回给客户端：</p>
+<pre><code>var express = require(&apos;express&apos;);
+var jwt = require(&apos;jwt-simple&apos;);
+var app = express();
+app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);
+
+var expires = moment().add(&apos;days&apos;, 7).valueOf();
+var token = jwt.encode({
+    iss: user.id,
+    exp: expires
+}, app.get(&apos;jwtTokenSecret&apos;));
+
+res.json({
+    token : token,
+    expires: expires,
+    user: user.toJSON()
+});
+</code></pre><p>jwt.encode()函数有2个参数。第一个就是一个需要编码的token对象，第二个是一个编码的密钥。Moment.js被用来设置token将在7天之后失效。最后通过res.json()方法返回这个JSON对象给客户端。<br>客户端接受到token后存储，待下次请求时将token传给服务器端验证。</p>
+<h4 id="3-jwt的优点和安全相关问题"><a href="#3-jwt的优点和安全相关问题" class="headerlink" title="3. jwt的优点和安全相关问题"></a>3. jwt的优点和安全相关问题</h4><p><strong>优点：</strong><br>1）因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。<br>2）因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。<br>3）便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。<br>4）它不需要在服务端保存会话信息, 所以它易于应用的扩展。<br><strong>安全相关注意事项：</strong><br>1）不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。<br>2）保护好secret私钥，该私钥非常重要。<br>3）如果可以，请使用https协议。<br>4）使用jwe，及rsa加密。<br><strong>可能发生的安全问题：</strong><br><strong>XSS：</strong> XSS是Web中最常见的一种漏洞，其主要原因是对用户输入信息不加过滤，导致用户（被误导）恶意输入的Js代码在访问该网页时被执行，而Js可以读取当前网站域名下保存的Cookie信息。<br>针对这种攻击，无论将jwt存储在Cookie还是localStorage中，信息都有可能被窃取，为了防止XSS攻击，需要对用户输入的所有信息进行过滤。<br><strong>XSRF：</strong>主要利用Cookie是按照域名存储，同时访问某域名时浏览器会自动携带该域名所保存的Cookie信息这一特征。如果执意要将JWT存储在Cookie中，服务端则需要额外验证请求来源，或者在提交表单中加入随机签名并在处理表单时进行验证。</p>
+<p>参考链接：</p>
+<p><a href="http://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="external">什么是jwt</a><br><a href="http://blog.csdn.net/offbye/article/details/47617367" target="_blank" rel="external">nodejs中使用jwt</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/session/" rel="tag"># session</a>
+          
+            <a href="/tags/cookie/" rel="tag"># cookie</a>
+          
+            <a href="/tags/jwt/" rel="tag"># jwt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/http缓存机制/" rel="next" title="http缓存机制">
+                <i class="fa fa-chevron-left"></i> http缓存机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/21/网络-体系结构及TCP-IP/" rel="prev" title="网络体系结构及TCP/TP协议">
+                网络体系结构及TCP/TP协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="fwp" />
+          <p class="site-author-name" itemprop="name">fwp</p>
+           
+              <p class="site-description motion-element" itemprop="description">知识记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-基于session的验证"><span class="nav-number">1.</span> <span class="nav-text">一 基于session的验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简要过程"><span class="nav-number">1.1.</span> <span class="nav-text">1. 简要过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookie"><span class="nav-number">1.2.</span> <span class="nav-text">Cookie　</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#URL重写"><span class="nav-number">1.3.</span> <span class="nav-text">URL重写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-在express中使用session"><span class="nav-number">1.4.</span> <span class="nav-text">2. 在express中使用session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-基于session验证存在的问题"><span class="nav-number">1.5.</span> <span class="nav-text">3. 基于session验证存在的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-基于token的验证（jwt）"><span class="nav-number">2.</span> <span class="nav-text">二 基于token的验证（jwt）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JWT的构成"><span class="nav-number">2.1.</span> <span class="nav-text">1. JWT的构成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-使用jwt"><span class="nav-number">2.2.</span> <span class="nav-text">2. 使用jwt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-jwt的优点和安全相关问题"><span class="nav-number">2.3.</span> <span class="nav-text">3. jwt的优点和安全相关问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fwp</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://fuweiping.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/05/21/有关session、cookie、jwt/';
+          this.page.identifier = '2017/05/21/有关session、cookie、jwt/';
+          this.page.title = '有关session、cookie和jwt验证';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://fuweiping.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3XB8AXsRovxBiBFseXLXlKNq-gzGzoHsz", "S51B3iUah1f5XHWzRVLEcYqW");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

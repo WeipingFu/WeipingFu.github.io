@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="html,html5," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="新增标签结构标签（1）section：独立内容区块，可以用h1~h6组成大纲，表示文档结构，也可以有章节、页眉、页脚或页眉的其他部分；（2）article：特殊独立区块，表示这篇页眉中的核心内容；（3）aside：标签内容之外与标签内容相关的辅助信息；（4）header：某个区块的头部信息/标题；（5）hgroup：头部信息/标题的补充内容；（6）footer：底部信息；（7）nav：导航条部分信">
+<meta name="keywords" content="html,html5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5新标签及API">
+<meta property="og:url" content="http://yoursite.com/2017/05/14/html5新标签及API/index.html">
+<meta property="og:site_name" content="fwp个人博客">
+<meta property="og:description" content="新增标签结构标签（1）section：独立内容区块，可以用h1~h6组成大纲，表示文档结构，也可以有章节、页眉、页脚或页眉的其他部分；（2）article：特殊独立区块，表示这篇页眉中的核心内容；（3）aside：标签内容之外与标签内容相关的辅助信息；（4）header：某个区块的头部信息/标题；（5）hgroup：头部信息/标题的补充内容；（6）footer：底部信息；（7）nav：导航条部分信">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-06T09:21:37.434Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="html5新标签及API">
+<meta name="twitter:description" content="新增标签结构标签（1）section：独立内容区块，可以用h1~h6组成大纲，表示文档结构，也可以有章节、页眉、页脚或页眉的其他部分；（2）article：特殊独立区块，表示这篇页眉中的核心内容；（3）aside：标签内容之外与标签内容相关的辅助信息；（4）header：某个区块的头部信息/标题；（5）hgroup：头部信息/标题的补充内容；（6）footer：底部信息；（7）nav：导航条部分信">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/14/html5新标签及API/"/>
+
+
+
+
+
+  <title>html5新标签及API | fwp个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fwp个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/14/html5新标签及API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fwp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwp个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">html5新标签及API</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T11:10:21+08:00">
+                2017-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/html/" itemprop="url" rel="index">
+                    <span itemprop="name">html</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/14/html5新标签及API/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/05/14/html5新标签及API/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/14/html5新标签及API/" class="leancloud_visitors" data-flag-title="html5新标签及API">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="新增标签"><a href="#新增标签" class="headerlink" title="新增标签"></a>新增标签</h3><h4 id="结构标签"><a href="#结构标签" class="headerlink" title="结构标签"></a>结构标签</h4><p><strong>（1）section：</strong>独立内容区块，可以用h1~h6组成大纲，表示文档结构，也可以有章节、页眉、页脚或页眉的其他部分；<br><strong>（2）article：</strong>特殊独立区块，表示这篇页眉中的核心内容；<br><strong>（3）aside：</strong>标签内容之外与标签内容相关的辅助信息；<br><strong>（4）header：</strong>某个区块的头部信息/标题；<br><strong>（5）hgroup：</strong>头部信息/标题的补充内容；<br><strong>（6）footer：</strong>底部信息；<br><strong>（7）nav：</strong>导航条部分信息<br><strong>（8）figure：</strong>独立的单元，例如某个有图片与内容的新闻块。</p>
+<h4 id="表单标签"><a href="#表单标签" class="headerlink" title="表单标签"></a>表单标签</h4><p><strong>（1）email：</strong>必须输入邮件；<br><strong>（2）url：</strong>必须输入url地址；<br><strong>（3）number：</strong>必须输入数值；<br><strong>（4）range：</strong>必须输入一定范围内的数值；<br><strong>（5）Date Pickers：</strong>日期选择器；input type类型选择：<br>a. date：选取日、月、年<br>b. month：选取月、年<br>c. week：选取周和年<br>d. time：选取时间（小时和分钟）<br>e. datetime：选取时间、日、月、年（UTC时间）<br>f. datetime-local：选取时间、日、月、年（本地时间）<br><strong>（6）search：</strong>搜索常规的文本域；<br><strong>（7）color：</strong>颜色（拾色器）<br><strong>（8）tel：</strong>电话号码</p>
+<h4 id="媒体标签"><a href="#媒体标签" class="headerlink" title="媒体标签"></a>媒体标签</h4><p><strong>（1）video：</strong>视频<br><strong>（2）audio：</strong>音频<br><strong>（3）embed：</strong>嵌入内容（包括各种媒体），Midi、Wav、AU、MP3、Flash、AIFF等。</p>
+<h4 id="其他标签"><a href="#其他标签" class="headerlink" title="其他标签"></a>其他标签</h4><p><strong>（1）mark：</strong>标注（像荧光笔做笔记）<br><strong>（2）progress：</strong>进度条；<br><code>&lt;progress max=&quot;最大进度条的值&quot; value=&quot;当前进度条的值&quot;&gt;</code><br><strong>（3）time：</strong>数据标签，给搜索引擎使用；发布日期<br><code>&lt;time datetime=&quot;2014-12-25T09:00&quot;&gt;9：00&lt;/time&gt;更新日期&lt;time datetime=&quot;2015-
+01-23T04:00&quot; pubdate&gt;4:00&lt;/time&gt;</code><br><strong>（4）ruby和rt：</strong>对某一个字进行注释；<br><code>&lt;ruby&gt;&lt;rt&gt;注释内容&lt;/rt&gt;&lt;rp&gt;浏览器不支持时如何显示&lt;/rp&gt;&lt;/ruby&gt;</code><br><strong>（5）wbr：</strong>软换行，页面宽度到需要换行时换行；<br><strong>（6）canvas：</strong>使用JS代码做内容进行图像绘制；<br><strong>（7）command：</strong>按钮；<br><strong>（8）deteils ：</strong>展开菜单；<br><strong>（9）dateilst：</strong>文本域下拉提示；<br><strong>（10）keygen:</strong> 加密；</p>
+<h3 id="新增属性"><a href="#新增属性" class="headerlink" title="新增属性"></a>新增属性</h3><p><strong>（1）manifest属性：</strong>定义页面需要用到的离线应用文件，一般放在html标签里<br><strong>（2）charset属性：</strong> meta属性之一,定义页面的字符集<br><strong>（3）sizes属性：</strong> link新增属性，当link的rel=”icon”时，用以设置图标大小<br><strong>（4）base属性:</strong><br><code>&lt;base href=&quot;http://localhost/&quot; target=&quot;_blank&quot;&gt;</code>表示当在新窗口打开一个页面时，会将href中的内容作为前缀添加到地址前<br><strong>（5）defer属性：</strong> script标签属性，表示脚本加载完毕后，只有当页面也加载完毕才执行（推迟执行）, h5之前就有<br><strong>（6）async属性：</strong> script标签属性，脚本加载完毕后马上执行（运行过程中浏览器会解析下面的内容），即使页面还没有加载完毕（异步执行）<br><strong>（7）media属性：</strong> a元素属性：表示对何种设备进行优化<br><strong>（8）hreflang属性：</strong> a的属性，表示超链接指向的网址使用的语言<br><strong>（9）ref属性：</strong> a的属性,定义超链接是否是外部链接<br><strong>（10）reversed属性:</strong> ol的属性，定义序号是否倒叙<br><strong>（11）start属性：</strong> ol的属性，定义序号的起始值<br><strong>（12）scoped属性：</strong> 内嵌CSS样式的属性，定义该样式只局限于拥有该内嵌样式的元素，适用于单页开发<br><strong>（13）seamless属性：</strong> iframe元素，新增了seamless无边距无边框</p>
+<h3 id="新增实用方法和属性"><a href="#新增实用方法和属性" class="headerlink" title="新增实用方法和属性"></a>新增实用方法和属性</h3><p><strong>1. getElementsByClassName()方法</strong><br>该方法接收一个参数，即一个包含一或多个类名的字符串，返回带有指定类的所有元素的NodeList。传入多个类名时，类名的先后顺序不重要。<br><strong>2. classList 属性</strong><br>element.classList属性返回由element元素的classname组成的类数组，只读属性，可以通过以下方法操作：</p>
+<ul>
+<li>add(value)：将给定的字符串值添加到列表中。如果值已经存在，就不添加了。</li>
+<li>contains(value)：表示列表中是否存在给定的值，如果存在则返回true，否则返回false。</li>
+<li>remove(value)：从列表中删除给定的字符串。</li>
+<li>toggle(value)：如果列表中已经存在给定的值，删除它；如果列表中没有给定的值，添加它。</li>
+</ul>
+<p><strong>3. 自定义数据属性</strong><br>HTML5 规定可以为元素添加非标准的属性，但要添加前缀data-，目的是为元素提供与渲染无关的信息，或者提供语义信息。这些属性可以任意添加、随便命名，只要以data-开头即可。<br>data属性可以通过element.dataset.<em>来获取<br><strong>4. outerHTML 属性</strong><br>outerHTML 属性和innerHTML 类似；不同的是，outerHTML包括调用节点在内，而innerHTML不包括。<br><em>*5. insertAdjacentHTML()方法</em></em><br>插入元素，它接收两个参数：插入位置和要插入的HTML文本。第一个参数必须是下列值之一：<br>“beforebegin”，在当前元素之前插入一个紧邻的同辈元素；<br>“afterbegin”，在当前元素之下插入一个新的子元素或在第一个子元素之前再插入新的子元素；<br>“beforeend”，在当前元素之下插入一个新的子元素或在最后一个子元素之后再插入新的子元素；<br>“afterend”，在当前元素之后插入一个紧邻的同辈元素。</p>
+<h3 id="新增API"><a href="#新增API" class="headerlink" title="新增API"></a>新增API</h3><h4 id="Drag-amp-Drop-API-拖放"><a href="#Drag-amp-Drop-API-拖放" class="headerlink" title="Drag&amp;Drop API (拖放)"></a>Drag&amp;Drop API (拖放)</h4><p>使用dataTransfer 接口来支持拖放数据存储，它的使用方式一般为 event.dataTransfer。</p>
+<blockquote>
+<p><strong>dataTransfer.effectAllowed[=value]。</strong>该属性返回拖曳对象允许的拖曳时的反馈效果 【放在可移动元素start事件上】<br><strong>dataTransfer.dropEffect[=value]。</strong>该属性返回已设置的拖放时反馈效果。【放在目标容器over事件上】<br><strong>dataTransfer.items。</strong>返回一个关于拖曳数据的DataTransferItemList对象。<br><strong>dataTransfer.setDragImage(element, x, y)。</strong>指定拖曳元素时随鼠标移动的图片，x、y分别是图片相对于鼠标的横坐标和纵坐标。<br><strong>dataTransfer.addElement(element)。</strong>将元素添加到被拖曳的列表里。如果你想让某个元素跟随被拖曳元素一同被拖曳，可以使用这个方法。<br><strong>dataTransfer.types。</strong>返回在dragstart事件触发时为元素存储数据的格式。如果是系统文件的拖曳，则返回files。<br><strong>dataTransfer.setData(format, data)。</strong>为元素添加数据，在dragstart事件触发时可以用它为被拖曳元素存储数据。数据格式一般有两种：text/plain（设置format为字符串text即可，主要用于文本数据）和text/uri-list（设置format为字符串url即可，主要用于url）。<br><strong>data=dataTransfer.getData(format)。</strong>返回存储的数据。如果数据不存在，则返回空字符串。<br><strong>dataTransfer.clearData([format])。</strong>删除指定格式的数据。如果不指定格式，则删除所有数据。<br><strong>dataTransfer.files。</strong>如果是拖曳系统文件，返回正在被拖曳的文件列表对象。可以通过它获得所拖曳的文件数据。【拖拽上传】</p>
+</blockquote>
+<h4 id="History-API（历史记录）"><a href="#History-API（历史记录）" class="headerlink" title="History  API（历史记录）"></a>History  API（历史记录）</h4><p>提供了两个新方法pushState()和replaceState()，它们允许我们添加和改变当前浏览器的地址。<br>pushState()和replaceState()参数一样，参数说明如下：<br>1、state：存储JSON字符串，可以用在popstate事件中。<br>2、title：现在大多数浏览器不支持或者忽略这个参数，最好用null代替<br>3、url：任意有效的URL，用于更新浏览器的地址栏，并不在乎URL是否已经存在地址列表中。更重要的是，它不会重新加载页面。</p>
+<blockquote>
+<p> history.pushState({username: “html5”}, “user account”, “user.html”);  用于向history对象添加当前页面的记录，并且改变浏览器地址栏的URL<br>history.replaceState({username: “html5” }, “user account”, “user.html”); 类似于pushState()，只是将当前页面状态替换为新的状态</p>
+</blockquote>
+<h4 id="Notification-API-桌面通知"><a href="#Notification-API-桌面通知" class="headerlink" title="Notification API (桌面通知)"></a>Notification API (桌面通知)</h4><blockquote>
+<p>构造函数：new Notification，2个参数：消息的标题，消息主体对象，其中消息主体对象包括消息框的图标（icon）和消息内容（body）。<br>requestPermission(callback)方法：请求用户授权<br>Notification.permission属性：取值default-用户没有接收或拒绝授权请求，不能显示通知；granted-用户接受授权请求，允许显示通知；denied-用户拒绝授权请求，不允许显示通知<br>4个事件处理函数：<br>onshow函数-在消息展示时执行<br>onclick函数-在用户点击消息后被调用<br>onclose函数-在消息框被关闭时被调用<br>onerror函数-发生错误时被调用，如果没有被授权而继续创建消息通知，也会执行onerror函数</p>
+</blockquote>
+<h4 id="Communication-API-（跨域通信）"><a href="#Communication-API-（跨域通信）" class="headerlink" title="Communication API （跨域通信）"></a>Communication API （跨域通信）</h4><p>以往的浏览器，跨域存在安全问题（CSRF攻击，Cross-Site Request Forgery跨站请求伪造），现在使用Communication API可以很好的避免这个问题。<br>用postMessage函数将消息跨域传递，通过监听message事件接收消息</p>
+<h4 id="WebSocket-API"><a href="#WebSocket-API" class="headerlink" title="WebSocket API"></a>WebSocket API</h4><p>提供了全双工通信方式，我们从此可以在Web应用中实现实时的数据传输和获取。<br>支持双向、双工通信。可以实现实现微博新消息通知、邮件推送、实时游戏和聊天等功能。</p>
+<h4 id="Web-Worker"><a href="#Web-Worker" class="headerlink" title="Web Worker"></a>Web Worker</h4><p>简单来说，就是通过JavaScript创建一个后台进程（或者叫工作者进程），执行一些特殊的任务（比如耗时比较长的数据处理），并且提供主进程和新进程之间数据交换<br>接口：postMessage和onmessage。它起到互不阻塞执行的效果，避免了传统的JavaScript执行长时间操作时界面无响应的弊端，提高了性能及用户体验。</p>
+<h4 id="Storage-API"><a href="#Storage-API" class="headerlink" title="Storage API"></a>Storage API</h4><p>主要涉及localStorage API、sessionStorage API、applicationCacheAPI（离线存储）和服务器端Manifest文件等概念。</p>
+<h4 id="Canvas和WebGL"><a href="#Canvas和WebGL" class="headerlink" title="Canvas和WebGL"></a>Canvas和WebGL</h4><h4 id="Device-API"><a href="#Device-API" class="headerlink" title="Device API"></a>Device API</h4><p>使HTML5 标签可以直接调用类似摄像头、电源、系统、文件、网络等。<br><strong>Geolocation API</strong>（地理位置API）<br><strong>File API</strong>来帮助我们在Web页面中访问本地文件，它可以在Web应用中展现文件，或者选择并读取文件。<br><strong>Media Capture API</strong>增强了HTML表单，提供了对音频、图像和视频进行采集的功能。PC上还未实现，欧朋手机浏览器实现HTML5标签打开摄像头。<br><strong>Contact API</strong>主要应用在移动设备上，提供对用户通用通讯录的访问<br><strong>Calendar API</strong>与ContactAPI非常类似，提供了对用户通用日历的存取方式，主要应用在移动设备上。<br><strong>System Information API</strong>用于为Web应用提供访问系统各种运行时属性的方式，主要也应用在移动设备上。（都还未有浏览器实现）<br><strong>Messaging API</strong>定义了一个简单的API来发送和接收电子邮件、短信和彩信，主要应用在移动设备上。   </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/html/" rel="tag"># html</a>
+          
+            <a href="/tags/html5/" rel="tag"># html5</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/12/html5新特性/" rel="next" title="html5新特性">
+                <i class="fa fa-chevron-left"></i> html5新特性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/14/display-inline-block问题及其解决方法/" rel="prev" title="display：inline-block存在问题及其解决方法">
+                display：inline-block存在问题及其解决方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="fwp" />
+          <p class="site-author-name" itemprop="name">fwp</p>
+           
+              <p class="site-description motion-element" itemprop="description">知识记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#新增标签"><span class="nav-number">1.</span> <span class="nav-text">新增标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结构标签"><span class="nav-number">1.1.</span> <span class="nav-text">结构标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表单标签"><span class="nav-number">1.2.</span> <span class="nav-text">表单标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#媒体标签"><span class="nav-number">1.3.</span> <span class="nav-text">媒体标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他标签"><span class="nav-number">1.4.</span> <span class="nav-text">其他标签</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增属性"><span class="nav-number">2.</span> <span class="nav-text">新增属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增实用方法和属性"><span class="nav-number">3.</span> <span class="nav-text">新增实用方法和属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增API"><span class="nav-number">4.</span> <span class="nav-text">新增API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Drag-amp-Drop-API-拖放"><span class="nav-number">4.1.</span> <span class="nav-text">Drag&Drop API (拖放)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#History-API（历史记录）"><span class="nav-number">4.2.</span> <span class="nav-text">History  API（历史记录）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notification-API-桌面通知"><span class="nav-number">4.3.</span> <span class="nav-text">Notification API (桌面通知)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Communication-API-（跨域通信）"><span class="nav-number">4.4.</span> <span class="nav-text">Communication API （跨域通信）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebSocket-API"><span class="nav-number">4.5.</span> <span class="nav-text">WebSocket API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Web-Worker"><span class="nav-number">4.6.</span> <span class="nav-text">Web Worker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Storage-API"><span class="nav-number">4.7.</span> <span class="nav-text">Storage API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Canvas和WebGL"><span class="nav-number">4.8.</span> <span class="nav-text">Canvas和WebGL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Device-API"><span class="nav-number">4.9.</span> <span class="nav-text">Device API</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fwp</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://fuweiping.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/05/14/html5新标签及API/';
+          this.page.identifier = '2017/05/14/html5新标签及API/';
+          this.page.title = 'html5新标签及API';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://fuweiping.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3XB8AXsRovxBiBFseXLXlKNq-gzGzoHsz", "S51B3iUah1f5XHWzRVLEcYqW");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
