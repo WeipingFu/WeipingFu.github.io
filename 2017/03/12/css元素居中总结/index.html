@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute .center">
+<meta name="description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute 1234567">
 <meta name="keywords" content="css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css元素居中总结">
 <meta property="og:url" content="http://yoursite.com/2017/03/12/css元素居中总结/index.html">
 <meta property="og:site_name" content="fwp个人博客">
-<meta property="og:description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute .center">
+<meta property="og:description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute 1234567">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T08:00:57.321Z">
+<meta property="og:updated_time" content="2017-08-17T01:32:01.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css元素居中总结">
-<meta name="twitter:description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute .center">
+<meta name="twitter:description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute 1234567">
 
 
 
@@ -434,13 +434,7 @@
       
         <h2 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h2><h3 id="1-inline或inline-的元素"><a href="#1-inline或inline-的元素" class="headerlink" title="1.inline或inline-*的元素"></a>1.inline或inline-*的元素</h3><p>设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。</p>
 <h3 id="2-一个block元素"><a href="#2-一个block元素" class="headerlink" title="2.一个block元素"></a>2.一个block元素</h3><p>(1)设定元素宽度，margin-left和margin-right为auto即可。<br>(2)设定父元素position：relative，子元素absolute</p>
-<pre><code>.center {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    margin-left: center的width; 
-    //或transform: translate(-50%, 0);
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin-left</span>: center的width; </div><div class="line">    //或transform: translate(-50%, 0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>没有float：center，我们可以用伪元素实现一个图片居中，两边段落环绕的效果，具体看<a href="https://www.zybuluo.com/mdeditor#691644" target="_blank" rel="external">https://www.zybuluo.com/mdeditor#691644</a></p>
 <h3 id="3-多个block元素"><a href="#3-多个block元素" class="headerlink" title="3.多个block元素"></a>3.多个block元素</h3><p>(1) 多个元素在一行显示，且居中，设要居中元素为display：inline-block(inline-block元素之间会有默认空隙，去除方法：)或设其父元素为flex布局</p>
 <pre><code>.parent {
