@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="HTTP协议简介HyperText Transfer Protocol 超文本传输协议HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。HTTP协议工作于客户端-服务端架构为上。浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求。Web">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:56:42.269Z">
+<meta property="og:updated_time" content="2017-08-17T02:01:27.528Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http协议">
 <meta name="twitter:description" content="HTTP协议简介HyperText Transfer Protocol 超文本传输协议HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。HTTP协议工作于客户端-服务端架构为上。浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求。Web">
@@ -463,24 +463,7 @@
 <blockquote>
 <p>Post请求则作为http消息的实际内容发送给web服务器，数据放置在HTML Header内提交，Post没有限制提交的数据。<br>Post比Get安全，当数据是中文或者不敏感的数据，则用get，因为使用get，参数会显示在地址，对于敏感数据和不是中文字符的数据，则用post;<br>POST可能修改服务器上的资源的请求，在服务器端，用Post方式提交的数据只能用Request.Form来获取</p>
 </blockquote>
-<pre><code>**GET请求**
-GET /books/?sex=man&amp;name=Professional HTTP/1.1
-Host: www.wrox.com
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)
-Gecko/20050225 Firefox/1.0.1
-Connection: Keep-Alive
-注意最后一行是空行
-
-**POST请求**
-POST / HTTP/1.1
-Host: www.wrox.com
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)
-Gecko/20050225 Firefox/1.0.1
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 40
-Connection: Keep-Alive
-
-name=Professional%20Ajax&amp;publisher=Wiley
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">**GET请求**</div><div class="line">GET /books/?sex=man&amp;name=Professional HTTP/1.1</div><div class="line">Host: www.wrox.com</div><div class="line">User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)</div><div class="line">Gecko/20050225 Firefox/1.0.1</div><div class="line">Connection: Keep-Alive</div><div class="line">注意最后一行是空行</div><div class="line"></div><div class="line">**POST请求**</div><div class="line">POST / HTTP/1.1</div><div class="line">Host: www.wrox.com</div><div class="line">User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)</div><div class="line">Gecko/20050225 Firefox/1.0.1</div><div class="line">Content-Type: application/x-www-form-urlencoded</div><div class="line">Content-Length: 40</div><div class="line">Connection: Keep-Alive</div><div class="line"></div><div class="line">name=Professional%20Ajax&amp;publisher=Wiley</div></pre></td></tr></table></figure>
 </code></pre><p>参考：<a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a></p>
 
       
@@ -512,8 +495,8 @@ name=Professional%20Ajax&amp;publisher=Wiley
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/22/css transition/" rel="next" title="css3 transition">
-                <i class="fa fa-chevron-left"></i> css3 transition
+              <a href="/2017/05/24/css animation/" rel="next" title="css animation">
+                <i class="fa fa-chevron-left"></i> css animation
               </a>
             
           </div>
@@ -522,8 +505,8 @@ name=Professional%20Ajax&amp;publisher=Wiley
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/20/react 子组件使用props(一）/" rel="prev" title="react子组件使用props（一）">
-                react子组件使用props（一） <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/05/js模块化小结/" rel="prev" title="js 模块化小结">
+                js 模块化小结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -608,7 +591,7 @@ name=Professional%20Ajax&amp;publisher=Wiley
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -630,7 +613,7 @@ name=Professional%20Ajax&amp;publisher=Wiley
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

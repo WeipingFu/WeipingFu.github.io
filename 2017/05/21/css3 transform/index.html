@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="转换（transform）通过 CSS3 转换，我们能够对元素进行移动、缩放、转动、拉长或拉伸。transform：[transform-functions] 2d转换transform方法包括：  translate() - 移位 rotate() - 旋转 scale() - 放大或缩小 skew() - 偏斜 matrix() - 综合变换  1. translate通过 translate">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:47:38.761Z">
+<meta property="og:updated_time" content="2017-08-17T02:04:54.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css3 transform">
 <meta name="twitter:description" content="转换（transform）通过 CSS3 转换，我们能够对元素进行移动、缩放、转动、拉长或拉伸。transform：[transform-functions] 2d转换transform方法包括：  translate() - 移位 rotate() - 旋转 scale() - 放大或缩小 skew() - 偏斜 matrix() - 综合变换  1. translate通过 translate">
@@ -442,22 +442,10 @@
 <li>matrix() - 综合变换</li>
 </ul>
 <h4 id="1-translate"><a href="#1-translate" class="headerlink" title="1. translate"></a>1. translate</h4><p>通过 translate() 方法，根据给定的 left（x 坐标） 和 top（y 坐标） 位置参数，元素从其当前位置移动。<br>值 translate(50px,100px) 把元素从左侧移动 50 像素，从顶端移动 100 像素。<strong>值 translate(50px) 相当于 translateX(50px)</strong><br>兼容写法：</p>
-<pre><code>div {
-    transform: translate(50px,100px);
-    -ms-transform: translate(50px,100px);      //IE 9 
-    -webkit-transform: translate(50px,100px); //Safari and Chrome
-    -o-transform: translate(50px,100px);      //Opera 
-    -moz-transform: translate(50px,100px);      //Firefox
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(50px,100px);</div><div class="line">    -ms-transform: translate(50px,100px);	  //IE 9 </div><div class="line">    -webkit-transform: translate(50px,100px); //Safari and Chrome</div><div class="line">    -o-transform: translate(50px,100px);	  //Opera </div><div class="line">    -moz-transform: translate(50px,100px);	  //Firefox</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>同时有 translateX() 方法和 translateY() 方法</p>
 <h4 id="2-rotate"><a href="#2-rotate" class="headerlink" title="2. rotate"></a>2. rotate</h4><p>通过 rotate() 方法，元素顺时针旋转给定的角度。允许负值，元素将逆时针旋转。<br>值 rotate(30deg) 把元素顺时针旋转 30 度。<strong>相当于rotateZ(30deg)。</strong><br>兼容写法：</p>
-<pre><code>div {
-    transform: rotate(30deg);
-    -ms-transform: rotate(30deg);      //IE 9 
-    -webkit-transform: rotate(30deg); //Safari and Chrome
-    -o-transform: rotate(30deg);      //Opera 
-    -moz-transform: rotate(30deg);      //Firefox
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">rotate</span>(30deg);</div><div class="line">    -ms-transform: rotate(30deg);	  //IE 9 </div><div class="line">    -webkit-transform: rotate(30deg); //Safari and Chrome</div><div class="line">    -o-transform: rotate(30deg);	  //Opera </div><div class="line">    -moz-transform: rotate(30deg);	  //Firefox</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h4 id="3-scale"><a href="#3-scale" class="headerlink" title="3. scale"></a>3. scale</h4><p>通过 scale() 方法，根据给定的宽度（X 轴）和高度（Y 轴）参数，元素的尺寸会增加或减少。尺寸是number类型，可以是小数。<br><strong>值 scale(2) 把宽高都扩大2倍</strong>； scale(2,4) 把宽度转换为原始尺寸的 2 倍，把高度转换为原始高度的 4 倍。<br>兼容写法同上，transform 后的 function改成 scale(2, 4) 即可。<br>同时有 scaleX() 方法和 scaleY() 方法</p>
 <h4 id="4-skew"><a href="#4-skew" class="headerlink" title="4. skew"></a>4. skew</h4><p>通过 skew() 方法，根据给定的水平线（X 轴）和垂直线（Y 轴）参数，元素偏斜／翻转给定的角度。<br>值 skew(30deg,20deg) 围绕 X 轴把元素翻转 30 度，围绕 Y 轴翻转 20 度。<strong>值 skew(30deg) 相当于 skewX(30deg) 围绕 X 轴把元素翻转 30 度。</strong><br>同时有 skewX() 方法和 skewY() 方法</p>
 <h4 id="5-matrix"><a href="#5-matrix" class="headerlink" title="5. matrix"></a>5. matrix</h4><p>matrix() 方法把所有 2D 转换方法组合在一起。<br>matrix() 方法需要六个参数，包含数学函数，允许旋转、缩放、移动以及倾斜元素。<br>matrix方法是根据一个3<em>3的矩阵和另一个3</em>1矩阵相乘来实现图形变换的，上述提到过的translate、rotate、scale、skew方法都可以转换成matrix，其实现原理都是由matrix而来。<br>matrix(a, b, c, d, tx, ty)六个参数对应的矩阵如下：</p>
@@ -471,8 +459,7 @@
 </code></pre><p>故等同于transform：translate(30px, 30px), 要实现translate效果只需改变matrix的后两位参数tx、ty的值</p>
 <p><strong>scale:</strong><br>缩放同translate类似也只需改变matrix的两个参数，即matrix(1, 0, 0, 1, tx, ty)中两个1所在位置的参数，其中前者是横向缩放比例，后者是纵向缩放比例<br>matrix(sx, 0, 0, sy, 0, 0)等同于scale(sx, sy)</p>
 <p><strong>rotate:</strong><br>假设是rotate(θ), matrix(cosθ, sinθ, -sinθ, cosθ, 0, 0), 结合矩阵公式，可以算出中心点应该在的x、y位置</p>
-<pre><code>x&apos; = x*cosθ-y*sinθ+0 = x*cosθ-y*sinθ
-y&apos; = x*sinθ+y*cosθ+0 = x*sinθ+y*cosθ
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x&apos; = x*cosθ-y*sinθ+0 = x*cosθ-y*sinθ</div><div class="line">y&apos; = x*sinθ+y*cosθ+0 = x*sinθ+y*cosθ</div></pre></td></tr></table></figure>
 </code></pre><p><strong>skew：</strong><br>skew(θx, θy) 等同于 matrix(1, tan(θy), tan(θx), 1, 0, 0)</p>
 <p>用matrix可以实现以上方法不能实现的更复杂的变换，如镜像变换，假设我们要根据y=kx进行镜像变换（其中k是斜率），那么matrix函数应该这样写：</p>
 <pre><code>matrix((1-k*k) / (1+k*k), 2k / (1 + k*k), 2k / (1 + k*k), (k*k - 1) / (1+k*k), 0, 0)
@@ -490,15 +477,7 @@ y&apos; = x*sinθ+y*cosθ+0 = x*sinθ+y*cosθ
 <h4 id="4-matrix"><a href="#4-matrix" class="headerlink" title="4. matrix"></a>4. matrix</h4><p>matrix3d是综合上述的方法，它有16个参数，从而构成一个4*4的矩阵。</p>
 <h4 id="5-其他属性"><a href="#5-其他属性" class="headerlink" title="5. 其他属性"></a>5. 其他属性</h4><p><strong>（1）transform-style</strong><br>transform-style属性也是3D效果中经常使用的，其两个参数，flat|preserve-3d. 前者flat为默认值，表示平面的；后者preserve-3d表示3D透视。<br><strong>（2）backface-visibility</strong><br>在现实世界中，我们无法穿过物体A看到其后面的物体B或C或D；但是，在CSS3的3D世界中，默认情况下，我们是可以看到背后的元素。<br>因此，为了切合实际，我们常常会设置backface-visibility：hidden，使后面元素不可见。</p>
 <h4 id="6-实际应用"><a href="#6-实际应用" class="headerlink" title="6. 实际应用"></a>6. 实际应用</h4><p><strong>图片的旋转木马效果</strong><br>因为要正好绕成一个圈，因此，图片rotateY值正好0~360等分，于是，如果有9张图片，则每个图片的旋转角度累加40(360 / 9 = 40)度即可</p>
-<pre><code>img:nth-child(1) { transform: rotateY(   0deg ); }
-img:nth-child(2) { transform: rotateY(  40deg ); }
-img:nth-child(3) { transform: rotateY(  80deg ); }
-img:nth-child(4) { transform: rotateY( 120deg ); }
-img:nth-child(5) { transform: rotateY( 160deg ); }
-img:nth-child(6) { transform: rotateY( 200deg ); }
-img:nth-child(7) { transform: rotateY( 240deg ); }
-img:nth-child(8) { transform: rotateY( 280deg ); }
-img:nth-child(9) { transform: rotateY( 320deg ); }
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(1)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>(   0deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(2)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>(  40deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(3)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>(  80deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(4)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>( 120deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(5)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>( 160deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(6)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>( 200deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(7)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>( 240deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(8)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>( 280deg ); &#125;</div><div class="line"><span class="selector-tag">img</span><span class="selector-pseudo">:nth-child(9)</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotateY</span>( 320deg ); &#125;</div></pre></td></tr></table></figure>
 </code></pre><p>这样以后，9张图的角度虽然不一样，但是它们都站在同一个点上，早就挤作一团。9张图分别面朝东南西北等共9个不同方位，只要将它们都向前移动4~5步（即使用translateZ），它们之间的空间就会拉开了，呈现出圆形。<br>translateZ方法的参数通过计算得出，假设上述每个img的宽度都为178px，距离r的值则为：</p>
 <pre><code>r = （128 / 2) / Math.tan((40 / 2) / 180 * Math.PI) ≈ 175.8
 </code></pre><p>为了好看，图片之间可以留了点间距，则使用的translateZ的值为175.8 + 20 = 195.8<br>最后只要写js代码，每次点击让容器每次沿y轴旋转40度就可以了。</p>
@@ -544,8 +523,8 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/21/有关session、cookie、jwt/" rel="prev" title="有关session、cookie和jwt验证">
-                有关session、cookie和jwt验证 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/21/网络-体系结构及TCP-IP/" rel="prev" title="网络体系结构及TCP/TP协议">
+                网络体系结构及TCP/TP协议 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -630,7 +609,7 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -652,7 +631,7 @@ img:nth-child(9) { transform: rotateY( 320deg ); }
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

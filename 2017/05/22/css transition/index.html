@@ -98,19 +98,19 @@
 
 
 
-<meta name="description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： /* 应用于">
+<meta name="description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： 123456">
 <meta name="keywords" content="css,css3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css3 transition">
 <meta property="og:url" content="http://yoursite.com/2017/05/22/css transition/index.html">
 <meta property="og:site_name" content="fwp个人博客">
-<meta property="og:description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： /* 应用于">
+<meta property="og:description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： 123456">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://i.imgur.com/esac958.png">
-<meta property="og:updated_time" content="2017-08-06T12:17:25.966Z">
+<meta property="og:updated_time" content="2017-08-17T01:46:09.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css3 transition">
-<meta name="twitter:description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： /* 应用于">
+<meta name="twitter:description" content="transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。下面是一些示例： 123456">
 <meta name="twitter:image" content="http://i.imgur.com/esac958.png">
 
 
@@ -435,21 +435,7 @@
 
       
         <p>transition允许我们当元素从一种样式变换为另一种样式时，为元素添加过渡动画。<br>transition这个属性其实是 transition-property（变换的属性）, transition-duration（变换延续时间）, transition-timing-function（速率变化函数）, 和 transition-delay（变换延迟时间）的缩写属性。<br>下面是一些示例：</p>
-<pre><code>/* 应用于1个属性上 */
-/* property name | duration */
-transition: margin-left 4s;
-
-/* property name | duration | delay */
-transition: margin-left 4s 1s;
-
-/* property name | duration | timing function | delay */
-transition: margin-left 4s ease-in-out 1s;
-
-/* 应用于2个属性上 */
-transition: margin-left 4s, color 1s;
-
-/* 应用于所有改变了的属性上 */
-transition: all 0.5s ease-out;
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 应用于1个属性上 */</span></div><div class="line"><span class="comment">/* property name | duration */</span></div><div class="line"><span class="selector-tag">transition</span>: <span class="selector-tag">margin-left</span> 4<span class="selector-tag">s</span>;</div><div class="line"></div><div class="line"><span class="comment">/* property name | duration | delay */</span></div><div class="line"><span class="selector-tag">transition</span>: <span class="selector-tag">margin-left</span> 4<span class="selector-tag">s</span> 1<span class="selector-tag">s</span>;</div><div class="line"></div><div class="line"><span class="comment">/* property name | duration | timing function | delay */</span></div><div class="line"><span class="selector-tag">transition</span>: <span class="selector-tag">margin-left</span> 4<span class="selector-tag">s</span> <span class="selector-tag">ease-in-out</span> 1<span class="selector-tag">s</span>;</div><div class="line"></div><div class="line"><span class="comment">/* 应用于2个属性上 */</span></div><div class="line"><span class="selector-tag">transition</span>: <span class="selector-tag">margin-left</span> 4<span class="selector-tag">s</span>, <span class="selector-tag">color</span> 1<span class="selector-tag">s</span>;</div><div class="line"></div><div class="line"><span class="comment">/* 应用于所有改变了的属性上 */</span></div><div class="line"><span class="selector-tag">transition</span>: <span class="selector-tag">all</span> 0<span class="selector-class">.5s</span> <span class="selector-tag">ease-out</span>;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="transition-property（过渡属性）"><a href="#transition-property（过渡属性）" class="headerlink" title="transition-property（过渡属性）"></a>transition-property（过渡属性）</h3><ul>
 <li>可以单独指定元素哪些属性改变时执行过渡（transition），可以触发浏览器reflow或repaint的属性那些CSS属性可以应用动画，可参见：<a href="https://developer.mozilla.org/zh-CN/docs/CSS/CSS_animated_properties" target="_blank" rel="external">mdn给出的可用属性</a>这里列出所有的CSS属性，如果可以做动画，那么会说明是如何设置。</li>
 <li>可以指定为all，元素任何可过渡（transition）属性值变化时都将执行过渡（transition）效果。</li>
@@ -468,25 +454,7 @@ transition: all 0.5s ease-out;
 </ol>
 <h3 id="transition-delay（过渡延迟函数）"><a href="#transition-delay（过渡延迟函数）" class="headerlink" title="transition-delay（过渡延迟函数）"></a>transition-delay（过渡延迟函数）</h3><p>指定一个动画开始执行的时间，即当改变元素属性值后多长时间开始执行“转换效果”，初始默认值为0</p>
 <h3 id="其他情况：当属性值列表长度不一致时"><a href="#其他情况：当属性值列表长度不一致时" class="headerlink" title="其他情况：当属性值列表长度不一致时"></a>其他情况：当属性值列表长度不一致时</h3><p>以 transition-property 的值列表长度为标准，如果某个属性值列表长度短于它的，则重复值以长度一致， 例如:</p>
-<pre><code>div {
-    transition-property: opacity, left, top, height;
-    transition-duration: 3s, 5s;
-}
-等同于
-div {
-    transition-property: opacity, left, top, height;
-    transition-duration: 3s, 5s, 3s, 5s;
-}
-</code></pre><p>如果某个属性的值列表长于 transition-property 的，将被截短，例如：</p>
-<pre><code>div {
-    transition-property: opacity, left;
-    transition-duration: 3s, 5s, 2s, 1s;
-}
-等同于
-div {
-    transition-property: opacity, left;
-    transition-duration: 3s, 5s;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">    <span class="selector-tag">div</span> &#123;</div><div class="line">        <span class="attribute">transition-property</span>: opacity, left, top, height;</div><div class="line">        <span class="attribute">transition-duration</span>: <span class="number">3s</span>, <span class="number">5s</span>;</div><div class="line">    &#125;</div><div class="line">    等同于</div><div class="line">    <span class="selector-tag">div</span> &#123;</div><div class="line">        <span class="attribute">transition-property</span>: opacity, left, top, height;</div><div class="line">        <span class="attribute">transition-duration</span>: <span class="number">3s</span>, <span class="number">5s</span>, <span class="number">3s</span>, <span class="number">5s</span>;</div><div class="line">    &#125;</div><div class="line">	```    </div><div class="line"></div><div class="line">如果某个属性的值列表长于 <span class="selector-tag">transition-property</span> 的，将被截短，例如：</div><div class="line"></div><div class="line">	```<span class="selector-tag">css</span></div><div class="line">    <span class="selector-tag">div</span> &#123;</div><div class="line">        <span class="attribute">transition-property</span>: opacity, left;</div><div class="line">        <span class="attribute">transition-duration</span>: <span class="number">3s</span>, <span class="number">5s</span>, <span class="number">2s</span>, <span class="number">1s</span>;</div><div class="line">    &#125;</div><div class="line">    等同于</div><div class="line">    <span class="selector-tag">div</span> &#123;</div><div class="line">        <span class="attribute">transition-property</span>: opacity, left;</div><div class="line">        <span class="attribute">transition-duration</span>: <span class="number">3s</span>, <span class="number">5s</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="执行效果触发"><a href="#执行效果触发" class="headerlink" title="执行效果触发"></a>执行效果触发</h3><h4 id="1-通过css伪类"><a href="#1-通过css伪类" class="headerlink" title="1. 通过css伪类"></a>1. 通过css伪类</h4><p>CSS中伪类执行动画包括：</p>
 <p><img src="http://i.imgur.com/esac958.png" alt=""></p>
 <h4 id="2-通过js修改样式或追加删除样式"><a href="#2-通过js修改样式或追加删除样式" class="headerlink" title="2. 通过js修改样式或追加删除样式"></a>2. 通过js修改样式或追加删除样式</h4><p>一般是鼠标事件操作和定时操作（window.setTimeout()，window.setInterval()</p>
@@ -540,8 +508,8 @@ div {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/21/网络-体系结构及TCP-IP/" rel="next" title="网络体系结构及TCP/TP协议">
-                <i class="fa fa-chevron-left"></i> 网络体系结构及TCP/TP协议
+              <a href="/2017/05/21/有关session、cookie、jwt/" rel="next" title="有关session、cookie和jwt验证">
+                <i class="fa fa-chevron-left"></i> 有关session、cookie和jwt验证
               </a>
             
           </div>
@@ -550,8 +518,8 @@ div {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/25/网络-HTTP协议/" rel="prev" title="http协议">
-                http协议 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/24/css animation/" rel="prev" title="css animation">
+                css animation <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -636,7 +604,7 @@ div {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -658,7 +626,7 @@ div {
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

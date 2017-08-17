@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="CORS是一个W3C标准，全称是”跨域资源共享”（Cross-origin resource sharing）。它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。CORS需要浏览器和服务器的同时支持，目前，所有浏览器都支持该功能，IE浏览器不能低于IE10。CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T10:06:44.326Z">
+<meta property="og:updated_time" content="2017-08-17T01:57:30.600Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨域资源共享CORS">
 <meta name="twitter:description" content="CORS是一个W3C标准，全称是”跨域资源共享”（Cross-origin resource sharing）。它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。CORS需要浏览器和服务器的同时支持，目前，所有浏览器都支持该功能，IE浏览器不能低于IE10。CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就">
@@ -441,21 +441,16 @@
 <ul>
 <li>如果Origin指定的源，不在许可范围内，服务器会返回一个正常的HTTP回应。浏览器发现，这个回应的头信息没有包含<strong>Access-Control-Allow-Origin</strong>字段，就知道出错了，从而抛出一个错误。注意，这种错误无法通过状态码识别，因为HTTP回应的状态码有可能是200。</li>
 <li><p>如果Origin指定的域名在许可范围内，服务器返回的响应，会多出几个头信息字段。</p>
-<p>  Access-Control-Allow-Origin: <a href="http://api.bob.com" target="_blank" rel="external">http://api.bob.com</a><br>  Access-Control-Allow-Credentials: true<br>  Access-Control-Expose-Headers: FooBar<br>  Content-Type: text/html; charset=utf-8</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Access-Control-Allow-Origin: http://api.bob.com</div><div class="line">Access-Control-Allow-Credentials: true</div><div class="line">Access-Control-Expose-Headers: FooBar</div><div class="line">Content-Type: text/html; charset=utf-8</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <p><strong>1）Access-Control-Allow-Origin</strong><br>该字段是必须的。它的值要么是请求时Origin字段的值，要么是一个<em>，表示接受任意域名的请求。<br><strong>2）Access-Control-Allow-Credentials</strong><br>该字段可选。它的值是一个布尔值，表示是否允许发送Cookie。<br>默认情况下，Cookie不包括在CORS请求之中。设为true，即表示服务器明确许可，Cookie可以包含在请求中，一起发给服务器。这个值也只能设为true，如果服务器不要浏览器发送Cookie，删除该字段即可。<br><strong>3）Access-Control-Expose-Headers</strong><br>该字段可选。CORS请求时，XHR对象的getResponseHeader()方法只能拿到6个基本字段：Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma。如果想拿到其他字段，就必须在Access-Control-Expose-Headers里面指定。上面的例子指定，getResponseHeader(‘FooBar’)可以返回FooBar字段的值。<br><em>*使用cookie</em></em><br>浏览器要向服务器端上传cookie，不仅服务器端的Access-Control-Allow-Credentials值要设置为true，开发者必须在AJAX请求中设置withCredentials属性为true。</p>
-<pre><code>var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">xhr.withCredentials = <span class="literal">true</span>;</div></pre></td></tr></table></figure>
 </code></pre><p>如果省略withCredentials设置，有的浏览器还是会一起发送Cookie。这时，可以显式关闭withCredentials，设置其值为false。<br>如果要发送Cookie，Access-Control-Allow-Origin就不能设为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的document.cookie也无法读取服务器域名下的Cookie。</p>
 <h3 id="2-非简单请求"><a href="#2-非简单请求" class="headerlink" title="2. 非简单请求"></a>2. 非简单请求</h3><p>非简单请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json的请求。<br>非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为”预检”请求（preflight）。</p>
 <h4 id="预检请求"><a href="#预检请求" class="headerlink" title="预检请求"></a>预检请求</h4><p>浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错。<br>浏览器会自动判断请求是否为简单请求，若为非简单请求，浏览器自动发出“预检”请求。<br>“预检”请求用的请求方法是OPTIONS，表示这个请求是用来询问的。头信息里面，关键字段是Origin，表示请求来自哪个源。除了Origin字段，”预检”请求的头信息包括两个特殊字段。<br><strong>1）Access-Control-Request-Method</strong><br>该字段是必须的，用来列出浏览器的CORS请求会用到哪些HTTP方法，上例是PUT。<br><strong>2）Access-Control-Request-Headers</strong><br>该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段。</p>
 <h4 id="预检请求的回应"><a href="#预检请求的回应" class="headerlink" title="预检请求的回应"></a>预检请求的回应</h4><p>服务器收到”预检”请求以后，检查了Origin、Access-Control-Request-Method和Access-Control-Request-Headers字段以后，确认允许跨源请求，就可以做出回应。<br>如果浏览器否定了”预检”请求，会返回一个正常的HTTP回应，但是没有任何CORS相关的头信息字段<br>浏览器确认了“预检”请求，回应中会包括以下字段：</p>
-<pre><code>Access-Control-Allow-Origin: http://api.bob.com
-Access-Control-Allow-Methods: GET, POST, PUT
-Access-Control-Allow-Headers: X-Custom-Header
-Access-Control-Allow-Credentials: true
-Access-Control-Max-Age: 1728000
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Access-Control-Allow-Origin: http://api.bob.com</div><div class="line">Access-Control-Allow-Methods: GET, POST, PUT</div><div class="line">Access-Control-Allow-Headers: X-Custom-Header</div><div class="line">Access-Control-Allow-Credentials: true</div><div class="line">Access-Control-Max-Age: 1728000</div></pre></td></tr></table></figure>
 </code></pre><p><strong>1）Access-Control-Allow-Methods</strong><br>该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次”预检”请求。<br><strong>2）Access-Control-Allow-Headers</strong><br>如果浏览器请求包括Access-Control-Request-Headers字段，则Access-Control-Allow-Headers字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在”预检”中请求的字段。<br><strong>3）Access-Control-Allow-Credentials</strong><br>该字段与简单请求时的含义相同，即是否允许发送cookie。<br><strong>4）Access-Control-Max-Age</strong><br>该字段可选，用来指定本次预检请求的有效期，单位为秒。上面结果中，有效期是20天（1728000秒），即允许缓存该条回应1728000秒（即20天），在此期间，不用发出另一条预检请求。</p>
 <p><strong>“预检”通过后，正常请求</strong><br>一旦服务器通过了”预检”请求，以后每次浏览器正常的CORS请求，就都跟简单请求一样，会有一个Origin头信息字段。服务器的回应，也都会有一个Access-Control-Allow-Origin头信息字段。</p>
 <h3 id="3-与JSONP对比"><a href="#3-与JSONP对比" class="headerlink" title="3. 与JSONP对比"></a>3. 与JSONP对比</h3><p>CORS与JSONP的使用目的相同，但是比JSONP更强大。<br>JSONP只支持GET请求，CORS支持所有类型的HTTP请求。JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据。</p>
@@ -586,7 +581,7 @@ Access-Control-Max-Age: 1728000
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -608,7 +603,7 @@ Access-Control-Max-Age: 1728000
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

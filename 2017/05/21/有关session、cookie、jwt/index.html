@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="session指的是一个终端用户与交互系统进行通信的时间间隔（会话）例如：用户访问某个网站，从他登录到退出的时间段就是session由于http是是一种无状态的协议，故有这样一个情况：用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:55:26.445Z">
+<meta property="og:updated_time" content="2017-08-17T02:02:59.414Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="有关session、cookie和jwt验证">
 <meta name="twitter:description" content="session指的是一个终端用户与交互系统进行通信的时间间隔（会话）例如：用户访问某个网站，从他登录到退出的时间段就是session由于http是是一种无状态的协议，故有这样一个情况：用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用">
@@ -443,56 +443,24 @@
 <h4 id="3-基于session验证存在的问题"><a href="#3-基于session验证存在的问题" class="headerlink" title="3. 基于session验证存在的问题"></a>3. 基于session验证存在的问题</h4><p><strong>1）存储:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存或文件、数据库中，而随着认证用户的增多，服务端的开销会明显增大。<br><strong>2）扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在特定的这台服务器上,才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡器的能力。这也限制了应用的扩展能力。<br><strong>3）CSRF:</strong> 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</p>
 <h3 id="二-基于token的验证（jwt）"><a href="#二-基于token的验证（jwt）" class="headerlink" title="二 基于token的验证（jwt）"></a>二 基于token的验证（jwt）</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br><strong>基本过程</strong><br>1）用户使用用户名密码来请求服务器<br>2）服务器进行验证用户的信息<br>3）服务器通过验证发送给用户一个token<br>4）客户端存储token(可采用cookie或sessionStorage、localStorage)，并在每次请求时附送上这个token值<br>5）服务端验证token值，并返回数据<br>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略。</p>
 <h4 id="1-JWT的构成"><a href="#1-JWT的构成" class="headerlink" title="1. JWT的构成"></a>1. JWT的构成</h4><p>JWT是由三段信息构成的，将这三段信息用.链接一起就构成了Jwt字符串。<br>第一部分称为头部（header), 第二部分称为载荷（payload), 第三部分是签证（signature).</p>
-<p> // 1. Headers<br> // 包括类别（typ）、加密算法（alg）；<br> {</p>
-<pre><code>&quot;alg&quot;: &quot;HS256&quot;,
-&quot;typ&quot;: &quot;JWT&quot;
-</code></pre><p> }<br> // 2. Claims<br> // 包括需要传递的用户信息；<br> {</p>
-<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
-&quot;name&quot;: &quot;John Doe&quot;,
-&quot;admin&quot;: true
-</code></pre><p> }<br> // 3. Signature<br> // 根据alg算法与私有秘钥进行加密得到的签名字串；<br> // 这一段是最重要的敏感信息，只能在服务端解密；<br> HMACSHA256(</p>
-<pre><code>base64UrlEncode(header) + &quot;.&quot; +
-base64UrlEncode(payload),
-SECREATE_KEY
-</code></pre><p> )<br><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
-<p> {</p>
-<pre><code>&apos;typ&apos;: &apos;JWT&apos;,
-&apos;alg&apos;: &apos;HS256&apos;
-</code></pre><p> }<br>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
-<p> eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9<br><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
-<p> {</p>
-<pre><code>&quot;sub&quot;: &quot;1234567890&quot;,
-&quot;name&quot;: &quot;John Doe&quot;,
-&quot;admin&quot;: true
-</code></pre><p> }<br>然后将其进行base64加密，得到Jwt的第二部分。</p>
-<p> eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9<br><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
-<p> var encodedString = base64UrlEncode(header) + ‘.’ + base64UrlEncode(payload);<br> var signature = HMACSHA256(encodedString, ‘secret’); // TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">// 1. Headers</div><div class="line">// 包括类别（typ）、加密算法（alg）；</div><div class="line">&#123;</div><div class="line">    &quot;alg&quot;: &quot;HS256&quot;,</div><div class="line">    &quot;typ&quot;: &quot;JWT&quot;</div><div class="line">&#125;</div><div class="line">// 2. Claims</div><div class="line">// 包括需要传递的用户信息；</div><div class="line">&#123;</div><div class="line">    &quot;sub&quot;: &quot;1234567890&quot;,</div><div class="line">    &quot;name&quot;: &quot;John Doe&quot;,</div><div class="line">    &quot;admin&quot;: true</div><div class="line">&#125;</div><div class="line">// 3. Signature</div><div class="line">// 根据alg算法与私有秘钥进行加密得到的签名字串；</div><div class="line">// 这一段是最重要的敏感信息，只能在服务端解密；</div><div class="line">HMACSHA256(</div><div class="line">    base64UrlEncode(header) + &quot;.&quot; +</div><div class="line">    base64UrlEncode(payload),</div><div class="line">    SECREATE_KEY</div><div class="line">)</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
+<p><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &apos;typ&apos;: &apos;JWT&apos;,</div><div class="line">    &apos;alg&apos;: &apos;HS256&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><p>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
+<pre><code>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
+</code></pre><p><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;sub&quot;: &quot;1234567890&quot;,</div><div class="line">    &quot;name&quot;: &quot;John Doe&quot;,</div><div class="line">    &quot;admin&quot;: true</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><p>然后将其进行base64加密，得到Jwt的第二部分。</p>
+<pre><code>eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
+</code></pre><p><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> encodedString = base64UrlEncode(header) + <span class="string">'.'</span> + base64UrlEncode(payload);</div><div class="line"><span class="keyword">var</span> signature = HMACSHA256(encodedString, <span class="string">'secret'</span>); <span class="comment">// TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span></div></pre></td></tr></table></figure>
+</code></pre><p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
 <h4 id="2-使用jwt"><a href="#2-使用jwt" class="headerlink" title="2. 使用jwt"></a>2. 使用jwt</h4><p>客户端发送请求，可以将token设为请求地址参数或请求body参数或在请求头部分设置Authorization字段（推荐）传给服务器：</p>
-<pre><code>fetch(&apos;api/user/1&apos;, {
-    headers: {
-        &apos;Authorization&apos;: &apos;Bearer &apos; + token
-    }
-})
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fetch(<span class="string">'api/user/1'</span>, &#123;</div><div class="line">    headers: &#123;</div><div class="line">        <span class="string">'Authorization'</span>: <span class="string">'Bearer '</span> + token</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 </code></pre><p>服务器端收到请求后，根据请求头部token的header部分的加密算法和plaload加上自己的secret生成第三部分内容。然后再与客户端发送过来的第三部分内容对比。<br><strong>express使用jwt</strong><br>服务器端在验证用户登录成功后，设置token，并返回给客户端：</p>
-<pre><code>var express = require(&apos;express&apos;);
-var jwt = require(&apos;jwt-simple&apos;);
-var app = express();
-app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);
-
-var expires = moment().add(&apos;days&apos;, 7).valueOf();
-var token = jwt.encode({
-    iss: user.id,
-    exp: expires
-}, app.get(&apos;jwtTokenSecret&apos;));
-
-res.json({
-    token : token,
-    expires: expires,
-    user: user.toJSON()
-});
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var express = require(&apos;express&apos;);</div><div class="line">var jwt = require(&apos;jwt-simple&apos;);</div><div class="line">var app = express();</div><div class="line">app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);</div><div class="line"></div><div class="line">var expires = moment().add(&apos;days&apos;, 7).valueOf();</div><div class="line">var token = jwt.encode(&#123;</div><div class="line">    iss: user.id,</div><div class="line">    exp: expires</div><div class="line">&#125;, app.get(&apos;jwtTokenSecret&apos;));</div><div class="line"></div><div class="line">res.json(&#123;</div><div class="line">    token : token,</div><div class="line">    expires: expires,</div><div class="line">    user: user.toJSON()</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 </code></pre><p>jwt.encode()函数有2个参数。第一个就是一个需要编码的token对象，第二个是一个编码的密钥。Moment.js被用来设置token将在7天之后失效。最后通过res.json()方法返回这个JSON对象给客户端。<br>客户端接受到token后存储，待下次请求时将token传给服务器端验证。</p>
 <h4 id="3-jwt的优点和安全相关问题"><a href="#3-jwt的优点和安全相关问题" class="headerlink" title="3. jwt的优点和安全相关问题"></a>3. jwt的优点和安全相关问题</h4><p><strong>优点：</strong><br>1）因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。<br>2）因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。<br>3）便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。<br>4）它不需要在服务端保存会话信息, 所以它易于应用的扩展。<br><strong>安全相关注意事项：</strong><br>1）不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。<br>2）保护好secret私钥，该私钥非常重要。<br>3）如果可以，请使用https协议。<br>4）使用jwe，及rsa加密。<br><strong>可能发生的安全问题：</strong><br><strong>XSS：</strong> XSS是Web中最常见的一种漏洞，其主要原因是对用户输入信息不加过滤，导致用户（被误导）恶意输入的Js代码在访问该网页时被执行，而Js可以读取当前网站域名下保存的Cookie信息。<br>针对这种攻击，无论将jwt存储在Cookie还是localStorage中，信息都有可能被窃取，为了防止XSS攻击，需要对用户输入的所有信息进行过滤。<br><strong>XSRF：</strong>主要利用Cookie是按照域名存储，同时访问某域名时浏览器会自动携带该域名所保存的Cookie信息这一特征。如果执意要将JWT存储在Cookie中，服务端则需要额外验证请求来源，或者在提交表单中加入随机签名并在处理表单时进行验证。</p>
 <p>参考链接：</p>
@@ -531,8 +499,8 @@ res.json({
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/21/css3 transform/" rel="next" title="css3 transform">
-                <i class="fa fa-chevron-left"></i> css3 transform
+              <a href="/2017/05/21/网络-体系结构及TCP-IP/" rel="next" title="网络体系结构及TCP/TP协议">
+                <i class="fa fa-chevron-left"></i> 网络体系结构及TCP/TP协议
               </a>
             
           </div>
@@ -541,8 +509,8 @@ res.json({
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/21/网络-体系结构及TCP-IP/" rel="prev" title="网络体系结构及TCP/TP协议">
-                网络体系结构及TCP/TP协议 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/22/css transition/" rel="prev" title="css3 transition">
+                css3 transition <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -627,7 +595,7 @@ res.json({
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -649,7 +617,7 @@ res.json({
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

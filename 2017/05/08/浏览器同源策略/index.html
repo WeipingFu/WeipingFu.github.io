@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="一、含义最初的含义：A网页设置的cookie，B网页不能打开，除非这两个网页同源。（提交表单不受同源策略的限制）同源定义：  协议相同域名相同端口相同  非同源的限制：  Cookie、LocalStorage 和 IndexDB 无法读取DOM无法获得ajax无法发送（要跨域） 二、cookie对于cookie来说：两个网页一级域名相同，只是二级域名不同，浏览器允许通过设置document.do">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-17T01:33:59.429Z">
+<meta property="og:updated_time" content="2017-08-17T01:44:56.490Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器同源策略">
 <meta name="twitter:description" content="一、含义最初的含义：A网页设置的cookie，B网页不能打开，除非这两个网页同源。（提交表单不受同源策略的限制）同源定义：  协议相同域名相同端口相同  非同源的限制：  Cookie、LocalStorage 和 IndexDB 无法读取DOM无法获得ajax无法发送（要跨域） 二、cookie对于cookie来说：两个网页一级域名相同，只是二级域名不同，浏览器允许通过设置document.do">
@@ -441,139 +441,36 @@
 <p>Cookie、LocalStorage 和 IndexDB 无法读取<br>DOM无法获得<br>ajax无法发送（要跨域）</p>
 <h3 id="二、cookie"><a href="#二、cookie" class="headerlink" title="二、cookie"></a>二、cookie</h3><p>对于cookie来说：两个网页一级域名相同，只是二级域名不同，浏览器允许通过设置document.domain共享 Cookie。<br>举例来说，A网页是<a href="http://w1.example.com/a.html，B网页是http://w2.example.com/b.html，那么只要设置相同的document.domain，两个网页就可以共享Cookie。" target="_blank" rel="external">http://w1.example.com/a.html，B网页是http://w2.example.com/b.html，那么只要设置相同的document.domain，两个网页就可以共享Cookie。</a></p>
 </blockquote>
-<pre><code>document.domain = &apos;example.com&apos;;
-//A网页设置cookie
-document.cookie = &quot;test1=hello&quot;;
-//B网页读取cookie
-var allCookie = document.cookie;
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.domain = <span class="string">'example.com'</span>;</div><div class="line"><span class="comment">//A网页设置cookie</span></div><div class="line"><span class="built_in">document</span>.cookie = <span class="string">"test1=hello"</span>;</div><div class="line"><span class="comment">//B网页读取cookie</span></div><div class="line"><span class="keyword">var</span> allCookie = <span class="built_in">document</span>.cookie;</div></pre></td></tr></table></figure>
 </code></pre><p>服务器也可以在设置Cookie的时候，指定Cookie的所属域名为一级域名，这样二级域名和三级域名不用做任何设置，都可以读取这个Cookie。</p>
 <h3 id="三、iframe"><a href="#三、iframe" class="headerlink" title="三、iframe"></a>三、iframe</h3><p>如果两个网页不同源，就无法拿到对方的DOM。典型的例子是iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信。<br>如果两个窗口一级域名相同，只是二级域名不同，那么设置上一节介绍的document.domain属性，就可以规避同源政策，拿到DOM。<br>对于完全不同源的网站，存在一下3种方法：</p>
 <blockquote>
 <p>片段识别符（fragment identifier）<br>window.name<br>跨文档通信API（Cross-document messaging）</p>
 </blockquote>
 <h4 id="1-片段识别符"><a href="#1-片段识别符" class="headerlink" title="1. 片段识别符"></a>1. 片段识别符</h4><p>片段标识符（fragment identifier）指的是，URL的#号后面的部分，比如<a href="http://example.com/x.html#fragment的#fragment。如果只是改变片段标识符，页面不会重新刷新。" target="_blank" rel="external">http://example.com/x.html#fragment的#fragment。如果只是改变片段标识符，页面不会重新刷新。</a><br>父窗口可以把信息，写入子窗口的片段标识符，子窗口通过监听hashchange事件得到通知。</p>
-<pre><code>//父窗口
-var src = originURL + &apos;#&apos; + data;
-document.getElementById(&apos;myIFrame&apos;).src = src;
-//子窗口
-window.onhashchange = checkMessage;
-function checkMessage() {
-    var message = window.location.hash;
-// ...
-}
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//父窗口</span></div><div class="line"><span class="keyword">var</span> src = originURL + <span class="string">'#'</span> + data;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">'myIFrame'</span>).src = src;</div><div class="line"><span class="comment">//子窗口</span></div><div class="line"><span class="built_in">window</span>.onhashchange = checkMessage;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkMessage</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> message = <span class="built_in">window</span>.location.hash;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>同样的，子窗口也可以改变父窗口的片段标识符。</p>
-<pre><code>parent.location.href= target + &quot;#&quot; + hash;
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">parent.location.href= target + <span class="string">"#"</span> + hash;</div></pre></td></tr></table></figure>
 </code></pre><h4 id="2-window-name"><a href="#2-window-name" class="headerlink" title="2. window.name"></a>2. window.name</h4><p>浏览器窗口有window.name属性。这个属性的最大特点是，无论是否同源，只要在同一个窗口里，前一个网页设置了这个属性，后一个网页可以读取它。<br>父窗口先打开一个子窗口，载入一个不同源的网页，该网页将信息写入window.name属性，接着，子窗口跳回一个与主窗口同域的网址，然后，主窗口就可以读取子窗口的window.name了。</p>
-<pre><code>//子窗口设置window.name
-window.name = data;
-//子窗口跳到一个与父窗口同源的网站
-location = &apos;http://parent.url.com/xxx.html&apos;;
-//父窗口读取
-var data = document.getElementById(&apos;myFrame&apos;).contentWindow.name;
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//子窗口设置window.name</span></div><div class="line"><span class="built_in">window</span>.name = data;</div><div class="line"><span class="comment">//子窗口跳到一个与父窗口同源的网站</span></div><div class="line">location = <span class="string">'http://parent.url.com/xxx.html'</span>;</div><div class="line"><span class="comment">//父窗口读取</span></div><div class="line"><span class="keyword">var</span> data = <span class="built_in">document</span>.getElementById(<span class="string">'myFrame'</span>).contentWindow.name;</div></pre></td></tr></table></figure>
 </code></pre><p>这种方法的优点是，window.name容量很大，可以放置非常长的字符串；缺点是必须监听子窗口window.name属性的变化，影响网页性能。</p>
 <h4 id="3-window-postMessage"><a href="#3-window-postMessage" class="headerlink" title="3. window.postMessage"></a>3. window.postMessage</h4><p>HTML5为了解决同源策略问题，引入了一个全新的API：跨文档通信 API（Cross-document messaging）。<br>这个API为window对象新增了一个window.postMessage方法，允许跨窗口通信，不论这两个窗口是否同源。</p>
-<pre><code>otherWindow.postMessage(message, targetOrigin, [transfer]);
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">otherWindow.postMessage(message, targetOrigin, [transfer]);</div></pre></td></tr></table></figure>
 </code></pre><p>otherWindow：其他窗口的一个引用；message：将要发送到其他 window的数据；targetOrigin：通过窗口的origin属性来指定哪些窗口能接收到消息事件，其值可以是字符串”<em>“（表示无限制）或者一个URI；transfer（可选）：是一串和message 同时传递的 Transferable 对象。这些对象的所有权将被转移给消息的接收方，而发送一方将不再保有所有权。<br><em>*其他window可以监听派遣的message</em></em></p>
-<pre><code>window.addEventListener(&quot;message&quot;, receiveMessage, false);
-function receiveMessage(event)
-{
-// For Chrome, the origin property is in the event.originalEvent
-// object.
-    var origin = event.origin || event.originalEvent.origin;
-    if (origin !== &quot;http://example.org:8080&quot;)
-        return;
-
-    // ...
-}
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"message"</span>, receiveMessage, <span class="literal">false</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveMessage</span>(<span class="params">event</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line"><span class="comment">// For Chrome, the origin property is in the event.originalEvent</span></div><div class="line"><span class="comment">// object.</span></div><div class="line">    <span class="keyword">var</span> origin = event.origin || event.originalEvent.origin;</div><div class="line">    <span class="keyword">if</span> (origin !== <span class="string">"http://example.org:8080"</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>message事件的事件对象event，提供以下三个属性。<br>data：从其他 window 中传递过来的对象；origin：调用 postMessage 时消息发送方窗口的 origin；source：对发送消息的窗口对象的引用。<br><strong>示例</strong><br>A窗口：</p>
-<pre><code>/*
-* In window A&apos;s scripts, with A being on &lt;http://example.com:8080&gt;:
-*/
-var popup = window.open(...popup details...);
-// When the popup has fully loaded, if not blocked by a popup blocker:
-// This does nothing, assuming the window hasn&apos;t changed its location.
-
-popup.postMessage(&quot;The user is &apos;bob&apos; and the password is &apos;secret&apos;&quot;, &quot;https://secure.example.net&quot;);
-
-// This will successfully queue a message to be sent to the popup, assuming
-// the window hasn&apos;t changed its location.
-popup.postMessage(&quot;hello there!&quot;, &quot;http://example.org&quot;);
-
-function receiveMessage(event)
-{   
-// Do we trust the sender of this message?  (might be
-// different from what we originally opened, for example).
-    if (event.origin !== &quot;http://example.org&quot;)
-    return;
-    // event.source is popup
-    // event.data is &quot;hi there yourself!  the secret response is: rheeeeet!&quot;
-}
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">* In window A's scripts, with A being on &lt;http://example.com:8080&gt;:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">var</span> popup = <span class="built_in">window</span>.open(...popup details...);</div><div class="line"><span class="comment">// When the popup has fully loaded, if not blocked by a popup blocker:</span></div><div class="line"><span class="comment">// This does nothing, assuming the window hasn't changed its location.</span></div><div class="line"></div><div class="line">popup.postMessage(<span class="string">"The user is 'bob' and the password is 'secret'"</span>, <span class="string">"https://secure.example.net"</span>);</div><div class="line"></div><div class="line"><span class="comment">// This will successfully queue a message to be sent to the popup, assuming</span></div><div class="line"><span class="comment">// the window hasn't changed its location.</span></div><div class="line">popup.postMessage(<span class="string">"hello there!"</span>, <span class="string">"http://example.org"</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveMessage</span>(<span class="params">event</span>)</span></div><div class="line"><span class="function"></span>&#123;   </div><div class="line"><span class="comment">// Do we trust the sender of this message?  (might be</span></div><div class="line"><span class="comment">// different from what we originally opened, for example).</span></div><div class="line">    <span class="keyword">if</span> (event.origin !== <span class="string">"http://example.org"</span>)</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// event.source is popup</span></div><div class="line">    <span class="comment">// event.data is "hi there yourself!  the secret response is: rheeeeet!"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>另一个窗口：</p>
-<pre><code>/*
-* In the popup&apos;s scripts, running on &lt;http://example.org&gt;:
-*/
-
-// Called sometime after postMessage is called
-function receiveMessage(event)
-{
-    // Do we trust the sender of this message?
-    if (event.origin !== &quot;http://example.com:8080&quot;)
-    return;
-
-    // event.source is window.opener
-    // event.data is &quot;hello there!&quot;
-
-    // Assuming you&apos;ve verified the origin of the received message (which
-    // you must do in any case), a convenient idiom for replying to a
-    // message is to call postMessage on event.source and provide
-    // event.origin as the targetOrigin.
-    event.source.postMessage(&quot;hi there yourself! the secret response &quot; + &quot;is: rheeeeet!&quot;, event.origin);
-}
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">* In the popup's scripts, running on &lt;http://example.org&gt;:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="comment">// Called sometime after postMessage is called</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveMessage</span>(<span class="params">event</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">// Do we trust the sender of this message?</span></div><div class="line">    <span class="keyword">if</span> (event.origin !== <span class="string">"http://example.com:8080"</span>)</div><div class="line">    <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="comment">// event.source is window.opener</span></div><div class="line">    <span class="comment">// event.data is "hello there!"</span></div><div class="line"></div><div class="line">    <span class="comment">// Assuming you've verified the origin of the received message (which</span></div><div class="line">    <span class="comment">// you must do in any case), a convenient idiom for replying to a</span></div><div class="line">    <span class="comment">// message is to call postMessage on event.source and provide</span></div><div class="line">    <span class="comment">// event.origin as the targetOrigin.</span></div><div class="line">    event.source.postMessage(<span class="string">"hi there yourself! the secret response "</span> + <span class="string">"is: rheeeeet!"</span>, event.origin);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>安全问题：用于接收消息的任何事件监听器必须首先使用origin和source属性来检查消息的发送者的身份。</p>
 <h4 id="4-localStorage"><a href="#4-localStorage" class="headerlink" title="4. localStorage"></a>4. localStorage</h4><p>将接受到的message的data存入localStorage，同时可以将自己的localStorage作为信息发送出去。</p>
-<pre><code>//子窗口
-window.onmessage = function(e) {
-    if (e.origin !== &apos;http://bbb.com&apos;) return;
-    var payload = JSON.parse(e.data);
-    switch (payload.method) {
-        case &apos;set&apos;:
-            localStorage.setItem(payload.key, JSON.stringify(payload.data));
-            break;
-        case &apos;get&apos;:
-            var parent = window.parent;
-            var data = localStorage.getItem(payload.key);
-            parent.postMessage(data, &apos;http://aaa.com&apos;);
-            break;
-        case &apos;remove&apos;:
-            localStorage.removeItem(payload.key);
-            break;
-    }
-};
-
-//父窗口
-var win = document.getElementsByTagName(&apos;iframe&apos;)[0].contentWindow;
-var obj = { name: &apos;Jack&apos; };
-// 存入对象
-win.postMessage(JSON.stringify({key: &apos;storage&apos;, method: &apos;set&apos;, data: obj}), &apos;http://bbb.com&apos;);
-// 读取对象
-win.postMessage(JSON.stringify({key: &apos;storage&apos;, method: &quot;get&quot;}), &quot;*&quot;);
-window.onmessage = function(e) {
-    if (e.origin != &apos;http://aaa.com&apos;) return;
-    // &quot;Jack&quot;
-    console.log(JSON.parse(e.data).name);
-};
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//子窗口</span></div><div class="line"><span class="built_in">window</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (e.origin !== <span class="string">'http://bbb.com'</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">var</span> payload = <span class="built_in">JSON</span>.parse(e.data);</div><div class="line">    <span class="keyword">switch</span> (payload.method) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'set'</span>:</div><div class="line">            localStorage.setItem(payload.key, <span class="built_in">JSON</span>.stringify(payload.data));</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">'get'</span>:</div><div class="line">            <span class="keyword">var</span> parent = <span class="built_in">window</span>.parent;</div><div class="line">            <span class="keyword">var</span> data = localStorage.getItem(payload.key);</div><div class="line">            parent.postMessage(data, <span class="string">'http://aaa.com'</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">'remove'</span>:</div><div class="line">            localStorage.removeItem(payload.key);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//父窗口</span></div><div class="line"><span class="keyword">var</span> win = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'iframe'</span>)[<span class="number">0</span>].contentWindow;</div><div class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">name</span>: <span class="string">'Jack'</span> &#125;;</div><div class="line"><span class="comment">// 存入对象</span></div><div class="line">win.postMessage(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">key</span>: <span class="string">'storage'</span>, <span class="attr">method</span>: <span class="string">'set'</span>, <span class="attr">data</span>: obj&#125;), <span class="string">'http://bbb.com'</span>);</div><div class="line"><span class="comment">// 读取对象</span></div><div class="line">win.postMessage(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">key</span>: <span class="string">'storage'</span>, <span class="attr">method</span>: <span class="string">"get"</span>&#125;), <span class="string">"*"</span>);</div><div class="line"><span class="built_in">window</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (e.origin != <span class="string">'http://aaa.com'</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// "Jack"</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(e.data).name);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="四、Ajax"><a href="#四、Ajax" class="headerlink" title="四、Ajax"></a>四、Ajax</h3><p>同源政策规定，AJAX请求只能发给同源的网址，否则就报错。<br>除了架设服务器代理（浏览器请求同源服务器，再由后者请求外部服务），有三种方法规避这个限制。</p>
 <blockquote>
 <p>JSONP<br>WebSocket<br>CORS</p>
 </blockquote>
 <h4 id="1-JSONP"><a href="#1-JSONP" class="headerlink" title="1. JSONP"></a>1. JSONP</h4><p>与服务器端进行跨域通信的常用方法，只能应用于GET请求。<br><strong>基本思想</strong>：通过添加一个script文件请求数据，服务器将数据放置在一个回调函数中。</p>
-<pre><code>window.onload = function () {
-    addScriptTag(&apos;http://example.com/ip?callback=foo&apos;);
-}
-//定义foo函数
-function foo(data) {
-    console.log(&apos;Your public IP address is: &apos; + data.ip);
-};
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    addScriptTag(<span class="string">'http://example.com/ip?callback=foo'</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">//定义foo函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Your public IP address is: '</span> + data.ip);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 </code></pre><h4 id="2-WebSocket"><a href="#2-WebSocket" class="headerlink" title="2. WebSocket"></a>2. WebSocket</h4><p>WebSocket是一种通信协议，使用ws://（非加密）和wss://（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。<br>WebSocket请求的头信息中有个origin字段，该字段规定了请求的请求源，服务器端可以根据这个字段判断是否接受请求。</p>
 <h4 id="3-CORS"><a href="#3-CORS" class="headerlink" title="3. CORS"></a>3. CORS</h4><p>CORS是跨源资源分享（Cross-Origin Resource Sharing）的缩写。它是W3C标准，是跨源AJAX请求的根本解决方法。相比JSONP只能发GET请求，CORS允许任何类型的请求。</p>
 <p>参考：</p>
@@ -707,7 +604,7 @@ function foo(data) {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -729,7 +626,7 @@ function foo(data) {
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

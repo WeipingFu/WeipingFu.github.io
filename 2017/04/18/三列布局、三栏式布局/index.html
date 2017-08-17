@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="两侧定宽，中间自适应浮动1. 利用calc().left, .right {     float: left;     width: 100px; } .center {     float: left;     width: calc(100% - 200px); } 2. center外侧增加一层.left, .right {     float: left;     width: 100px">
+<meta name="description" content="两侧定宽，中间自适应浮动1. 利用calc()12345678.left, .right &amp;#123;    float: left;    width: 100px;&amp;#125;.center &amp;#123;    float: left;    width: calc(100% - 200px);&amp;#125; 2. center外侧增加一层12345678910111213   .left, .">
 <meta name="keywords" content="css,布局">
 <meta property="og:type" content="article">
 <meta property="og:title" content="三列布局、三栏式布局">
 <meta property="og:url" content="http://yoursite.com/2017/04/18/三列布局、三栏式布局/index.html">
 <meta property="og:site_name" content="fwp个人博客">
-<meta property="og:description" content="两侧定宽，中间自适应浮动1. 利用calc().left, .right {     float: left;     width: 100px; } .center {     float: left;     width: calc(100% - 200px); } 2. center外侧增加一层.left, .right {     float: left;     width: 100px">
+<meta property="og:description" content="两侧定宽，中间自适应浮动1. 利用calc()12345678.left, .right &amp;#123;    float: left;    width: 100px;&amp;#125;.center &amp;#123;    float: left;    width: calc(100% - 200px);&amp;#125; 2. center外侧增加一层12345678910111213   .left, .">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:27:41.985Z">
+<meta property="og:updated_time" content="2017-08-17T02:07:42.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="三列布局、三栏式布局">
-<meta name="twitter:description" content="两侧定宽，中间自适应浮动1. 利用calc().left, .right {     float: left;     width: 100px; } .center {     float: left;     width: calc(100% - 200px); } 2. center外侧增加一层.left, .right {     float: left;     width: 100px">
+<meta name="twitter:description" content="两侧定宽，中间自适应浮动1. 利用calc()12345678.left, .right &amp;#123;    float: left;    width: 100px;&amp;#125;.center &amp;#123;    float: left;    width: calc(100% - 200px);&amp;#125; 2. center外侧增加一层12345678910111213   .left, .">
 
 
 
@@ -432,213 +432,25 @@
       
 
       
-        <h2 id="两侧定宽，中间自适应"><a href="#两侧定宽，中间自适应" class="headerlink" title="两侧定宽，中间自适应"></a>两侧定宽，中间自适应</h2><h3 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h3><h4 id="1-利用calc"><a href="#1-利用calc" class="headerlink" title="1. 利用calc()"></a>1. 利用calc()</h4><pre><code>.left, .right {
-    float: left;
-    width: 100px;
-}
-.center {
-    float: left;
-    width: calc(100% - 200px);
-}
-</code></pre><h4 id="2-center外侧增加一层"><a href="#2-center外侧增加一层" class="headerlink" title="2. center外侧增加一层"></a>2. center外侧增加一层</h4><pre><code>.left, .right {
-    float: left;
-    width: 100px;
-}
-.center {
-    margin: 0 100px;
-    background: #00f;
-}
-.center-wraper {
-    float: left;
-    width: 100%;
-    margin: 0 -100px;
-}
-</code></pre><h3 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h3><pre><code>.parent {
-    position: relative;
-    height: 100px;
-}
-.left, .right {
-    position: absolute;
-    width: 100px;
-}
-.left {
-    left: 0;
-}
-.right {
-    right: 0;
-}
-.center {
-    position: absolute;
-    left: 100px;
-    right: 100px;
-}
-</code></pre><h3 id="inline-block"><a href="#inline-block" class="headerlink" title="inline-block"></a>inline-block</h3><h4 id="1-利用calc-1"><a href="#1-利用calc-1" class="headerlink" title="1. 利用calc()"></a>1. 利用calc()</h4><pre><code>.parent {
-    font-size: 0;
-}
-.left,.right,.center {
-    display:inline-block; 
-    vertical-align: top;
-    font-size: 16px;
-}
-.left, .right {
-    width: 100px;
-}
-.center {
-    width: calc(100% - 200px);
-}
-</code></pre><h4 id="2-center外侧加一层"><a href="#2-center外侧加一层" class="headerlink" title="2. center外侧加一层"></a>2. center外侧加一层</h4><pre><code>.parent {
-    font-size: 0;
-}
-.left, .right, .center-wraper {
-    display:inline-block; 
-    vertical-align: top;
-    font-size: 16px;
-}
-.left, .right {
-    width: 100px;
-}
-.center-wraper {
-    width: 100%; 
-    margin: 0 -100px;
-}
-.center {
-    margin:0 100px; 
-    background: #00f;
-}
-</code></pre><h3 id="table"><a href="#table" class="headerlink" title="table"></a>table</h3><pre><code>.parent {
-    display: table; 
-    width: 100%;
-    table-layout: fixed;
-}
-.left, .right, .center {
-    display:table-cell;
-}
-.left, .right {
-    width: 100px;
-}
-</code></pre><h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><pre><code>.parent {
-    display: flex; 
-}
-.left, .right {
-    width: 100px;
-}
-.center {
-    flex: 1;
-}
-</code></pre><h3 id="grid"><a href="#grid" class="headerlink" title="grid"></a>grid</h3><pre><code>.parent {
-    display:grid;
-    grid-template-columns:100px 1fr 100px; 
-}
+        <h2 id="两侧定宽，中间自适应"><a href="#两侧定宽，中间自适应" class="headerlink" title="两侧定宽，中间自适应"></a>两侧定宽，中间自适应</h2><h3 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h3><h4 id="1-利用calc"><a href="#1-利用calc" class="headerlink" title="1. 利用calc()"></a>1. 利用calc()</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="built_in">calc</span>(100% - 200px);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h4 id="2-center外侧增加一层"><a href="#2-center外侧增加一层" class="headerlink" title="2. center外侧增加一层"></a>2. center外侧增加一层</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">float</span>: left;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">	<span class="attribute">margin</span>: <span class="number">0</span> <span class="number">100px</span>;</div><div class="line">       <span class="attribute">background</span>: <span class="number">#00f</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center-wraper</span> &#123;</div><div class="line">	<span class="attribute">float</span>: left;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">	<span class="attribute">margin</span>: <span class="number">0</span> -<span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h3 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h3><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">position</span>: relative;</div><div class="line">	<span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">position</span>: absolute;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span> &#123;</div><div class="line">	<span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">	<span class="attribute">position</span>: absolute;</div><div class="line">	<span class="attribute">left</span>: <span class="number">100px</span>;</div><div class="line">	<span class="attribute">right</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h3 id="inline-block"><a href="#inline-block" class="headerlink" title="inline-block"></a>inline-block</h3><h4 id="1-利用calc-1"><a href="#1-利用calc-1" class="headerlink" title="1. 利用calc()"></a>1. 利用calc()</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">       <span class="attribute">font-size</span>: <span class="number">0</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="selector-class">.left</span>,<span class="selector-class">.right</span>,<span class="selector-class">.center</span> &#123;</div><div class="line">	<span class="attribute">display</span>:inline-block; </div><div class="line">	<span class="attribute">vertical-align</span>: top;</div><div class="line">	<span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">	<span class="attribute">width</span>: <span class="built_in">calc</span>(100% - 200px);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h4 id="2-center外侧加一层"><a href="#2-center外侧加一层" class="headerlink" title="2. center外侧加一层"></a>2. center外侧加一层</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">       <span class="attribute">font-size</span>: <span class="number">0</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="selector-class">.left</span>, <span class="selector-class">.right</span>, <span class="selector-class">.center-wraper</span> &#123;</div><div class="line">	<span class="attribute">display</span>:inline-block; </div><div class="line">	<span class="attribute">vertical-align</span>: top;</div><div class="line">	<span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center-wraper</span> &#123;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100%</span>; </div><div class="line">	<span class="attribute">margin</span>: <span class="number">0</span> -<span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">	<span class="attribute">margin</span>:<span class="number">0</span> <span class="number">100px</span>; </div><div class="line">       <span class="attribute">background</span>: <span class="number">#00f</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h3 id="table"><a href="#table" class="headerlink" title="table"></a>table</h3><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">display</span>: table; </div><div class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">	<span class="attribute">table-layout</span>: fixed;</div><div class="line">&#125;</div><div class="line">   <span class="selector-class">.left</span>, <span class="selector-class">.right</span>, <span class="selector-class">.center</span> &#123;</div><div class="line">	<span class="attribute">display</span>:table-cell;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">display</span>: flex; </div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h3 id="grid"><a href="#grid" class="headerlink" title="grid"></a>grid</h3><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>:grid;</div><div class="line">    <span class="attribute">grid-template-columns</span>:<span class="number">100px</span> <span class="number">1</span>fr <span class="number">100px</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h2 id="三栏式布局（圣杯、双飞翼）"><a href="#三栏式布局（圣杯、双飞翼）" class="headerlink" title="三栏式布局（圣杯、双飞翼）"></a>三栏式布局（圣杯、双飞翼）</h2><p>为了让中间的主要内容先加载，将main放到一个位置，left和right随后。</p>
 <h3 id="浮动-1"><a href="#浮动-1" class="headerlink" title="浮动"></a>浮动</h3><h4 id="1-圣杯布局"><a href="#1-圣杯布局" class="headerlink" title="1. 圣杯布局"></a>1. 圣杯布局</h4><p>圣杯布局使用float、负margin和relative，不需要添加额外标签。.main元素设置padding，为两侧定宽元素留出位置。内容元素设置100%宽度，占据中间位置。而两侧定宽元素通过设置负margin和relative的偏移属性配合，到达相应位置。<br>缺点: 并没有实现等高布局；使用了相对定位，扩展性不好。如果想高度保持一致可以给left main right都加上min-height</p>
-<pre><code>//html结构
-&lt;div class=&apos;parent&apos;&gt;
-    &lt;div class=&apos;main&apos;&gt;main&lt;/div&gt;
-    &lt;div class=&apos;left&apos;&gt;left&lt;/div&gt;
-    &lt;div class=&apos;right&apos;&gt;right&lt;/div&gt;
-&lt;/div&gt;
-//css
-.parent {
-    padding: 0 100px;
-    overflow: hidden;
-}
-.main{
-    width: 100%;
-    float: left;
-}
-.left,.right{
-    float: left;
-    width: 100px;    
-    position: relative;
-}
-.left{
-    margin-left: -100%;
-    left: -100px;
-}
-.right{
-    margin-left: -100px;
-    right: -100px;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//html结构</div><div class="line">&lt;div class='parent'&gt;</div><div class="line">    &lt;div class='main'&gt;main&lt;/div&gt;</div><div class="line">    &lt;div class='left'&gt;left&lt;/div&gt;</div><div class="line">    &lt;div class='right'&gt;right&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">//css</div><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">100px</span>;</div><div class="line">    <span class="attribute">overflow</span>: hidden;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span>&#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>,<span class="selector-class">.right</span>&#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;    </div><div class="line">    <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>&#123;</div><div class="line">    <span class="attribute">margin-left</span>: -<span class="number">100%</span>;</div><div class="line">    <span class="attribute">left</span>: -<span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123;</div><div class="line">    <span class="attribute">margin-left</span>: -<span class="number">100px</span>;</div><div class="line">    <span class="attribute">right</span>: -<span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h4 id="2-双飞翼布局"><a href="#2-双飞翼布局" class="headerlink" title="2. 双飞翼布局"></a>2. 双飞翼布局</h4><p>双飞翼布局在圣杯布局的基础上，通过为.main元素外添加一层div结构，不使用相对定位。在.main元素上设置margin。两侧的定宽列通过负margin来占据.main元素的margin区域。</p>
-<pre><code>//html结构
-&lt;div class=&apos;parent&apos;&gt;
-    &lt;div class=&apos;main-wraper&apos;&gt;
-        &lt;div class=&apos;main&apos;&gt;
-            main
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&apos;left&apos;&gt;left&lt;/div&gt;
-    &lt;div class=&apos;right&apos;&gt;right&lt;/div&gt;
-&lt;/div&gt;
-//css
-.parent {
-    overflow: hidden;
-}
-.main-wraper {
-    float: left;
-    width: 100%;
-}
-.main{
-    margin: 0 100px;
-}
-.left, .right{
-    float: left;
-    width: 100px;    
-}
-.left{
-    margin-left: -100%;
-    left: -100px;
-}
-.right{
-    margin-left: -100px;
-    right: -100px;
-}
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">//html结构</div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'parent'</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'main-wraper'</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'main'</span>&gt;</span></div><div class="line">            main</div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'left'</span>&gt;</span>left<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'right'</span>&gt;</span>right<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">//css</div><div class="line">.parent &#123;</div><div class="line">    overflow: hidden;</div><div class="line">&#125;</div><div class="line">.main-wraper &#123;</div><div class="line">    float: left;</div><div class="line">    width: 100%;</div><div class="line">&#125;</div><div class="line">.main&#123;</div><div class="line">    margin: 0 100px;</div><div class="line">&#125;</div><div class="line">.left, .right&#123;</div><div class="line">    float: left;</div><div class="line">    width: 100px;    </div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">    margin-left: -100%;</div><div class="line">    left: -100px;</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">    margin-left: -100px;</div><div class="line">    right: -100px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="绝对定位-1"><a href="#绝对定位-1" class="headerlink" title="绝对定位"></a>绝对定位</h3><p>可以设置子元素的top:0;bottom:0;使得所有子元素的高度都和父元素的高度相同，实现等高效果。</p>
-<pre><code>.parent {
-    position: relative;
-    height: 100px;
-}
-.main{
-    left: 100px;
-    right: 100px;
-}
-.left, .right, .main {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-}
-.left{
-    left: 0;
-    width: 100px;
-}
-.right{
-    right: 0;
-    width: 100px;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">position</span>: relative;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span>&#123;</div><div class="line">    <span class="attribute">left</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">right</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>, <span class="selector-class">.right</span>, <span class="selector-class">.main</span> &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">bottom</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>&#123;</div><div class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123;</div><div class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="flex-1"><a href="#flex-1" class="headerlink" title="flex"></a>flex</h3><p>flex中的伸缩项目默认都拉伸为父元素的高度，可实现等高效果。通过改变伸缩项目的order，可以实现元素顺序调换的效果</p>
-<pre><code>.parent {
-    display: flex;
-}
-.left,.right {
-    width: 100px;
-}
-.right{ 
-    order: 2;
-}
-.main{
-    order: 1;
-    flex: 1;
-    margin: 0 20px;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>,<span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123; </div><div class="line">    <span class="attribute">order</span>: <span class="number">2</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span>&#123;</div><div class="line">    <span class="attribute">order</span>: <span class="number">1</span>;</div><div class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</div><div class="line">    <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">20px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="grid-1"><a href="#grid-1" class="headerlink" title="grid"></a>grid</h3><p>通过grid-area调换left，main，right的位置</p>
-<pre><code>.parent {
-    display:grid;
-    grid-template-columns:100px 1fr 100px;
-    grid-gap:20px;
-}
-.main {
-    grid-area:1/2/2/3;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>:grid;</div><div class="line">    <span class="attribute">grid-template-columns</span>:<span class="number">100px</span> <span class="number">1</span>fr <span class="number">100px</span>;</div><div class="line">    <span class="attribute">grid-gap</span>:<span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span> &#123;</div><div class="line">    <span class="attribute">grid-area</span>:<span class="number">1</span>/<span class="number">2</span>/<span class="number">2</span>/<span class="number">3</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre>
       
     </div>
@@ -767,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -789,7 +601,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

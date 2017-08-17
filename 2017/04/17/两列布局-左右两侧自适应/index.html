@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="左侧由内容撑开，右侧撑满整个页面 浮动左侧浮动，右侧设置overflow .left {     float: left;     background: #f00; } .right {     background: #0f0;     overflow: hidden; } flexie9以下不支持 .parent {     display: flex; } .right {     fl">
+<meta name="description" content="左侧由内容撑开，右侧撑满整个页面 浮动左侧浮动，右侧设置overflow 12345678   .left &amp;#123;	float: left;	background: #f00;&amp;#125;.right &amp;#123;	background: #0f0;	overflow: hidden;&amp;#125; flexie9以下不支持 123456.parent &amp;#123;    display: f">
 <meta name="keywords" content="css,布局">
 <meta property="og:type" content="article">
 <meta property="og:title" content="两列布局-左右两侧自适应">
 <meta property="og:url" content="http://yoursite.com/2017/04/17/两列布局-左右两侧自适应/index.html">
 <meta property="og:site_name" content="fwp个人博客">
-<meta property="og:description" content="左侧由内容撑开，右侧撑满整个页面 浮动左侧浮动，右侧设置overflow .left {     float: left;     background: #f00; } .right {     background: #0f0;     overflow: hidden; } flexie9以下不支持 .parent {     display: flex; } .right {     fl">
+<meta property="og:description" content="左侧由内容撑开，右侧撑满整个页面 浮动左侧浮动，右侧设置overflow 12345678   .left &amp;#123;	float: left;	background: #f00;&amp;#125;.right &amp;#123;	background: #0f0;	overflow: hidden;&amp;#125; flexie9以下不支持 123456.parent &amp;#123;    display: f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:26:03.667Z">
+<meta property="og:updated_time" content="2017-08-17T02:08:05.555Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="两列布局-左右两侧自适应">
-<meta name="twitter:description" content="左侧由内容撑开，右侧撑满整个页面 浮动左侧浮动，右侧设置overflow .left {     float: left;     background: #f00; } .right {     background: #0f0;     overflow: hidden; } flexie9以下不支持 .parent {     display: flex; } .right {     fl">
+<meta name="twitter:description" content="左侧由内容撑开，右侧撑满整个页面 浮动左侧浮动，右侧设置overflow 12345678   .left &amp;#123;	float: left;	background: #f00;&amp;#125;.right &amp;#123;	background: #0f0;	overflow: hidden;&amp;#125; flexie9以下不支持 123456.parent &amp;#123;    display: f">
 
 
 
@@ -434,26 +434,11 @@
       
         <p>左侧由内容撑开，右侧撑满整个页面</p>
 <h3 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h3><p>左侧浮动，右侧设置overflow</p>
-<pre><code>.left {
-    float: left;
-    background: #f00;
-}
-.right {
-    background: #0f0;
-    overflow: hidden;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.left</span> &#123;</div><div class="line">	<span class="attribute">float</span>: left;</div><div class="line">	<span class="attribute">background</span>: <span class="number">#f00</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">background</span>: <span class="number">#0f0</span>;</div><div class="line">	<span class="attribute">overflow</span>: hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><p>ie9以下不支持</p>
-<pre><code>.parent {
-    display: flex;
-}
-.right {
-    flex: 1;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="grid"><a href="#grid" class="headerlink" title="grid"></a>grid</h3><p>ie10以下不支持</p>
-<pre><code>.parent{
-    display:grid;
-    grid-template-columns:auto 1fr;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">display</span>:grid;</div><div class="line">    <span class="attribute">grid-template-columns</span>:auto <span class="number">1</span>fr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre>
       
     </div>
@@ -582,7 +567,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -604,7 +589,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

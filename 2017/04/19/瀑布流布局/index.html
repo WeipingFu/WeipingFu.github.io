@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="一般瀑布流的实现常见有三种方式：  传统的多列浮动  css3样式定义  js计算绝对布局  传统的多列浮动方式固定要展示的列数，每一列中间的数据作为一组单独计算，插入数据时分别插入不同列中。优点:  布局最为简单,一般只依赖与一个浮动布局 不需要知道内容的高度，所以当有图片未加载时也不影响  缺点:  只适用于特定的屏幕，当屏幕size变化时，无法动态实现列数的更改  拓展不易  css3实现方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:34:39.207Z">
+<meta property="og:updated_time" content="2017-08-17T02:05:42.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="瀑布流布局">
 <meta name="twitter:description" content="一般瀑布流的实现常见有三种方式：  传统的多列浮动  css3样式定义  js计算绝对布局  传统的多列浮动方式固定要展示的列数，每一列中间的数据作为一组单独计算，插入数据时分别插入不同列中。优点:  布局最为简单,一般只依赖与一个浮动布局 不需要知道内容的高度，所以当有图片未加载时也不影响  缺点:  只适用于特定的屏幕，当屏幕size变化时，无法动态实现列数的更改  拓展不易  css3实现方">
@@ -464,30 +464,8 @@
 </ul>
 <h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><p>css3中增加了一个新的属性：column，来实现等高的列的布局效果。该属性有column-width宽度，column-count数量等，并且能根据窗口自适应。<br>css实现瀑布流分为两种效果，普通横向瀑布流与固定列数的瀑布流</p>
 <h4 id="普通横向瀑布流"><a href="#普通横向瀑布流" class="headerlink" title="普通横向瀑布流"></a>普通横向瀑布流</h4><p>这种瀑布流方式常常用于和js绝对布局方式比较，但是虽然从显示上来说，效果差不多，但是从用户体验的角度讲，这个不符合平常的习惯（插入数据方式，js绝对布局是从左到右，css3是从上到下）<br>css3实现等宽布局：</p>
-<pre><code>.container {
-    /*宽*/ 
-    -webkit-column-width: 200px; 
-    -moz-column-width: 200px;
-     -o-colum-width: 200px;
-    colum-width: 200px;
-
-    /*间距*/
-    -webkit-column-gap: 10px; 
-    -moz-column-gap: 10px; 
-    -o-column-gap: 10px;
-    column-gap: 10px;
-}
-</code></pre><h4 id="固定列数布局"><a href="#固定列数布局" class="headerlink" title="固定列数布局"></a>固定列数布局</h4><pre><code>.container {
-    -webkit-column-count: 3; 
-    -moz-column-count: 3;
-    -o-column-count: 3;
-    column-count:3;
-
-    -webkit-column-gap: 10px; 
-    -moz-column-gap: 10px; 
-    -o-column-gap: 10px;
-    column-gap: 10px;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.container</span> &#123;</div><div class="line">    <span class="comment">/*宽*/</span> </div><div class="line">    <span class="attribute">-webkit-column-width</span>: <span class="number">200px</span>; </div><div class="line">	<span class="attribute">-moz-column-width</span>: <span class="number">200px</span>;</div><div class="line">	 <span class="attribute">-o-colum-width</span>: <span class="number">200px</span>;</div><div class="line">       <span class="attribute">colum-width</span>: <span class="number">200px</span>;</div><div class="line">       </div><div class="line">	<span class="comment">/*间距*/</span></div><div class="line">	<span class="attribute">-webkit-column-gap</span>: <span class="number">10px</span>; </div><div class="line">	<span class="attribute">-moz-column-gap</span>: <span class="number">10px</span>; </div><div class="line">	<span class="attribute">-o-column-gap</span>: <span class="number">10px</span>;</div><div class="line">       <span class="attribute">column-gap</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h4 id="固定列数布局"><a href="#固定列数布局" class="headerlink" title="固定列数布局"></a>固定列数布局</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  <span class="selector-class">.container</span> &#123;</div><div class="line">      <span class="attribute">-webkit-column-count</span>: <span class="number">3</span>; </div><div class="line"><span class="attribute">-moz-column-count</span>: <span class="number">3</span>;</div><div class="line"><span class="attribute">-o-column-count</span>: <span class="number">3</span>;</div><div class="line">      <span class="attribute">column-count</span>:<span class="number">3</span>;</div><div class="line"></div><div class="line">      <span class="attribute">-webkit-column-gap</span>: <span class="number">10px</span>; </div><div class="line"><span class="attribute">-moz-column-gap</span>: <span class="number">10px</span>; </div><div class="line"><span class="attribute">-o-column-gap</span>: <span class="number">10px</span>;</div><div class="line"><span class="attribute">column-gap</span>: <span class="number">10px</span>;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
 </code></pre><h2 id="js绝对布局实现方式"><a href="#js绝对布局实现方式" class="headerlink" title="js绝对布局实现方式"></a>js绝对布局实现方式</h2><p>利用js，动态计算元素的插入位置，利用绝对布局absolute进行定位，根据屏幕的不同可以动态调整。</p>
 <h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>优点:</strong></p>
 <ul>
@@ -635,7 +613,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -657,7 +635,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

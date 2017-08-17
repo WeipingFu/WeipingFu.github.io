@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="web语义化其实是让大家按照一定的规范描述web内容，从而让机器能够更好的理解我们发布的内容，对内容进行处理与挖掘。同时，在团队开发的时候，使开发者们能够更好地互相理解。 ###一、语义化的构成网页的语义构成：元素(html标签)+属性+属性值(+文档结构)html网页类似于一个word文档，也要有标题，章节，图表等，每个元素及属性都表达不同的语义。 ####1. html标签的语义(1) sec">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:22:37.956Z">
+<meta property="og:updated_time" content="2017-08-17T02:09:58.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web语义化">
 <meta name="twitter:description" content="web语义化其实是让大家按照一定的规范描述web内容，从而让机器能够更好的理解我们发布的内容，对内容进行处理与挖掘。同时，在团队开发的时候，使开发者们能够更好地互相理解。 ###一、语义化的构成网页的语义构成：元素(html标签)+属性+属性值(+文档结构)html网页类似于一个word文档，也要有标题，章节，图表等，每个元素及属性都表达不同的语义。 ####1. html标签的语义(1) sec">
@@ -436,16 +436,10 @@
 <p>###一、语义化的构成<br>网页的语义构成：元素(html标签)+属性+属性值(+文档结构)<br>html网页类似于一个word文档，也要有标题，章节，图表等，每个元素及属性都表达不同的语义。</p>
 <p>####1. html标签的语义<br><strong>(1) sections元素</strong><br><strong>article：</strong>独立的文档、页面、应用、站点，可以是一篇贴子、一篇文章、一条评论等。<br><strong>section：</strong>按主题内容分组，通常会有标题(heading)<br>并非语义化的div<br>使用时机：当你希望这个元素内容体现在文档的提纲中时使用<br><strong>nav：</strong>页面导航<br><strong>aside：</strong>侧边栏，表示与周围内容不太密切相关的内容<br><strong>h1～h6：</strong>各级标题<br><strong>header：</strong>用来描述最近父级区域的头部，一组介绍性描述或导航信息(目录／搜索框／logo／标题等)，不影响文档提纲的生成<br><strong>footer：</strong>用来描述最近父级区域的尾部，一般介绍作者信息／相关文档／版权信息等，不影响文档提纲的生成<br><strong>address：</strong>代表与最近父级article或整个文档关联的联系人信息</p>
 <p><strong>(2) 分组内容</strong><br><strong>p：</strong>段落，但不优先考虑使用，如果有其他语义更明确的标签则用其他标签如address<br><strong>hr：</strong>html5中将它重定义为不同主题内容间的分隔符，区块内容之间不需要用hr来分隔<br><strong>pre：</strong>表示已排版的内容，如代码片段等<br><strong>blockquote：</strong>表示引用其他来源的内容，署名必须放在blockquote标签外，cite标签用来标示该引用来源的url<br><strong>ol／ul／li：</strong>有序／无序列表，ol下li元素的value属性表示该li的序号值</p>
-<pre><code>&lt;ol&gt;                           //   18. a
-    &lt;li value=&quot;18&quot;&gt;a&lt;/li&gt;      //   20. b
-    &lt;li value=&quot;20&quot;&gt;b&lt;/li&gt;      //   21. c
-    &lt;li&gt;c&lt;/li&gt;
-&lt;/ol&gt;
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span>                           //   18. a</div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">value</span>=<span class="string">"18"</span>&gt;</span>a<span class="tag">&lt;/<span class="name">li</span>&gt;</span>      //   20. b</div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">value</span>=<span class="string">"20"</span>&gt;</span>b<span class="tag">&lt;/<span class="name">li</span>&gt;</span>      //   21. c</div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>c<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></div></pre></td></tr></table></figure>
 </code></pre><p><strong>dl／dt／dd：</strong>名值对的列表，一般用于术语定义表／元数据／FAQ等<br><strong>figure：</strong>一般用来表示插图／图表／照片／代码等，通常会有一个标题(figcaption)<br><strong>div：</strong>本身无语义，可以和class、lang、title等属性结合，为一系列连续的内容增加语义，不优先考虑使用<br><strong>main：</strong>文档的主内容／应用的核心功能，在文档中唯一出现</p>
 <p><strong>(3)文本级语义元素</strong><br><strong>em：</strong> 表示侧重点的强调，在浏览器上一般渲染为斜体，根据em位置不同，文本语义可能不同，例如：</p>
-<pre><code>&lt;p&gt;&lt;em&gt;Bats&lt;/em&gt; can fly.&lt;/p&gt;
-&lt;p&gt;Bats &lt;em&gt;can&lt;/em&gt; fly.&lt;/p&gt;
-&lt;p&gt;Bats can &lt;em&gt;fly&lt;/em&gt;.&lt;/p&gt;
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>Bats<span class="tag">&lt;/<span class="name">em</span>&gt;</span> can fly.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Bats <span class="tag">&lt;<span class="name">em</span>&gt;</span>can<span class="tag">&lt;/<span class="name">em</span>&gt;</span> fly.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Bats can <span class="tag">&lt;<span class="name">em</span>&gt;</span>fly<span class="tag">&lt;/<span class="name">em</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
 </code></pre><p><strong>strong：</strong> 表示内容的重要性，在浏览器上一般渲染为粗体，strong位置不同，文本本身含义不变<br><strong>i：</strong> 表示另一种叙述方式，如画外音／分类学名词／外来语／舞台指示／船名等等，建议与class／lang属性搭配使用<br><strong>b：</strong> 表示某种需要引起注意但又没有其他额外语义的内容，如摘要中的关键词／评价中的产品名称／文章的开篇内容等，建议与class搭配使用<br><strong>small：</strong> 通常是免责声明／许可证声明／注意事项等<br><strong>s：</strong> 表示不再准确或不再相关的内容，与del元素含义不同，渲染为带删除线的文字<br><strong>u：</strong>表示用非文本进行的标注的内容，如中文专名(人名、地名、朝代、国名、机构等)／拼写检查的错误内容等<br><strong>cite：</strong>引用的内容的标题(书／l论文／散文／电影／歌曲等)<br><strong>q：</strong>引用的来自其他来源的段内内容，这里cite属性表示该来源的url(blockquote是整段，q可以是段内ji即在p标签内)，可以直接使用引号<br><strong>abbr：</strong>表示缩写，其title属性的值为全称，建议在第一次使用缩写词汇时用abbr+title属性<br><strong>dfn：</strong>表示一个术语的定义实例(使搜索引擎容易搜到特定术语)<br><strong>time：</strong>表示一个机器可读的时间，其datetime属性必须是预定义的几种时间格式之一，如果不含datetime属性，则会解析其文本内容值<br><strong>code：</strong>代码片段<br><strong>samp：</strong>计算机程序的输出<br><strong>kbd：</strong>用户输入的内容／按键<br><strong>ins／del：</strong>表示对当前文档内容进行的增添与修改，cite指向某个修改的说明文档的url，datetime属性表示修给发生的时间<br><strong>span：</strong>本身无语义，可以与class、lang属性结合<br><strong>track：</strong>为多媒体元素指定文本轨，其kind属性用来描述文本轨的类型(subtitles／captions／descriptions等)</p>
 <p><strong>(4) 表格元素</strong><br><strong>table</strong><br><strong>caption：</strong>表格的标题，当table是外部figure元素的唯一子元素，应首选figcaption<br><strong>tbody、thead、tfoot</strong><br><strong>col、colgroup、tr</strong><br><strong>td、th</strong></p>
 <p>####2. 全局属性<br><strong>id：</strong>标识符，不应依赖其语义处理相应元素<br><strong>class：</strong>应该命名为能描述元素内容的名称<br><strong>tilte：</strong>链接 - 描述目标信息；图片  - 版权／描述；引用 - 来源信息；交互元素 - 操作指南等<br><strong>lang：</strong>内容的语言</p>
@@ -586,7 +580,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -608,7 +602,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

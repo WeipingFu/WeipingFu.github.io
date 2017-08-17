@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="浮动float浮动布局的缺点是浮动后会造成文本环绕、元素被覆盖等效果，以及需要及时清除浮动。如果各浮动元素的高度不同时，可能会出犬牙交错的效果. 1. 左侧浮动，右侧设置margin-left.left: {     float: left;     width: 200px; } .right {     margin-left: 200px; } 缺点1:IE6-浏览器下3像素bug，具体表现">
+<meta name="description" content="浮动float浮动布局的缺点是浮动后会造成文本环绕、元素被覆盖等效果，以及需要及时清除浮动。如果各浮动元素的高度不同时，可能会出犬牙交错的效果. 1. 左侧浮动，右侧设置margin-left1234567.left: &amp;#123;    float: left;    width: 200px;&amp;#125;.right &amp;#123;    margin-left: 200px;&amp;#125; 缺点">
 <meta name="keywords" content="css,布局">
 <meta property="og:type" content="article">
 <meta property="og:title" content="两列布局-左侧定宽，右侧自适应">
 <meta property="og:url" content="http://yoursite.com/2017/04/17/两列布局-左侧定宽，右侧自适应/index.html">
 <meta property="og:site_name" content="fwp个人博客">
-<meta property="og:description" content="浮动float浮动布局的缺点是浮动后会造成文本环绕、元素被覆盖等效果，以及需要及时清除浮动。如果各浮动元素的高度不同时，可能会出犬牙交错的效果. 1. 左侧浮动，右侧设置margin-left.left: {     float: left;     width: 200px; } .right {     margin-left: 200px; } 缺点1:IE6-浏览器下3像素bug，具体表现">
+<meta property="og:description" content="浮动float浮动布局的缺点是浮动后会造成文本环绕、元素被覆盖等效果，以及需要及时清除浮动。如果各浮动元素的高度不同时，可能会出犬牙交错的效果. 1. 左侧浮动，右侧设置margin-left1234567.left: &amp;#123;    float: left;    width: 200px;&amp;#125;.right &amp;#123;    margin-left: 200px;&amp;#125; 缺点">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:25:02.907Z">
+<meta property="og:updated_time" content="2017-08-17T02:09:22.867Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="两列布局-左侧定宽，右侧自适应">
-<meta name="twitter:description" content="浮动float浮动布局的缺点是浮动后会造成文本环绕、元素被覆盖等效果，以及需要及时清除浮动。如果各浮动元素的高度不同时，可能会出犬牙交错的效果. 1. 左侧浮动，右侧设置margin-left.left: {     float: left;     width: 200px; } .right {     margin-left: 200px; } 缺点1:IE6-浏览器下3像素bug，具体表现">
+<meta name="twitter:description" content="浮动float浮动布局的缺点是浮动后会造成文本环绕、元素被覆盖等效果，以及需要及时清除浮动。如果各浮动元素的高度不同时，可能会出犬牙交错的效果. 1. 左侧浮动，右侧设置margin-left1234567.left: &amp;#123;    float: left;    width: 200px;&amp;#125;.right &amp;#123;    margin-left: 200px;&amp;#125; 缺点">
 
 
 
@@ -433,128 +433,24 @@
 
       
         <h3 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h3><p>float浮动布局的缺点是浮动后会造成文本环绕、元素被覆盖等效果，以及需要及时清除浮动。如果各浮动元素的高度不同时，可能会出犬牙交错的效果.</p>
-<h4 id="1-左侧浮动，右侧设置margin-left"><a href="#1-左侧浮动，右侧设置margin-left" class="headerlink" title="1. 左侧浮动，右侧设置margin-left"></a>1. 左侧浮动，右侧设置margin-left</h4><pre><code>.left: {
-    float: left;
-    width: 200px;
-}
-.right {
-    margin-left: 200px;
-}
+<h4 id="1-左侧浮动，右侧设置margin-left"><a href="#1-左侧浮动，右侧设置margin-left" class="headerlink" title="1. 左侧浮动，右侧设置margin-left"></a>1. 左侧浮动，右侧设置margin-left</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span>: &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">margin-left</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p><strong>缺点1:</strong><br>IE6-浏览器下3像素bug，具体表现在右侧首行文字会向右偏移3px。解决办法是在left元素上设置margin-right: -100px<br><strong>缺点2:</strong><br>当右侧容器中有元素清除浮动时，会使该元素不与左侧浮动元素同行，从而出现文字下沉现象。</p>
 <h4 id="2-左侧浮动，右侧设置margin且增加一层wraper"><a href="#2-左侧浮动，右侧设置margin且增加一层wraper" class="headerlink" title="2. 左侧浮动，右侧设置margin且增加一层wraper"></a>2. 左侧浮动，右侧设置margin且增加一层wraper</h4><p>为了解决上述方法中的两个缺点，可以通过增加结构来实现。右侧增加一层wraper并设置浮动，且wraper宽度必须设置为100%，若不设置，float后元素的宽度会由内容撑开，同时还需设置负margin值，使得两列元素在同一行。</p>
-<pre><code>.left {
-    float: left;
-    width: 200px;
-}
-.right {
-    margin-left: 200px;
-}
-.right-wraper {
-    float: left;
-    margin-left: -200px; 
-    width: 100%;
-}
-</code></pre><h4 id="3-使用css3中的calc"><a href="#3-使用css3中的calc" class="headerlink" title="3. 使用css3中的calc()"></a>3. 使用css3中的calc()</h4><pre><code>.left {
-    float: left;
-    width: 200px;
-}
-.right {
-    float: left;
-    width: calc(100% - 200px);
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.left</span> &#123;</div><div class="line">	<span class="attribute">float</span>: left;</div><div class="line">	<span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">margin-left</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right-wraper</span> &#123;</div><div class="line">	<span class="attribute">float</span>: left;</div><div class="line">	<span class="attribute">margin-left</span>: -<span class="number">200px</span>; </div><div class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h4 id="3-使用css3中的calc"><a href="#3-使用css3中的calc" class="headerlink" title="3. 使用css3中的calc()"></a>3. 使用css3中的calc()</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="built_in">calc</span>(100% - 200px);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h4 id="4-左侧浮动，右侧设置overflow"><a href="#4-左侧浮动，右侧设置overflow" class="headerlink" title="4. 左侧浮动，右侧设置overflow"></a>4. 左侧浮动，右侧设置overflow</h4><p>设置overflow为hidden可以触发BFC，阻止浮动造成的后果。</p>
-<pre><code>.left: {
-    float: left;
-    width: 200px;
-}
-.right {
-    overflow: hidden;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span>: &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">overflow</span>: hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h3><p>absolute布局的缺点是由于父元素需要设置为relative，且子元素设置为absolute，所以父元素的高度并不是由子元素撑开的，需要单独设置。<br><strong>1. 左侧绝对定位，右侧设置margin-left</strong><br><strong>2. 左侧绝对定位，右侧绝对定位</strong></p>
-<pre><code>.parent {
-    position: relative;
-    height: 200px;
-}
-.left: {
-    position: absolute;
-    left: 0;
-    width: 200px;
-}
-.right {
-    margin-left: 200px;
-}
-或
-.right {
-    position: absolute;
-    left: 200px;
-    right: 0;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">position</span>: relative;</div><div class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>: &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">margin-left</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line">或</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">left</span>: <span class="number">200px</span>;</div><div class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="inline-block"><a href="#inline-block" class="headerlink" title="inline-block"></a>inline-block</h3><p>使用inline-block的主要缺点是需要设置垂直对齐方式vertical-align，则需要处理换行符解析成空格的间隙问题。<br>解决间隙：一般将父级元素的font-size设为0，然后在子元素中将font-size设为默认大小。</p>
-<h4 id="1-利用calc"><a href="#1-利用calc" class="headerlink" title="1. 利用calc()"></a>1. 利用calc()</h4><pre><code>.parent {
-    font-size: 0;
-}
-.left {
-    display: inline-block;
-    width: 200px;
-    font-size: 16px;
-    vertical-align: top;
-}
-.right {
-    display: inline-block;
-    width: calc(100% - 200px);
-    font-size: 16px;
-    vertical-align: top;
-}
-</code></pre><h4 id="2-右侧外层wraper"><a href="#2-右侧外层wraper" class="headerlink" title="2. 右侧外层wraper"></a>2. 右侧外层wraper</h4><pre><code>.parent {
-    font-size: 0;
-}
-.left {
-    position: relative;
-    display: inline-block;
-    width: 200px;
-    font-size: 16px;
-    vertical-align: top;
-}
-
-.right-wraper {
-    display: inline-block;
-    margin-left: -200px;
-    width: 100%;
-    font-size: 16px;
-    vertical-align: top;
-}
-.right {
-    margin-left: 200px; 
-}
+<h4 id="1-利用calc"><a href="#1-利用calc" class="headerlink" title="1. 利用calc()"></a>1. 利用calc()</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">       <span class="attribute">font-size</span>: <span class="number">0</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="selector-class">.left</span> &#123;</div><div class="line">	<span class="attribute">display</span>: inline-block;</div><div class="line">	<span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">	<span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">	<span class="attribute">vertical-align</span>: top;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">display</span>: inline-block;</div><div class="line">	<span class="attribute">width</span>: <span class="built_in">calc</span>(100% - 200px);</div><div class="line">	<span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">	<span class="attribute">vertical-align</span>: top;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h4 id="2-右侧外层wraper"><a href="#2-右侧外层wraper" class="headerlink" title="2. 右侧外层wraper"></a>2. 右侧外层wraper</h4><pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">       <span class="attribute">font-size</span>: <span class="number">0</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="selector-class">.left</span> &#123;</div><div class="line">       <span class="attribute">position</span>: relative;</div><div class="line">	<span class="attribute">display</span>: inline-block;</div><div class="line">	<span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">	<span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">	<span class="attribute">vertical-align</span>: top;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.right-wraper</span> &#123;</div><div class="line">	<span class="attribute">display</span>: inline-block;</div><div class="line">	<span class="attribute">margin-left</span>: -<span class="number">200px</span>;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">	<span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">	<span class="attribute">vertical-align</span>: top;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">margin-left</span>: <span class="number">200px</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="table"><a href="#table" class="headerlink" title="table"></a>table</h3><p>使用table布局的缺点是元素被设置为table后，内容撑开宽度，所以需要设置width:100%。若要兼容IE7-浏览器，需要改为<table>结构。由于table-cell元素无法设置margin，若需要在元素间设置间距，需要增加结构。</table></p>
-<pre><code>.parent {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-}
-.left {
-    display: table-cell;
-    width: 200px;
-}
-.right {
-    display: table-cell;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">display</span>: table;</div><div class="line">	<span class="attribute">table-layout</span>: fixed;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span> &#123;</div><div class="line">	<span class="attribute">display</span>: table-cell;</div><div class="line">	<span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">display</span>: table-cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><p>flex弹性盒模型是非常强大的布局方式。但由于其性能消耗较大，适合于局部小范围的布局.<br>IE9以下不支持</p>
-<pre><code>.parent {
-    display: flex;
-}
-.left {
-    width: 200px;
-}
-.right {
-    flex: 1;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">display</span>: flex;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span> &#123;</div><div class="line">	<span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">	<span class="attribute">flex</span>: <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="grid"><a href="#grid" class="headerlink" title="grid"></a>grid</h3><p>IE10以下不支持</p>
-<pre><code>.parent {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    background: gray;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">   <span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">display</span>: grid;</div><div class="line">	<span class="attribute">grid-template-columns</span>: <span class="number">200px</span> <span class="number">1</span>fr;</div><div class="line">	<span class="attribute">background</span>: gray;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre>
       
     </div>
@@ -683,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -705,7 +601,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

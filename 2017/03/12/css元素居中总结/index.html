@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute 1234567">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-17T01:32:01.174Z">
+<meta property="og:updated_time" content="2017-08-17T01:41:31.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css元素居中总结">
 <meta name="twitter:description" content="水平居中1.inline或inline-*的元素设块级父元素text-align为center，对inline，inline-block，inline-table，inline-flex等元素都起作用。 2.一个block元素(1)设定元素宽度，margin-left和margin-right为auto即可。(2)设定父元素position：relative，子元素absolute 1234567">
@@ -437,60 +437,19 @@
 <pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.center</span> &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin-left</span>: center的width; </div><div class="line">    //或transform: translate(-50%, 0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>没有float：center，我们可以用伪元素实现一个图片居中，两边段落环绕的效果，具体看<a href="https://www.zybuluo.com/mdeditor#691644" target="_blank" rel="external">https://www.zybuluo.com/mdeditor#691644</a></p>
 <h3 id="3-多个block元素"><a href="#3-多个block元素" class="headerlink" title="3.多个block元素"></a>3.多个block元素</h3><p>(1) 多个元素在一行显示，且居中，设要居中元素为display：inline-block(inline-block元素之间会有默认空隙，去除方法：)或设其父元素为flex布局</p>
-<pre><code>.parent {
-    display: flex;
-    justify-centent: center;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">justify-centent</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>(2) 多个元素各占一行显示的方法参考上面2</p>
-<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><h3 id="1-inline或inline-的元素-1"><a href="#1-inline或inline-的元素-1" class="headerlink" title="1.inline或inline-*的元素"></a>1.inline或inline-*的元素</h3><p>(1) 一行显示：父元素内padding-top和padding-bottom相等 或者是 设置父元素line-height和height相等<br>(2) 多行显示：<br>1⃣ ️父元素的父元素display：table，父元素display：table-cell，vertical-align：center<br>2⃣ ️父元素设为flex布局，且有定高（px，%等）</p>
-<pre><code>.center_parent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 400px;
-}
-</code></pre><p>3⃣️ 利用伪元素</p>
-<pre><code>.parent {
-    position: relative;
-}
-.parent:before {
-    content: &quot;&quot;;
-    display: inline-block;
-    height: 100%;
-    width: 1%;
-    vertical-align: middle;
-}
-.parent p {
-    display: inline-block;
-    vertical-align: middle;
-}
+<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><h3 id="1-inline或inline-的元素-1"><a href="#1-inline或inline-的元素-1" class="headerlink" title="1.inline或inline-*的元素"></a>1.inline或inline-*的元素</h3><p>(1) 一行显示：父元素内padding-top和padding-bottom相等 或者是 设置父元素line-height和height相等<br>(2) 多行显示：<br>1.父元素的父元素display：table，父元素display：table-cell，vertical-align：center<br>2.父元素设为flex布局，且有定高（px，%等）</p>
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.center_parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">flex-direction</span>: column;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">    <span class="attribute">height</span>: <span class="number">400px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><p>3.利用伪元素</p>
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.parent</span><span class="selector-pseudo">:before</span> &#123;</div><div class="line">    <span class="attribute">content</span>: <span class="string">""</span>;</div><div class="line">    <span class="attribute">display</span>: inline-block;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">1%</span>;</div><div class="line">    <span class="attribute">vertical-align</span>: middle;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.parent</span> <span class="selector-tag">p</span> &#123;</div><div class="line">    <span class="attribute">display</span>: inline-block;</div><div class="line">    <span class="attribute">vertical-align</span>: middle;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><h3 id="2-block元素"><a href="#2-block元素" class="headerlink" title="2.block元素"></a>2.block元素</h3><p>(1) 知道元素的高度：元素相对父元素top：50%，margin-top：-width／2<br>(2) 不知道元素的高度：<br>1⃣️ 元素相对父元素top：50%，transform：translateY(-50%)<br>2⃣️ flex布局：父元素flex-direction：column；justify-content：center；</p>
 <h2 id="水平和垂直居中"><a href="#水平和垂直居中" class="headerlink" title="水平和垂直居中"></a>水平和垂直居中</h2><p>(1) 知道元素高度和宽度</p>
-<pre><code>.parent {
-    position: relative;
-}
-.child {
-    width: 300px;
-    height: 100px;
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -70px 0 0 -170px;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin</span>: -<span class="number">70px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">170px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>(2) 不知道元素高度和宽度</p>
-<pre><code>.child {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>(3) 用flex布局</p>
-<pre><code>.parent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">    <span class="attribute">align-items</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>参考：<a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="external">https://css-tricks.com/centering-css-complete-guide/</a></p>
 
       
@@ -618,7 +577,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -640,7 +599,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="排序分为内部排序和外部排序，内部排序常见算法有：冒泡排序、插入排序、选择排序、快速排序、归并排序、希尔排序、堆排序等，总结如下表             时间复杂度        排序方法平均情况最坏情况最好情况空间复杂度稳定性        冒泡排序O(n^2)O(n^2)O(n)O(1)稳定        直接插入排序O(n^2)O(n^2)O(n)O(1)稳定        简单选择排序O(">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T10:05:16.256Z">
+<meta property="og:updated_time" content="2017-08-17T01:58:42.568Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序算法总结">
 <meta name="twitter:description" content="排序分为内部排序和外部排序，内部排序常见算法有：冒泡排序、插入排序、选择排序、快速排序、归并排序、希尔排序、堆排序等，总结如下表             时间复杂度        排序方法平均情况最坏情况最好情况空间复杂度稳定性        冒泡排序O(n^2)O(n^2)O(n)O(1)稳定        直接插入排序O(n^2)O(n^2)O(n)O(1)稳定        简单选择排序O(">
@@ -435,149 +435,16 @@
         <p>排序分为内部排序和外部排序，内部排序常见算法有：冒泡排序、插入排序、选择排序、快速排序、归并排序、希尔排序、堆排序等，总结如下表</p>
 <p><table><br>    <tbody><br>        <tr><th></th><th colspan="3">时间复杂度</th><th></th><th></th></tr><br>        <tr><th>排序方法</th><th>平均情况</th><th>最坏情况</th><th>最好情况</th><th>空间复杂度</th><th>稳定性</th></tr><br>        <tr><th>冒泡排序</th><td>O(n^2)</td><td>O(n^2)</td><td>O(n)</td><td>O(1)</td><td>稳定</td></tr><br>        <tr><th>直接插入排序</th><td>O(n^2)</td><td>O(n^2)</td><td>O(n)</td><td>O(1)</td><td>稳定</td></tr><br>        <tr><th>简单选择排序</th><td>O(n^2)</td><td>O(n^2)</td><td>O(n^2)</td><td>O(1)</td><td>不稳定</td></tr><br>        <tr><th>快速排序</th><td>O(nlogn)</td><td>O(n^2)</td><td>O(nlogn)</td><td>O(logn)</td><td>不稳定</td></tr><br>        <tr><th>归并排序</th><td>O(nlogn)</td><td>O(nlogn)</td><td>O(nlogn)</td><td>O(n)</td><td>稳定</td></tr><br>        <tr><th>希尔排序</th><td>O(nlogn)</td><td>O(nlogn)</td><td></td><td>O(1)</td><td>不稳定</td></tr><br>        <tr><th>堆排序</th><td>O(nlogn)</td><td>O(nlogn)</td><td>O(nlogn)</td><td>O(1)</td><td>不稳定</td></tr><br>        <tr><th>基数排序</th><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(n+r)</td><td>稳定</td></tr><br>    </tbody><br></table><br>稳定性，就是有两个相同的元素，排序先后的相对位置是否变化<br>稳定性的好处：排序算法如果是稳定的，那么从一个键上排序，然后再从另一个键上排序，第一个键排序的结果可以为第二个键排序所用。基数排序就 是这样，先按低位排序，逐次按高位排序，低位相同的元素其顺序再高位也相同时是不会改变的。</p>
 <p><strong>1. 冒泡排序</strong><br>把小的元素往前调或者把大的元素往后调。每次遍历都与相邻的元素比较或交换，通过一趟排序把最大（最小）的数冒出来；<br>稳定性分析：如果两个元素相等，我想你是不会再无聊地把他们俩交换一下的；如果两个相等的元素没有相邻，那么即使通过前面的两两交换把两个相邻起来，这时候也不会交换，所以相同元素的前后顺序并没有改变，所以冒泡排序是一种稳定排序算法。<br><strong>具体实现：</strong></p>
-<pre><code>//没有优化的冒泡排序
-public void BubbleSort(int arr[]) {
-    int length = arr.length;
-    int temp = 0;
-    for(int i = 0; i &lt; length - 1; i++) {
-        for(int j = 0; j &lt; length - i - 1; j++) {
-            if(arr[j] &gt; arr[j+1]) {
-                temp = arr[j+1];
-                arr[j+1] = arr[j];
-                arr[j] = temp;
-            }
-        }
-    }
-}
-//加入flag标志位，若flag=0，说明整个序列已排好序
-public void BubbleSort2(int arr[]) {
-    int flag = 0;
-    for(int i = 0; i &lt; length - 1; i++) {
-        flag = 0;
-        for(int j = 0; j &lt; length - i - 1; j++) {
-            if(arr[j] &gt; arr[j+1]) {
-                temp = arr[j+1];
-                arr[j+1] = arr[j];
-                arr[j] = temp;
-                flag = 1;
-            }
-        }
-        if(flag == 0) {
-            break;
-        }
-    }
-}
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//没有优化的冒泡排序</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> arr[])</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> length = arr.length;</div><div class="line">    <span class="keyword">int</span> temp = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - i - <span class="number">1</span>; j++) &#123;</div><div class="line">            <span class="keyword">if</span>(arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;</div><div class="line">                temp = arr[j+<span class="number">1</span>];</div><div class="line">                arr[j+<span class="number">1</span>] = arr[j];</div><div class="line">                arr[j] = temp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//加入flag标志位，若flag=0，说明整个序列已排好序</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">BubbleSort2</span><span class="params">(<span class="keyword">int</span> arr[])</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++) &#123;</div><div class="line">        flag = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length - i - <span class="number">1</span>; j++) &#123;</div><div class="line">            <span class="keyword">if</span>(arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;</div><div class="line">                temp = arr[j+<span class="number">1</span>];</div><div class="line">                arr[j+<span class="number">1</span>] = arr[j];</div><div class="line">                arr[j] = temp;</div><div class="line">                flag = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(flag == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p><strong>2. 直接插入排序</strong><br>在一个已经有序的小序列的基础上，一次插入一个元素。刚开始，这个有序的小序列只有1个元素，就是第一个元素。比较是从有序序列的末尾开始，也就是想要插入的元素和已经有序的最大者开始比较，如果比它大则直接插入在其后面，否则一直往前找直到找到它该插入的位置。如果碰见一个和插入元素相等的，那么插入元素把想插入的元素放在相等元素的后面。<br>稳定性分析：从上述排序过程中可以看出它是稳定的。<br><strong>扩展：</strong> <strong>二分插入排序</strong>：每次插入时，从中间位置开始比较，每次比较缩小一半范围。这种方法最坏情况比直接插入好，最好情况比直接插入差。<br><strong>直接插入排序实现：</strong></p>
-<pre><code>public void Insertsort(int a[], int n)  
-{  
-    int i, j;  
-    for (i = 1; i &lt; n; i++) { 
-        if (a[i] &lt; a[i - 1])  
-        {  
-            int temp = a[i];  
-            for (j = i - 1; j &gt;= 0 &amp;&amp; a[j] &gt; temp; j--)  
-                a[j + 1] = a[j];  //后移
-            a[j + 1] = temp;  
-        }  
-    }
-}  
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Insertsort</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span>  </span></div><div class="line"><span class="function"></span>&#123;  </div><div class="line">    <span class="keyword">int</span> i, j;  </div><div class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++) &#123; </div><div class="line">        <span class="keyword">if</span> (a[i] &lt; a[i - <span class="number">1</span>])  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">int</span> temp = a[i];  </div><div class="line">            <span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; a[j] &gt; temp; j--)  </div><div class="line">                a[j + <span class="number">1</span>] = a[j];  <span class="comment">//后移</span></div><div class="line">            a[j + <span class="number">1</span>] = temp;  </div><div class="line">        &#125;  </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p><strong>3. 简单选择排序</strong><br>首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置；然后，再从剩余未排序元素中继续寻找最小（大）元素，放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。<br>稳定性分析：举个例子，序列5 8 5 2 9，我们知道第一遍选择第1个元素5会和2交换，那么原序列中2个5的相对前后顺序就被破坏了，所以选择排序不是一个稳定的排序算法。<br><strong>具体实现：</strong></p>
-<pre><code>public void selectionSort(int[] list) {
-// 需要遍历获得最小值的次数
-// 要注意一点，当要排序 N 个数，已经经过 N-1 次遍历后，已经是有序数列
-    for (int i = 0; i &lt; list.length - 1; i++) {
-        int temp = 0;
-        int index = i; // 用来保存最小值得索引
-        // 寻找第i个小的数值
-        for (int j = i + 1; j &lt; list.length; j++) {
-            if (list[index] &gt; list[j]) {
-                index = j;
-            }
-        }
-        // 将找到的第i个小的数值放在第i个位置上
-        temp = list[index];
-        list[index] = list[i];
-        list[i] = temp;
-        System.out.format(&quot;第 %d 趟:\t&quot;, i + 1);
-        printAll(list);
-    }
-}
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectionSort</span><span class="params">(<span class="keyword">int</span>[] list)</span> </span>&#123;</div><div class="line"><span class="comment">// 需要遍历获得最小值的次数</span></div><div class="line"><span class="comment">// 要注意一点，当要排序 N 个数，已经经过 N-1 次遍历后，已经是有序数列</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.length - <span class="number">1</span>; i++) &#123;</div><div class="line">        <span class="keyword">int</span> temp = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> index = i; <span class="comment">// 用来保存最小值得索引</span></div><div class="line">        <span class="comment">// 寻找第i个小的数值</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; list.length; j++) &#123;</div><div class="line">            <span class="keyword">if</span> (list[index] &gt; list[j]) &#123;</div><div class="line">                index = j;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 将找到的第i个小的数值放在第i个位置上</span></div><div class="line">        temp = list[index];</div><div class="line">        list[index] = list[i];</div><div class="line">        list[i] = temp;</div><div class="line">        System.out.format(<span class="string">"第 %d 趟:\t"</span>, i + <span class="number">1</span>);</div><div class="line">        printAll(list);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p><strong>4. 希尔排序</strong><br>也叫递减增量排序，是插入排序的一种更高效的改进版本。希尔排序是不稳定的排序算法。</p>
 <p><strong>5. 快速排序</strong><br>快速排序使用分治策略(Divide and Conquer)来把一个序列分为两个子序列。步骤为：<br>（1）从序列中挑出一个元素，作为”基准”(pivot).<br>（2）把所有比基准值小的元素放在基准前面，所有比基准值大的元素放在基准的后面（相同的数可以到任一边），这个称为分区(partition)操作。<br>（3）对每个分区递归地进行步骤1~3，递归的结束条件是序列的大小是0或1，这时整体已经被排好序了。<br>稳定性分析：在中枢元素和a[j]交换的时候，很有可能把前面的元素的稳定性打乱，比如序列为 5 3 3 4 3 8 9 10 11，现在中枢元素5和3(第5个元素，下标从1开始计)交换就会把元素3的稳定性打乱，所以快速排序是一个不稳定的排序算法。<br><strong>具体实现如下：</strong></p>
-<pre><code>public class QuickSort {
-    public static int partition(int left, int right, int a[])    {
-        int key = a[left];
-        while(left &lt; right) {
-            while(left &lt; right &amp;&amp; a[right] &gt;= key) {
-                right--;
-            }
-            a[left] = a[right];
-            while(left &lt; right &amp;&amp; a[left] &lt; key) {
-                left++;
-            }
-            a[right] = a[left];
-        }
-        a[left] = key;
-        return left;
-    }
-    public static void quicksort(int left, int right, int a[]) {
-        if(left &lt; right) {
-            int middle = partition(left, right, a);
-            quicksort(left, middle-1, a);
-            quicksort(middle+1, right, a);
-        }
-    }
-    public static void main(String[] args) {
-        int[] a = {49, 38, 65, 97, 76, 13, 27, 49};
-        quicksort(0, a.length-1, a);
-        for(int i = 0, len = a.length; i &lt; len; i++) {
-            System.out.print(a[i]+&quot; &quot;);
-        }
-    }
-}
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuickSort</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> a[])</span>    </span>&#123;</div><div class="line">        <span class="keyword">int</span> key = a[left];</div><div class="line">        <span class="keyword">while</span>(left &lt; right) &#123;</div><div class="line">            <span class="keyword">while</span>(left &lt; right &amp;&amp; a[right] &gt;= key) &#123;</div><div class="line">                right--;</div><div class="line">            &#125;</div><div class="line">            a[left] = a[right];</div><div class="line">            <span class="keyword">while</span>(left &lt; right &amp;&amp; a[left] &lt; key) &#123;</div><div class="line">                left++;</div><div class="line">            &#125;</div><div class="line">            a[right] = a[left];</div><div class="line">        &#125;</div><div class="line">        a[left] = key;</div><div class="line">        <span class="keyword">return</span> left;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> a[])</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(left &lt; right) &#123;</div><div class="line">            <span class="keyword">int</span> middle = partition(left, right, a);</div><div class="line">            quicksort(left, middle-<span class="number">1</span>, a);</div><div class="line">            quicksort(middle+<span class="number">1</span>, right, a);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] a = &#123;<span class="number">49</span>, <span class="number">38</span>, <span class="number">65</span>, <span class="number">97</span>, <span class="number">76</span>, <span class="number">13</span>, <span class="number">27</span>, <span class="number">49</span>&#125;;</div><div class="line">        quicksort(<span class="number">0</span>, a.length-<span class="number">1</span>, a);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>, len = a.length; i &lt; len; i++) &#123;</div><div class="line">            System.out.print(a[i]+<span class="string">" "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p><strong>6.归并排序</strong><br>将待排序序列R[0…n-1]看成是n个长度为1的有序序列，将相邻的有序表成对归并，得到n/2个长度为2的有序表；将这些有序序列再次归并，得到n/4个长度为4的有序序列；如此反复进行下去，最后得到一个长度为n的有序序列。<br>归并排序其实要做两件事：<br>（1）“分解”——将序列每次折半划分。<br>（2）“合并”——将划分后的序列段两两合并后排序。<br><strong>合并过程：</strong><br>设两个有序序列分别为 R[low, mid] 和 R[mid+1, high]<br>先将他们合并到一个局部的暂存数组R2中，合并完成后再将R2复制回R中。<br>为了方便描述，我们称 R[low, mid] 第一段，R[mid+1, high] 为第二段。<br>每次从两个段中取出一个记录进行关键字的比较，将较小者放入R2中。最后将各段中余下的部分直接复制到R2中。<br>经过这样的过程，R2已经是一个有序的序列，再将其复制回R中，一次合并排序就完成了<br><strong>具体实现：</strong></p>
-<pre><code>public class mergeSort {
-    public static void merge(int low, int mid, int high, int[] arr) {
-        int[] tempArr = new int[arr.length];
-        int left = low;
-        int center = mid + 1;
-        int newLow = low;
-        while(low &lt;= mid &amp;&amp; center &lt;= high) {
-            if(arr[low] &lt;= arr[center]) {
-                tempArr[left++] = arr[low++];
-            } else {
-                tempArr[left++] = arr[center++];
-            }
-        }
-        while(low &lt;= mid) {
-            tempArr[left++] = arr[low++];
-        }
-        while (center &lt;= high) {
-            tempArr[left++] = arr[center++];
-        }
-        while (newLow &lt;= high) {
-            arr[newLow] = tempArr[newLow];
-            newLow++;
-        }
-    }
-
-    public static void mergesort(int low, int high, int[] arr) {
-        if(low &gt;= high)
-            return;
-        int mid = (low + high) / 2;
-        mergesort(low, mid, arr);
-        mergesort(mid+1, high, arr);
-        merge(low, mid, high, arr);
-    }
-
-    public static void main(String[] args) {
-        int[] array = {1, 3, 4, 2, 6, 8, 5, 9, 7};
-        mergesort(0, array.length-1, array);
-        for(int i = 0; i &lt; array.length; i++) {
-            System.out.print(array[i] + &quot; &quot;);
-        }
-    }
-}
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">mergeSort</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> low, <span class="keyword">int</span> mid, <span class="keyword">int</span> high, <span class="keyword">int</span>[] arr)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] tempArr = <span class="keyword">new</span> <span class="keyword">int</span>[arr.length];</div><div class="line">        <span class="keyword">int</span> left = low;</div><div class="line">        <span class="keyword">int</span> center = mid + <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> newLow = low;</div><div class="line">        <span class="keyword">while</span>(low &lt;= mid &amp;&amp; center &lt;= high) &#123;</div><div class="line">            <span class="keyword">if</span>(arr[low] &lt;= arr[center]) &#123;</div><div class="line">                tempArr[left++] = arr[low++];</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                tempArr[left++] = arr[center++];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span>(low &lt;= mid) &#123;</div><div class="line">            tempArr[left++] = arr[low++];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> (center &lt;= high) &#123;</div><div class="line">            tempArr[left++] = arr[center++];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> (newLow &lt;= high) &#123;</div><div class="line">            arr[newLow] = tempArr[newLow];</div><div class="line">            newLow++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergesort</span><span class="params">(<span class="keyword">int</span> low, <span class="keyword">int</span> high, <span class="keyword">int</span>[] arr)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(low &gt;= high)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</div><div class="line">        mergesort(low, mid, arr);</div><div class="line">        mergesort(mid+<span class="number">1</span>, high, arr);</div><div class="line">        merge(low, mid, high, arr);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] array = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">7</span>&#125;;</div><div class="line">        mergesort(<span class="number">0</span>, array.length-<span class="number">1</span>, array);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</div><div class="line">            System.out.print(array[i] + <span class="string">" "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p><strong>7.堆排序</strong><br>二叉堆是完全二叉树或者是近似完全二叉树。<br>二叉堆满足二个特性：<br>1．父结点的键值总是大于或等于（小于或等于）任何一个子节点的键值。<br>2．每个结点的左子树和右子树都是一个二叉堆（都是最大堆或最小堆）。</p>
 
       
@@ -696,7 +563,7 @@ public void BubbleSort2(int arr[]) {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -718,7 +585,7 @@ public void BubbleSort2(int arr[]) {
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

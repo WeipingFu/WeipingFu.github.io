@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="子组件显示父组件穿过来的props有两种方式： 1、直接使用这种方式，父组件改变props后，子组件重新渲染，由于直接使用的props，所以我们不需要做什么就可以正常显示最新的props class Child extends Component {     render() {         return &amp;lt;div&amp;gt;{this.props.someThings}&amp;lt;/div&amp;g">
+<meta name="description" content="子组件显示父组件穿过来的props有两种方式： 1、直接使用这种方式，父组件改变props后，子组件重新渲染，由于直接使用的props，所以我们不需要做什么就可以正常显示最新的props 12345class Child extends Component &amp;#123;    render() &amp;#123;        return &amp;lt;div&amp;gt;&amp;#123;this.props.som">
 <meta name="keywords" content="react">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react子组件使用props（一）">
 <meta property="og:url" content="http://yoursite.com/2017/06/20/react 子组件使用props(一）/index.html">
 <meta property="og:site_name" content="fwp个人博客">
-<meta property="og:description" content="子组件显示父组件穿过来的props有两种方式： 1、直接使用这种方式，父组件改变props后，子组件重新渲染，由于直接使用的props，所以我们不需要做什么就可以正常显示最新的props class Child extends Component {     render() {         return &amp;lt;div&amp;gt;{this.props.someThings}&amp;lt;/div&amp;g">
+<meta property="og:description" content="子组件显示父组件穿过来的props有两种方式： 1、直接使用这种方式，父组件改变props后，子组件重新渲染，由于直接使用的props，所以我们不需要做什么就可以正常显示最新的props 12345class Child extends Component &amp;#123;    render() &amp;#123;        return &amp;lt;div&amp;gt;&amp;#123;this.props.som">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T09:57:48.736Z">
+<meta property="og:updated_time" content="2017-08-17T02:00:51.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react子组件使用props（一）">
-<meta name="twitter:description" content="子组件显示父组件穿过来的props有两种方式： 1、直接使用这种方式，父组件改变props后，子组件重新渲染，由于直接使用的props，所以我们不需要做什么就可以正常显示最新的props class Child extends Component {     render() {         return &amp;lt;div&amp;gt;{this.props.someThings}&amp;lt;/div&amp;g">
+<meta name="twitter:description" content="子组件显示父组件穿过来的props有两种方式： 1、直接使用这种方式，父组件改变props后，子组件重新渲染，由于直接使用的props，所以我们不需要做什么就可以正常显示最新的props 12345class Child extends Component &amp;#123;    render() &amp;#123;        return &amp;lt;div&amp;gt;&amp;#123;this.props.som">
 
 
 
@@ -434,27 +434,10 @@
       
         <p>子组件显示父组件穿过来的props有两种方式：</p>
 <p><strong>1、直接使用</strong><br>这种方式，父组件改变props后，子组件重新渲染，由于直接使用的props，所以我们不需要做什么就可以正常显示最新的props</p>
-<pre><code>class Child extends Component {
-    render() {
-        return &lt;div&gt;{this.props.someThings}&lt;/div&gt;
-    }
-}
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class Child extends Component &#123;</div><div class="line">    render() &#123;</div><div class="line">        return &lt;div&gt;&#123;this.props.someThings&#125;&lt;/div&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p><strong>2、转换成自己的state</strong><br>这种方式，由于我们使用的是state，所以每当父组件每次重新传递props时，我们需要重新处理下，将props转换成自己的state，这里就用到了 componentWillReceiveProps。</p>
 <p>每次子组件接收到新的props，都会重新渲染一次，除非你做了处理来阻止（比如使用：shouldComponentUpdate），但是你可以在这次渲染前，根据新的props更新state，更新state也会触发一次重新渲染，但react不会这么傻，所以只会渲染一次，这对应用的性能是有利的。</p>
-<pre><code>class Child extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            someThings: props.someThings
-        };
-    }
-    componentWillReceiveProps(nextProps) {
-        this.setState({someThings: nextProps.someThings});
-    }
-    render() {
-        return &lt;div&gt;{this.state.someThings}&lt;/div&gt;
-    }
-}
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Child extends Component &#123;</div><div class="line">    constructor(props) &#123;</div><div class="line">        super(props);</div><div class="line">        this.state = &#123;</div><div class="line">            someThings: props.someThings</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    componentWillReceiveProps(nextProps) &#123;</div><div class="line">        this.setState(&#123;someThings: nextProps.someThings&#125;);</div><div class="line">    &#125;</div><div class="line">    render() &#123;</div><div class="line">        return &lt;div&gt;&#123;this.state.someThings&#125;&lt;/div&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre>
       
     </div>
@@ -485,8 +468,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/25/网络-HTTP协议/" rel="next" title="http协议">
-                <i class="fa fa-chevron-left"></i> http协议
+              <a href="/2017/06/08/ES6新特性（一）/" rel="next" title="js 模块化小结">
+                <i class="fa fa-chevron-left"></i> js 模块化小结
               </a>
             
           </div>
@@ -572,7 +555,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -594,7 +577,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

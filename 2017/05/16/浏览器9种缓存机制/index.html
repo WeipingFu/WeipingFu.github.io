@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="fwp个人博客">
 <meta property="og:description" content="一、http缓存http缓存是基于HTTP协议的浏览器文件级缓存机制。即针对文件的重复请求情况下，浏览器可以根据协议头判断从服务器端请求文件还是从本地读取文件，chrome控制台下的Frames即展示的是浏览器的http文件级缓存。详细介绍请看http缓存机制 二、websqlWeb Sql 数据库API实际上不是HTML5规范的组成部分，而是以一个独立规范形式出现，在HTML5之前就已经存在了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-06T10:18:40.657Z">
+<meta property="og:updated_time" content="2017-08-17T01:55:21.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器9种缓存机制">
 <meta name="twitter:description" content="一、http缓存http缓存是基于HTTP协议的浏览器文件级缓存机制。即针对文件的重复请求情况下，浏览器可以根据协议头判断从服务器端请求文件还是从本地读取文件，chrome控制台下的Frames即展示的是浏览器的http文件级缓存。详细介绍请看http缓存机制 二、websqlWeb Sql 数据库API实际上不是HTML5规范的组成部分，而是以一个独立规范形式出现，在HTML5之前就已经存在了。">
@@ -471,23 +471,9 @@
 <h3 id="五、sessionStorage"><a href="#五、sessionStorage" class="headerlink" title="五、sessionStorage"></a>五、sessionStorage</h3><p>sessionStorage和localstorage类似，但是浏览器关闭则会全部删除，api和localstorage相同。</p>
 <h3 id="六、application-cache"><a href="#六、application-cache" class="headerlink" title="六、application cache"></a>六、application cache</h3><p>HTML5 引入了应用程序缓存，这意味着web应用可进行缓存，并可在没有因特网连接时进行访问。<br><strong>三个优势：</strong><br>离线浏览 - 用户可在应用离线时使用它们<br>速度 - 已缓存资源加载得更快<br>减少服务器负载 - 浏览器将只从服务器下载更新过或更改过的资源。<br>所有主流浏览器均支持应用程序缓存，除了 IE。</p>
 <h4 id="使用应用程序缓存"><a href="#使用应用程序缓存" class="headerlink" title="使用应用程序缓存"></a>使用应用程序缓存</h4><p>要在html标签上加上mainfest属性</p>
-<pre><code>&lt;!DOCTYPE HTML&gt;
-&lt;html manifest=&quot;demo.appcache&quot;&gt;
-...
-&lt;/html&gt;
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">manifest</span>=<span class="string">"demo.appcache"</span>&gt;</span></div><div class="line">...</div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 </code></pre><p>以下是demo.appcache文件的一个示例</p>
-<pre><code>CACHE MANIFEST      //文件将在首次下载后进行缓存
-# 2012-02-21 v1.0.0
-/theme.css
-/logo.gif
-/main.js
-
-NETWORK:        //文件需要与服务器的连接，且不会被缓存
-login.asp
-
-FALLBACK:       //文件规定当页面无法访问时的回退页面
-//第一个 URI 是资源，第二个是替补
-/html5/ /404.html
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">CACHE MANIFEST      //文件将在首次下载后进行缓存</div><div class="line"># 2012-02-21 v1.0.0</div><div class="line">/theme.css</div><div class="line">/logo.gif</div><div class="line">/main.js</div><div class="line"></div><div class="line">NETWORK:        //文件需要与服务器的连接，且不会被缓存</div><div class="line">login.asp</div><div class="line"></div><div class="line">FALLBACK:       //文件规定当页面无法访问时的回退页面</div><div class="line">//第一个 URI 是资源，第二个是替补</div><div class="line">/html5/ /404.html</div></pre></td></tr></table></figure>
 </code></pre><h3 id="七、cachestorage"><a href="#七、cachestorage" class="headerlink" title="七、cachestorage"></a>七、cachestorage</h3><p>CacheStorage是在ServiceWorker的规范中定义的。它主要用来存储 Response 对象，即是对 HTTP 响应做缓存的。<br>CacheStorage 是多个 Cache 的集合，而每个 Cache 可以存储多个 Response 对象。</p>
 <h4 id="主要API"><a href="#主要API" class="headerlink" title="主要API"></a>主要API</h4><ol>
 <li>CacheStorage.match() - 判断是否和cache中某个对象匹配，若匹配则返回一个Promise对象</li>
@@ -626,7 +612,7 @@ FALLBACK:       //文件规定当页面无法访问时的回退页面
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -648,7 +634,7 @@ FALLBACK:       //文件规定当页面无法访问时的回退页面
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
