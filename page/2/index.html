@@ -321,7 +321,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/有关session、cookie、jwt/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/21/http缓存机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fwp">
@@ -340,7 +340,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/21/有关session、cookie、jwt/" itemprop="url">有关session、cookie和jwt验证</a></h1>
+                <a class="post-title-link" href="/2017/05/21/http缓存机制/" itemprop="url">http缓存机制</a></h1>
         
 
         <div class="post-meta">
@@ -375,8 +375,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
+                  <a href="/categories/网络/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
                   </a>
                 </span>
 
@@ -393,9 +393,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/21/有关session、cookie、jwt/#comments" itemprop="discussionUrl">
+                <a href="/2017/05/21/http缓存机制/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/05/21/有关session、cookie、jwt/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/05/21/http缓存机制/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -403,7 +403,7 @@
 
           
           
-             <span id="/2017/05/21/有关session、cookie、jwt/" class="leancloud_visitors" data-flag-title="有关session、cookie和jwt验证">
+             <span id="/2017/05/21/http缓存机制/" class="leancloud_visitors" data-flag-title="http缓存机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -436,41 +436,15 @@
       
         
           
-            <p>session指的是一个终端用户与交互系统进行通信的时间间隔（会话）<br>例如：用户访问某个网站，从他登录到退出的时间段就是session<br>由于http是是一种无状态的协议，故有这样一个情况：<br>用户首次登录某个网站后，当用户再次向服务器端发送请求时还要进行登录验证，为了避免用户重复登录的麻烦，就要用到基于session或基于token的验证了。<br>其原理就是让浏览器记住用户登录的信息，在下次请求时由浏览器代替用户进行登录验证。</p>
-<h3 id="一-基于session的验证"><a href="#一-基于session的验证" class="headerlink" title="一 基于session的验证"></a>一 基于session的验证</h3><h4 id="1-简要过程"><a href="#1-简要过程" class="headerlink" title="1. 简要过程"></a>1. 简要过程</h4><ol>
-<li>生成全局唯一标识符（sessionid）；</li>
-<li>开辟数据存储空间。一般会在内存中创建相应的数据结构，但这种情况下，系统一旦掉电，所有的会话数据就会丢失，如果是电子商务网站，这种事故会造成严重的后果。不过也可以写到文件里甚至存储在数据库中，这样虽然会增加I/O开销，但session可以实现某种程度的持久化，而且更有利于session的共享；</li>
-<li><p>将session的全局唯一标示符发送给客户端。<br>问题的关键就在服务端如何发送这个session的唯一标识上。联系到HTTP协议，数据无非可以放到请求行、头域或Body里，基于此，一般来说会有两种常用的方式：cookie和URL重写。</p>
-<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie　"></a>Cookie　</h4><p>服务端只要设置Set-cookie头就可以将session的标识符传送到客户端，而客户端此后的每一次请求都会带上这个标识符，服务器端可以为cookie设置失效时间，一般会设置失效时间为0，即浏览器进程有效时间。至于浏览器怎么处理这个0，每个浏览器都有自己的方案，但差别都不会太大（一般体现在新建浏览器窗口的时候）。</p>
-<h4 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h4><p>所谓URL重写就是重写URL。在返回用户请求的页面之前，将页面内所有的URL后面全部以get参数的方式加上session标识符（或者加在path info部分等等），这样用户在收到响应之后，无论点击哪个链接或提交表单，都会在再带上session的标识符，从而就实现了会话的保持。这样做可以在客户端禁止使用cookie的时候也进行session认证。</p>
-<h4 id="2-在express中使用session"><a href="#2-在express中使用session" class="headerlink" title="2. 在express中使用session"></a>2. 在express中使用session</h4><p>express-session 是基于express框专门用于处理session的中间件。由于session的认证机制离不开cookie，需要同时使用cookieParser 中间件。<br>express-session的常用参数:<br>secret:一个String类型的字符串，作为服务器端生成session的签名<br>name:返回客户端的key的名称，默认为connect.sid,也可以自己设置<br>resave:(是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。默认为true。但是(后续版本)有可能默认失效，所以最好手动添加。<br>saveUninitialized:初始化session时是否保存到存储。默认为true，但是(后续版本)有可能默认失效，所以最好手动添加。<br>cookie:设置返回到前端key的属性，默认值为{ path: ‘/’, httpOnly: true, secure: false, maxAge: null }。<br><strong>express-session的一些方法:</strong><br>Session.destroy():删除session，当检测到客户端关闭时调用。<br>Session.reload():当session有修改时，刷新session。<br>Session.regenerate()：将已有session初始化。<br>Session.save()：保存session。 </p>
-<h4 id="3-基于session验证存在的问题"><a href="#3-基于session验证存在的问题" class="headerlink" title="3. 基于session验证存在的问题"></a>3. 基于session验证存在的问题</h4><p><strong>1）存储:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存或文件、数据库中，而随着认证用户的增多，服务端的开销会明显增大。<br><strong>2）扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在特定的这台服务器上,才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡器的能力。这也限制了应用的扩展能力。<br><strong>3）CSRF:</strong> 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</p>
-<h3 id="二-基于token的验证（jwt）"><a href="#二-基于token的验证（jwt）" class="headerlink" title="二 基于token的验证（jwt）"></a>二 基于token的验证（jwt）</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br><strong>基本过程</strong><br>1）用户使用用户名密码来请求服务器<br>2）服务器进行验证用户的信息<br>3）服务器通过验证发送给用户一个token<br>4）客户端存储token(可采用cookie或sessionStorage、localStorage)，并在每次请求时附送上这个token值<br>5）服务端验证token值，并返回数据<br>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略。</p>
-<h4 id="1-JWT的构成"><a href="#1-JWT的构成" class="headerlink" title="1. JWT的构成"></a>1. JWT的构成</h4><p>JWT是由三段信息构成的，将这三段信息用.链接一起就构成了Jwt字符串。<br>第一部分称为头部（header), 第二部分称为载荷（payload), 第三部分是签证（signature).</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">// 1. Headers</div><div class="line">// 包括类别（typ）、加密算法（alg）；</div><div class="line">&#123;</div><div class="line">    &quot;alg&quot;: &quot;HS256&quot;,</div><div class="line">    &quot;typ&quot;: &quot;JWT&quot;</div><div class="line">&#125;</div><div class="line">// 2. Claims</div><div class="line">// 包括需要传递的用户信息；</div><div class="line">&#123;</div><div class="line">    &quot;sub&quot;: &quot;1234567890&quot;,</div><div class="line">    &quot;name&quot;: &quot;John Doe&quot;,</div><div class="line">    &quot;admin&quot;: true</div><div class="line">&#125;</div><div class="line">// 3. Signature</div><div class="line">// 根据alg算法与私有秘钥进行加密得到的签名字串；</div><div class="line">// 这一段是最重要的敏感信息，只能在服务端解密；</div><div class="line">HMACSHA256(</div><div class="line">    base64UrlEncode(header) + &quot;.&quot; +</div><div class="line">    base64UrlEncode(payload),</div><div class="line">    SECREATE_KEY</div><div class="line">)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>（1）头部header</strong><br>jwt的头部承载两部分信息：声明类型，这里是jwt；声明加密的算法 通常直接使用 HMAC SHA256。完整的头部就像下面这样的JSON：</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &apos;typ&apos;: &apos;JWT&apos;,</div><div class="line">    &apos;alg&apos;: &apos;HS256&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>将头部进行base64编码（该加密是可以对称解码的),构成了第一部分</p>
-<pre><code>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
-</code></pre><p><strong>（2）载荷payload</strong><br>载荷就是存放有效信息的地方，这些有效信息包含三个部分：标准中注册的声明、公共的声明、私有的声明。<br><strong>1）标准中注册的声明 (建议但不强制使用) ：</strong><br><strong>iss:</strong> jwt签发者<br><strong>sub:</strong> jwt所面向的用户<br><strong>aud:</strong> 接收jwt的一方<br><strong>exp:</strong> jwt的过期时间，这个过期时间必须要大于签发时间<br><strong>nbf:</strong> 定义在什么时间之前，该jwt都是不可用的.<br><strong>iat:</strong> jwt的签发时间<br><strong>jti:</strong> jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。<br><strong>2）公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。<br><strong>3）私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解码的，意味着该部分信息可以归类为明文信息。<br>定义一个payload:</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;sub&quot;: &quot;1234567890&quot;,</div><div class="line">    &quot;name&quot;: &quot;John Doe&quot;,</div><div class="line">    &quot;admin&quot;: true</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>然后将其进行base64加密，得到Jwt的第二部分。</p>
-<pre><code>eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
-</code></pre><p><strong>签证signature</strong><br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：header (base64后的)、payload (base64后的)、secret。<br>这个部分需要base64编码后的header和base64编码后的payload使用.连接组成的字符串，然后通过header中声明的编码方式进行加盐secret组合加密，然后就构成了jwt的第三部分。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> encodedString = base64UrlEncode(header) + <span class="string">'.'</span> + base64UrlEncode(payload);</div><div class="line"><span class="keyword">var</span> signature = HMACSHA256(encodedString, <span class="string">'secret'</span>); <span class="comment">// TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span></div></pre></td></tr></table></figure>
-</code></pre><p>将header、payload和signature三部分用.连接起来就形成了整个jwt字符串。<br>secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
-<h4 id="2-使用jwt"><a href="#2-使用jwt" class="headerlink" title="2. 使用jwt"></a>2. 使用jwt</h4><p>客户端发送请求，可以将token设为请求地址参数或请求body参数或在请求头部分设置Authorization字段（推荐）传给服务器：</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fetch(<span class="string">'api/user/1'</span>, &#123;</div><div class="line">    headers: &#123;</div><div class="line">        <span class="string">'Authorization'</span>: <span class="string">'Bearer '</span> + token</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-</code></pre><p>服务器端收到请求后，根据请求头部token的header部分的加密算法和plaload加上自己的secret生成第三部分内容。然后再与客户端发送过来的第三部分内容对比。<br><strong>express使用jwt</strong><br>服务器端在验证用户登录成功后，设置token，并返回给客户端：</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var express = require(&apos;express&apos;);</div><div class="line">var jwt = require(&apos;jwt-simple&apos;);</div><div class="line">var app = express();</div><div class="line">app.set(&apos;jwtTokenSecret&apos;, &apos;YOUR_SECRET_STRING&apos;);</div><div class="line"></div><div class="line">var expires = moment().add(&apos;days&apos;, 7).valueOf();</div><div class="line">var token = jwt.encode(&#123;</div><div class="line">    iss: user.id,</div><div class="line">    exp: expires</div><div class="line">&#125;, app.get(&apos;jwtTokenSecret&apos;));</div><div class="line"></div><div class="line">res.json(&#123;</div><div class="line">    token : token,</div><div class="line">    expires: expires,</div><div class="line">    user: user.toJSON()</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-</code></pre><p>jwt.encode()函数有2个参数。第一个就是一个需要编码的token对象，第二个是一个编码的密钥。Moment.js被用来设置token将在7天之后失效。最后通过res.json()方法返回这个JSON对象给客户端。<br>客户端接受到token后存储，待下次请求时将token传给服务器端验证。</p>
-<h4 id="3-jwt的优点和安全相关问题"><a href="#3-jwt的优点和安全相关问题" class="headerlink" title="3. jwt的优点和安全相关问题"></a>3. jwt的优点和安全相关问题</h4><p><strong>优点：</strong><br>1）因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。<br>2）因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。<br>3）便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。<br>4）它不需要在服务端保存会话信息, 所以它易于应用的扩展。<br><strong>安全相关注意事项：</strong><br>1）不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。<br>2）保护好secret私钥，该私钥非常重要。<br>3）如果可以，请使用https协议。<br>4）使用jwe，及rsa加密。<br><strong>可能发生的安全问题：</strong><br><strong>XSS：</strong> XSS是Web中最常见的一种漏洞，其主要原因是对用户输入信息不加过滤，导致用户（被误导）恶意输入的Js代码在访问该网页时被执行，而Js可以读取当前网站域名下保存的Cookie信息。<br>针对这种攻击，无论将jwt存储在Cookie还是localStorage中，信息都有可能被窃取，为了防止XSS攻击，需要对用户输入的所有信息进行过滤。<br><strong>XSRF：</strong>主要利用Cookie是按照域名存储，同时访问某域名时浏览器会自动携带该域名所保存的Cookie信息这一特征。如果执意要将JWT存储在Cookie中，服务端则需要额外验证请求来源，或者在提交表单中加入随机签名并在处理表单时进行验证。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="external">什么是jwt</a><br><a href="http://blog.csdn.net/offbye/article/details/47617367" target="_blank" rel="external">nodejs中使用jwt</a></p>
-
-          
+          什么是cache？浏览器缓存（Browser Caching）是为了加速浏览，浏览器在用户磁盘上对最近请求过的文档进行存储，当访问者再次请求这个页面时，浏览器就可以从本地磁盘显示文档，这样就可以加速页面的阅览。chrome控制台下的Frames即展示的是浏览器的http文件级缓存。cache的作用：
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/21/http缓存机制/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -632,60 +606,16 @@
       
         
           
-            <h3 id="一、http缓存"><a href="#一、http缓存" class="headerlink" title="一、http缓存"></a>一、http缓存</h3><p>http缓存是基于HTTP协议的浏览器文件级缓存机制。即针对文件的重复请求情况下，浏览器可以根据协议头判断从服务器端请求文件还是从本地读取文件，chrome控制台下的Frames即展示的是浏览器的http文件级缓存。<br>详细介绍请看<a href="https://www.zybuluo.com/mdeditor#809371" target="_blank" rel="external">http缓存机制</a></p>
-<h3 id="二、websql"><a href="#二、websql" class="headerlink" title="二、websql"></a>二、websql</h3><p>Web Sql 数据库API实际上不是HTML5规范的组成部分，而是以一个独立规范形式出现，在HTML5之前就已经存在了。（现已不推荐使用）<br>其特点：</p>
-<ul>
-<li>将数据以数据库的形式存储在客户端，根据需求去读取;</li>
-<li>与Storage的区别是：Storage和Cookie都是以键值对的形式存在的;</li>
-<li>Web Sql 更方便于检索，允许sql语句查询;</li>
-<li>这个数据库是集成在浏览器里面的，目前主流浏览器基本都已支持;<br><strong>websql API主要包含三个核心方法：</strong><ol>
-<li>openDatabase：这个方法使用现有数据库或新建数据库来创建数据库对象</li>
-<li>transaction：这个方法允许我们根据情况控制事务提交或回滚</li>
-<li>executeSql：这个方法用于执行SQL语句</li>
-</ol>
-</li>
-</ul>
-<p>采用transaction和executeSql配合可以执行sql语句</p>
-<pre><code> db.transaction(function (tx) { 
-  tx.executeSql(&apos;CREATE TABLE IF NOT EXISTS t1 (id unique, log)&apos;);  
-  tx.executeSql(&apos;INSERT INTO t1 (id, log) VALUES (1, &quot;foobar&quot;)&apos;);  
-  tx.executeSql(&apos;INSERT INTO t1 (id, log) VALUES (2, &quot;logmsg&quot;)&apos;);  
-});
-</code></pre><h3 id="三、IndexedDB"><a href="#三、IndexedDB" class="headerlink" title="三、IndexedDB"></a>三、IndexedDB</h3><p>IndexedDB是一个事务型数据库系统，类似于基于SQL的RDBMS。 然而不同的是它使用固定列表，IndexedDB是一个基于JavaScript的面向对象的数据库。 IndexedDB允许您存储和检索用键索引的对象.<br>Web SQL Database实际上已经被废弃，而HTML5的支持的本地存储实际上变成了Web Storage（Local Storage和Session Storage）与IndexedDB。Web Storage使用简单字符串键值对在本地存储数据，方便灵活，但是对于大量结构化数据存储力不从心，IndexedDB是为了能够在客户端存储大量的结构化数据，并且使用索引高效检索的API。</p>
-<h4 id="IndexedDB-API"><a href="#IndexedDB-API" class="headerlink" title="IndexedDB API"></a>IndexedDB API</h4><p>IndexedDB分别为同步和异步访问提供了单独的API。同步API本来是要用于仅供Web Workers内部使用，但是还没有被任何浏览器所实现。异步API在Web Workers内部和外部都可以使用。</p>
-<h5 id="异步API"><a href="#异步API" class="headerlink" title="异步API"></a>异步API</h5><p><strong>操作数据库：</strong></p>
-<ol>
-<li>window.indexedDB.open(dbname, 版本号)-打开或创建一个数据库，该方法返回一个 IDBRequest 对象 (IDBOpenDBRequest)；异步操作通过在 IDBRequest 对象上触发事件来和调用程序进行通信。</li>
-<li>所有异步请求都有一个 onsuccess 回调和一个 onerror 回调，前者在数据库操作成功时调用，后者在一个操作未成功时调用。</li>
-<li>修改数据库或对象存储的代码必须位于 upgradeneeded 事件处理函数中；修改数据库会触发 upgradeneeded 事件（通过onupgradeneeded函数监听）。</li>
-<li>删除数据库：indexDB.deleteDatabase(dbname)<br><strong>操作对象存储：</strong><br>对象存储是一个数据记录集合。要在现有数据库中创建一个新对象存储，则需要对现有数据库进行版本控制。为此，请打开要进行版本控制的数据库。除了数据库名称之外，open 方法还接受版本号作为第二个参数。</li>
-<li>创建对象存储：createObjectStore(name, option)</li>
-<li>操作对象：添加-IDBObjectStore.add()；获取-IDBObjectStore.get()；删除-IDBObjectStore.delete()；更新-IDBObjectStore.put()等</li>
-<li>关于索引：创建-IDBObjectStore.createIndex()；打开-IDBObjectStore.index()；删除-IDBObjectStore.deleteIndex()；</li>
-<li>关于游标：IDBObjectStore.openCursor()；IDBObjectStore.openKeyCursor() </li>
-<li><p>使用事务：db.transaction(objectname, mode)，默认mode是readonly，其余选项还有readwrite和versionchange，示例代码：</p>
-<p> var trans1 = db.transaction(“foo”, “readwrite”);<br> var trans2 = db.transaction(“foo”, “readwrite”);<br> var objectStore2 = trans2.objectStore(“foo”)<br> var objectStore1 = trans1.objectStore(“foo”)<br> objectStore2.put(“2”, “key”);<br> objectStore1.put(“1”, “key”);</p>
-</li>
-</ol>
-<h3 id="四、localStorage"><a href="#四、localStorage" class="headerlink" title="四、localStorage"></a>四、localStorage</h3><p>localStorage是html5的一种新的本地缓存方案，目前用的比较多，一般用来存储ajax返回的数据，加快下次页面打开时的渲染速度。<br>无时间限制，但不能存大量数据；数据量超过存储范围会报错且自动删除靠前的数据。<br>localStorage.setItem(key, value)<br>localStorage.getItem(key)<br>localStorage.removeItem(key)<br>localStorage.clear()</p>
-<h3 id="五、sessionStorage"><a href="#五、sessionStorage" class="headerlink" title="五、sessionStorage"></a>五、sessionStorage</h3><p>sessionStorage和localstorage类似，但是浏览器关闭则会全部删除，api和localstorage相同。</p>
-<h3 id="六、application-cache"><a href="#六、application-cache" class="headerlink" title="六、application cache"></a>六、application cache</h3><p>HTML5 引入了应用程序缓存，这意味着web应用可进行缓存，并可在没有因特网连接时进行访问。<br><strong>三个优势：</strong><br>离线浏览 - 用户可在应用离线时使用它们<br>速度 - 已缓存资源加载得更快<br>减少服务器负载 - 浏览器将只从服务器下载更新过或更改过的资源。<br>所有主流浏览器均支持应用程序缓存，除了 IE。</p>
-<h4 id="使用应用程序缓存"><a href="#使用应用程序缓存" class="headerlink" title="使用应用程序缓存"></a>使用应用程序缓存</h4><p>要在html标签上加上mainfest属性</p>
-<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">manifest</span>=<span class="string">"demo.appcache"</span>&gt;</span></div><div class="line">...</div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre><p>以下是demo.appcache文件的一个示例</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">CACHE MANIFEST      //文件将在首次下载后进行缓存</div><div class="line"># 2012-02-21 v1.0.0</div><div class="line">/theme.css</div><div class="line">/logo.gif</div><div class="line">/main.js</div><div class="line"></div><div class="line">NETWORK:        //文件需要与服务器的连接，且不会被缓存</div><div class="line">login.asp</div><div class="line"></div><div class="line">FALLBACK:       //文件规定当页面无法访问时的回退页面</div><div class="line">//第一个 URI 是资源，第二个是替补</div><div class="line">/html5/ /404.html</div></pre></td></tr></table></figure>
-</code></pre><h3 id="七、cachestorage"><a href="#七、cachestorage" class="headerlink" title="七、cachestorage"></a>七、cachestorage</h3><p>CacheStorage是在ServiceWorker的规范中定义的。它主要用来存储 Response 对象，即是对 HTTP 响应做缓存的。<br>CacheStorage 是多个 Cache 的集合，而每个 Cache 可以存储多个 Response 对象。</p>
-<h4 id="主要API"><a href="#主要API" class="headerlink" title="主要API"></a>主要API</h4><ol>
-<li>CacheStorage.match() - 判断是否和cache中某个对象匹配，若匹配则返回一个Promise对象</li>
-<li>cacheStorage.has() - 如果包含指定cache对象，则返回一个promise对象。</li>
-<li>cacheStorage.open() - 打开一个cache对象，成功则返回一个promise对象。</li>
-<li>cacheStorage.delete() - 删除cache对象，成功则返回一个promise对象，否则返回false。</li>
-<li>cacheStorage.keys() - </li>
-<li>cache.addAll(), cache.put()<h3 id="八、cookie"><a href="#八、cookie" class="headerlink" title="八、cookie"></a>八、cookie</h3>服务器端设置cookie向客户端颁发，cookie一般通过http请求中在头部一起发送到服务器端。<br>一条cookie记录主要由键、值、域、过期时间、大小组成，一般保存用户的认证信息。cookie最大长度和域名个数由不同浏览器决定。<br>可能会受到CSRF／XSRF（Cross-site request forgery）攻击<h3 id="九、flash缓存"><a href="#九、flash缓存" class="headerlink" title="九、flash缓存"></a>九、flash缓存</h3>这种方式基本不用，这一方法主要基于flash有读写浏览器端本地目录的功能，同时也可以向js提供调用的api，则页面可以通过js调用flash去读写特定的磁盘目录，达到本地数据缓存的目的。</li>
-</ol>
-<p>参考：<br><a href="http://www.techweb.com.cn/network/system/2016-01-05/2252395.shtml" target="_blank" rel="external">浏览器九种缓存机制介绍</a></p>
-
-          
+          一、http缓存http缓存是基于HTTP协议的浏览器文件级缓存机制。即针对文件的重复请求情况下，浏览器可以根据协议头判断从服务器端请求文件还是从本地读取文件，chrome控制台下的Frames即展示的是浏览器的http文件级缓存。详细介绍请看http缓存机制
+二、websqlWeb Sql 数据库
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/16/浏览器9种缓存机制/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -847,20 +777,17 @@
       
         
           
-            <p>display：inline-block是介于inline和block之间的一个取值，其使元素既可以设置width、height、padding、margin等，又保持了inline元素不占整行的特性。<br>通过设置元素为inline-block，可以实现多列布局、导航栏等效果，但是会出现以下问题：</p>
-<ol>
-<li>元素之间会出现空白间距</li>
-<li>有内容的元素与无内容的元素渲染方式不一样</li>
-</ol>
-<h3 id="现象原因及解决方法"><a href="#现象原因及解决方法" class="headerlink" title="现象原因及解决方法"></a>现象原因及解决方法</h3><h4 id="空白间距"><a href="#空白间距" class="headerlink" title="空白间距"></a>空白间距</h4><p>空白间距是由换行或回车所产生空白符所致。空白间距的大小是由font-size来决定的，所以要消除空白间距，只需要把父元素的font-size设置为0即可，子元素的font-size需要重新设置。<br>如果需要兼容IE6、7，需设置*word-spacing： -1px</p>
-<h4 id="有内容元素与无内容元素不在一行显示"><a href="#有内容元素与无内容元素不在一行显示" class="headerlink" title="有内容元素与无内容元素不在一行显示"></a>有内容元素与无内容元素不在一行显示</h4><p>有内容元素和无内容元素的对齐方式不同，有内容元素以bottom为基准，无内容元素以top为基准。<br>故只要在有内容元素上设置vertical-align:top或者在无内容元素上设置vertical-align: bottom</p>
-<h4 id="元素内连续的英文句子不断行，超出范围"><a href="#元素内连续的英文句子不断行，超出范围" class="headerlink" title="元素内连续的英文句子不断行，超出范围"></a>元素内连续的英文句子不断行，超出范围</h4><p>纯连续字母和数字不会换行，只能最后加上 word-wrap: break-word 强制自动换行搞定。</p>
-<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
-<li>网页的导航栏</li>
-<li>排列布局，如3列布局</li>
-</ul>
+          display：inline-block是介于inline和block之间的一个取值，其使元素既可以设置width、height、padding、margin等，又保持了inline元素不占整行的特性。通过设置元素为inline-block，可以实现多列布局、导航栏等效果，但是会出现以下问题：
 
-          
+元
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/14/display-inline-block问题及其解决方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1022,38 +949,15 @@
       
         
           
-            <h3 id="新增标签"><a href="#新增标签" class="headerlink" title="新增标签"></a>新增标签</h3><h4 id="结构标签"><a href="#结构标签" class="headerlink" title="结构标签"></a>结构标签</h4><p><strong>（1）section：</strong>独立内容区块，可以用h1~h6组成大纲，表示文档结构，也可以有章节、页眉、页脚或页眉的其他部分；<br><strong>（2）article：</strong>特殊独立区块，表示这篇页眉中的核心内容；<br><strong>（3）aside：</strong>标签内容之外与标签内容相关的辅助信息；<br><strong>（4）header：</strong>某个区块的头部信息/标题；<br><strong>（5）hgroup：</strong>头部信息/标题的补充内容；<br><strong>（6）footer：</strong>底部信息；<br><strong>（7）nav：</strong>导航条部分信息<br><strong>（8）figure：</strong>独立的单元，例如某个有图片与内容的新闻块。</p>
-<h4 id="表单标签"><a href="#表单标签" class="headerlink" title="表单标签"></a>表单标签</h4><p><strong>（1）email：</strong>必须输入邮件；<br><strong>（2）url：</strong>必须输入url地址；<br><strong>（3）number：</strong>必须输入数值；<br><strong>（4）range：</strong>必须输入一定范围内的数值；<br><strong>（5）Date Pickers：</strong>日期选择器；input type类型选择：<br>a. date：选取日、月、年<br>b. month：选取月、年<br>c. week：选取周和年<br>d. time：选取时间（小时和分钟）<br>e. datetime：选取时间、日、月、年（UTC时间）<br>f. datetime-local：选取时间、日、月、年（本地时间）<br><strong>（6）search：</strong>搜索常规的文本域；<br><strong>（7）color：</strong>颜色（拾色器）<br><strong>（8）tel：</strong>电话号码</p>
-<h4 id="媒体标签"><a href="#媒体标签" class="headerlink" title="媒体标签"></a>媒体标签</h4><p><strong>（1）video：</strong>视频<br><strong>（2）audio：</strong>音频<br><strong>（3）embed：</strong>嵌入内容（包括各种媒体），Midi、Wav、AU、MP3、Flash、AIFF等。</p>
-<h4 id="其他标签"><a href="#其他标签" class="headerlink" title="其他标签"></a>其他标签</h4><p><strong>（1）mark：</strong>标注（像荧光笔做笔记）<br><strong>（2）progress：</strong>进度条；<br><code>&lt;progress max=&quot;最大进度条的值&quot; value=&quot;当前进度条的值&quot;&gt;</code><br><strong>（3）time：</strong>数据标签，给搜索引擎使用；发布日期<br><code>&lt;time datetime=&quot;2014-12-25T09:00&quot;&gt;9：00&lt;/time&gt;更新日期&lt;time datetime=&quot;2015-
-01-23T04:00&quot; pubdate&gt;4:00&lt;/time&gt;</code><br><strong>（4）ruby和rt：</strong>对某一个字进行注释；<br><code>&lt;ruby&gt;&lt;rt&gt;注释内容&lt;/rt&gt;&lt;rp&gt;浏览器不支持时如何显示&lt;/rp&gt;&lt;/ruby&gt;</code><br><strong>（5）wbr：</strong>软换行，页面宽度到需要换行时换行；<br><strong>（6）canvas：</strong>使用JS代码做内容进行图像绘制；<br><strong>（7）command：</strong>按钮；<br><strong>（8）deteils ：</strong>展开菜单；<br><strong>（9）dateilst：</strong>文本域下拉提示；<br><strong>（10）keygen:</strong> 加密；</p>
-<h3 id="新增属性"><a href="#新增属性" class="headerlink" title="新增属性"></a>新增属性</h3><p><strong>（1）manifest属性：</strong>定义页面需要用到的离线应用文件，一般放在html标签里<br><strong>（2）charset属性：</strong> meta属性之一,定义页面的字符集<br><strong>（3）sizes属性：</strong> link新增属性，当link的rel=”icon”时，用以设置图标大小<br><strong>（4）base属性:</strong><br><code>&lt;base href=&quot;http://localhost/&quot; target=&quot;_blank&quot;&gt;</code>表示当在新窗口打开一个页面时，会将href中的内容作为前缀添加到地址前<br><strong>（5）defer属性：</strong> script标签属性，表示脚本加载完毕后，只有当页面也加载完毕才执行（推迟执行）, h5之前就有<br><strong>（6）async属性：</strong> script标签属性，脚本加载完毕后马上执行（运行过程中浏览器会解析下面的内容），即使页面还没有加载完毕（异步执行）<br><strong>（7）media属性：</strong> a元素属性：表示对何种设备进行优化<br><strong>（8）hreflang属性：</strong> a的属性，表示超链接指向的网址使用的语言<br><strong>（9）ref属性：</strong> a的属性,定义超链接是否是外部链接<br><strong>（10）reversed属性:</strong> ol的属性，定义序号是否倒叙<br><strong>（11）start属性：</strong> ol的属性，定义序号的起始值<br><strong>（12）scoped属性：</strong> 内嵌CSS样式的属性，定义该样式只局限于拥有该内嵌样式的元素，适用于单页开发<br><strong>（13）seamless属性：</strong> iframe元素，新增了seamless无边距无边框</p>
-<h3 id="新增实用方法和属性"><a href="#新增实用方法和属性" class="headerlink" title="新增实用方法和属性"></a>新增实用方法和属性</h3><p><strong>1. getElementsByClassName()方法</strong><br>该方法接收一个参数，即一个包含一或多个类名的字符串，返回带有指定类的所有元素的NodeList。传入多个类名时，类名的先后顺序不重要。<br><strong>2. classList 属性</strong><br>element.classList属性返回由element元素的classname组成的类数组，只读属性，可以通过以下方法操作：</p>
-<ul>
-<li>add(value)：将给定的字符串值添加到列表中。如果值已经存在，就不添加了。</li>
-<li>contains(value)：表示列表中是否存在给定的值，如果存在则返回true，否则返回false。</li>
-<li>remove(value)：从列表中删除给定的字符串。</li>
-<li>toggle(value)：如果列表中已经存在给定的值，删除它；如果列表中没有给定的值，添加它。</li>
-</ul>
-<p><strong>3. 自定义数据属性</strong><br>HTML5 规定可以为元素添加非标准的属性，但要添加前缀data-，目的是为元素提供与渲染无关的信息，或者提供语义信息。这些属性可以任意添加、随便命名，只要以data-开头即可。<br>data属性可以通过element.dataset.<em>来获取<br><strong>4. outerHTML 属性</strong><br>outerHTML 属性和innerHTML 类似；不同的是，outerHTML包括调用节点在内，而innerHTML不包括。<br><em>*5. insertAdjacentHTML()方法</em></em><br>插入元素，它接收两个参数：插入位置和要插入的HTML文本。第一个参数必须是下列值之一：<br>“beforebegin”，在当前元素之前插入一个紧邻的同辈元素；<br>“afterbegin”，在当前元素之下插入一个新的子元素或在第一个子元素之前再插入新的子元素；<br>“beforeend”，在当前元素之下插入一个新的子元素或在最后一个子元素之后再插入新的子元素；<br>“afterend”，在当前元素之后插入一个紧邻的同辈元素。</p>
-<h3 id="新增API"><a href="#新增API" class="headerlink" title="新增API"></a>新增API</h3><h4 id="Drag-amp-Drop-API-拖放"><a href="#Drag-amp-Drop-API-拖放" class="headerlink" title="Drag&amp;Drop API (拖放)"></a>Drag&amp;Drop API (拖放)</h4><p>使用dataTransfer 接口来支持拖放数据存储，它的使用方式一般为 event.dataTransfer。</p>
-<blockquote>
-<p><strong>dataTransfer.effectAllowed[=value]。</strong>该属性返回拖曳对象允许的拖曳时的反馈效果 【放在可移动元素start事件上】<br><strong>dataTransfer.dropEffect[=value]。</strong>该属性返回已设置的拖放时反馈效果。【放在目标容器over事件上】<br><strong>dataTransfer.items。</strong>返回一个关于拖曳数据的DataTransferItemList对象。<br><strong>dataTransfer.setDragImage(element, x, y)。</strong>指定拖曳元素时随鼠标移动的图片，x、y分别是图片相对于鼠标的横坐标和纵坐标。<br><strong>dataTransfer.addElement(element)。</strong>将元素添加到被拖曳的列表里。如果你想让某个元素跟随被拖曳元素一同被拖曳，可以使用这个方法。<br><strong>dataTransfer.types。</strong>返回在dragstart事件触发时为元素存储数据的格式。如果是系统文件的拖曳，则返回files。<br><strong>dataTransfer.setData(format, data)。</strong>为元素添加数据，在dragstart事件触发时可以用它为被拖曳元素存储数据。数据格式一般有两种：text/plain（设置format为字符串text即可，主要用于文本数据）和text/uri-list（设置format为字符串url即可，主要用于url）。<br><strong>data=dataTransfer.getData(format)。</strong>返回存储的数据。如果数据不存在，则返回空字符串。<br><strong>dataTransfer.clearData([format])。</strong>删除指定格式的数据。如果不指定格式，则删除所有数据。<br><strong>dataTransfer.files。</strong>如果是拖曳系统文件，返回正在被拖曳的文件列表对象。可以通过它获得所拖曳的文件数据。【拖拽上传】</p>
-</blockquote>
-<h4 id="History-API（历史记录）"><a href="#History-API（历史记录）" class="headerlink" title="History  API（历史记录）"></a>History  API（历史记录）</h4><p>提供了两个新方法pushState()和replaceState()，它们允许我们添加和改变当前浏览器的地址。<br>pushState()和replaceState()参数一样，参数说明如下：<br>1、state：存储JSON字符串，可以用在popstate事件中。<br>2、title：现在大多数浏览器不支持或者忽略这个参数，最好用null代替<br>3、url：任意有效的URL，用于更新浏览器的地址栏，并不在乎URL是否已经存在地址列表中。更重要的是，它不会重新加载页面。</p>
-<blockquote>
-<p> history.pushState({username: “html5”}, “user account”, “user.html”);  用于向history对象添加当前页面的记录，并且改变浏览器地址栏的URL<br>history.replaceState({username: “html5” }, “user account”, “user.html”); 类似于pushState()，只是将当前页面状态替换为新的状态</p>
-</blockquote>
-<h4 id="Notification-API-桌面通知"><a href="#Notification-API-桌面通知" class="headerlink" title="Notification API (桌面通知)"></a>Notification API (桌面通知)</h4><blockquote>
-<p>构造函数：new Notification，2个参数：消息的标题，消息主体对象，其中消息主体对象包括消息框的图标（icon）和消息内容（body）。<br>requestPermission(callback)方法：请求用户授权<br>Notification.permission属性：取值default-用户没有接收或拒绝授权请求，不能显示通知；granted-用户接受授权请求，允许显示通知；denied-用户拒绝授权请求，不允许显示通知<br>4个事件处理函数：<br>onshow函数-在消息展示时执行<br>onclick函数-在用户点击消息后被调用<br>onclose函数-在消息框被关闭时被调用<br>onerror函数-发生错误时被调用，如果没有被授权而继续创建消息通知，也会执行onerror函数</p>
-</blockquote>
-<h4 id="Communication-API-（跨域通信）"><a href="#Communication-API-（跨域通信）" class="headerlink" title="Communication API （跨域通信）"></a>Communication API （跨域通信）</h4><p>以往的浏览器，跨域存在安全问题（CSRF攻击，Cross-Site Request Forgery跨站请求伪造），现在使用Communication API可以很好的避免这个问题。<br>用postMessage函数将消息跨域传递，通过监听message事件接收消息</p>
-<h4 id="WebSocket-API"><a href="#WebSocket-API" class="headerlink" title="WebSocket API"></a>WebSocket API</h4><p>提供了全双工通信方式，我们从此可以在Web应用中实现实时的数据传输和获取。<br>支持双向、双工通信。可以实现实现微博新消息通知、邮件推送、实时游戏和聊天等功能。</p>
-<h4 id="Web-Worker"><a href="#Web-Worker" class="headerlink" title="Web Worker"></a>Web Worker</h4><p>简单来说，就是通过JavaScript创建一个后台进程（或者叫工作者进程），执行一些特殊的任务（比如耗时比较长的数据处理），并且提供主进程和新进程之间数据交换<br>接口：postMessage和onmessage。它起到互不阻塞执行的效果，避免了传统的JavaScript执行长时间操作时界面无响应的弊端，提高了性能及用户体验。</p>
-<h4 id="Storage-API"><a href="#Storage-API" class="headerlink" title="Storage API"></a>Storage API</h4><p>主要涉及localStorage API、sessionStorage API、applicationCacheAPI（离线存储）和服务器端Manifest文件等概念。</p>
-<h4 id="Canvas和WebGL"><a href="#Canvas和WebGL" class="headerlink" title="Canvas和WebGL"></a>Canvas和WebGL</h4><h4 id="Device-API"><a href="#Device-API" class="headerlink" title="Device API"></a>Device API</h4><p>使HTML5 标签可以直接调用类似摄像头、电源、系统、文件、网络等。<br><strong>Geolocation API</strong>（地理位置API）<br><strong>File API</strong>来帮助我们在Web页面中访问本地文件，它可以在Web应用中展现文件，或者选择并读取文件。<br><strong>Media Capture API</strong>增强了HTML表单，提供了对音频、图像和视频进行采集的功能。PC上还未实现，欧朋手机浏览器实现HTML5标签打开摄像头。<br><strong>Contact API</strong>主要应用在移动设备上，提供对用户通用通讯录的访问<br><strong>Calendar API</strong>与ContactAPI非常类似，提供了对用户通用日历的存取方式，主要应用在移动设备上。<br><strong>System Information API</strong>用于为Web应用提供访问系统各种运行时属性的方式，主要也应用在移动设备上。（都还未有浏览器实现）<br><strong>Messaging API</strong>定义了一个简单的API来发送和接收电子邮件、短信和彩信，主要应用在移动设备上。   </p>
-
-          
+          新增标签结构标签（1）section：独立内容区块，可以用h1~h6组成大纲，表示文档结构，也可以有章节、页眉、页脚或页眉的其他部分；（2）article：特殊独立区块，表示这篇页眉中的核心内容；（3）aside：标签内容之外与标签内容相关的辅助信息；（4）header：某个区块的头部信息/标题；（
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/14/html5新标签及API/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1215,87 +1119,16 @@
       
         
           
-            <h3 id="html5简介"><a href="#html5简介" class="headerlink" title="html5简介"></a>html5简介</h3><p>html5是html最新的修订版本，2014年10月由万维网（W3C）完成标准制定。希望能减少网页浏览器对于如flash等丰富性网络应用服务(Plug-in-Based Rich Internet Application, RIA)的依赖，并提供更多能加强网络应用的标准集。</p>
-<p>html5为了支持多媒体引进了如video、audio和canvas标记，同时集成了SVG内容；为了丰富文档内容引进了section、article、header、nav等元素；同时有些如a、cite、menu元素被重新定义或标准化，有些元素如big、center、font等被移除。</p>
-<h4 id="html5的一些新特性"><a href="#html5的一些新特性" class="headerlink" title="html5的一些新特性"></a>html5的一些新特性</h4><ul>
-<li>语义化</li>
-<li>本地存储特性：localstorage，Indexed DB等</li>
-<li>设备兼容性：Geolocation功能</li>
-<li>连接特性：更有效的服务器推送技术，Server-Sent Event和WebSockets</li>
-<li>网页多媒体特性：支持网页的Audio、Video等多媒体功能</li>
-<li>三维、图形及特效特性：SVG、Canvas、WebGL及CSS3的3D功能</li>
-<li>性能与集成特性：XMLHttpRequest2异步及跨域请求(用户不用等待资源加载完后再做操作，提高性能)</li>
-<li>CSS3特性<h4 id="html5提供的新元素和属性"><a href="#html5提供的新元素和属性" class="headerlink" title="html5提供的新元素和属性"></a>html5提供的新元素和属性</h4></li>
-<li>增加语义化标签，取消过时的html4标记：剔除一些修饰性的标签，直接使用css</li>
-<li>将内容和展示分离：b和i标签依旧保留，但意义是为了将一段文字标示出来，并非为了展示特殊样式</li>
-<li>一些全新的表单输入：date、url、email等类型</li>
-<li>全新的Tag：多媒体对象不再全绑定在object或embed tag中，视频有视频的tag，音频有音频的tag</li>
-<li>本地数据库：Indexed DB等</li>
-<li>Canvas对象：直接在浏览器上绘制矢量图，使用户脱离flash</li>
-</ul>
-<h4 id="html5的优缺点"><a href="#html5的优缺点" class="headerlink" title="html5的优缺点"></a>html5的优缺点</h4><p><strong>优点：</strong></p>
-<ul>
-<li>是网络标准</li>
-<li>多设备跨平台，可移植性好，自适应网页设计</li>
-<li>对搜索引擎友好</li>
-<li>及时更新（html5游戏更新就像更新页面一样快）</li>
-<li>提高可用性，改进用户体验</li>
-</ul>
-<p><strong>缺点：</strong><br>浏览器兼容性</p>
-<h3 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h3><p>8点：<br><strong>1.语义化<br>2.连通性：和服务器之间通过新技术进行通信<br>3.离线&amp;存储：让网页在客户端本地存储数据以及更高效地离线运行<br>4.多媒体：video，audio等，使网页摆脱flash等外部媒体<br>5.2D／3D绘图：SVG，Canvas<br>6.性能&amp;集成：性能优化和计算机硬件使用<br>7.设备访问：能够处理各种输入输出设备<br>8.样式(css3)</strong></p>
-<h2 id="语义化"><a href="#语义化" class="headerlink" title="语义化"></a>语义化</h2><h4 id="1-新的节段和提纲标签：section-article-nav-header-footer-aside-hgroup等"><a href="#1-新的节段和提纲标签：section-article-nav-header-footer-aside-hgroup等" class="headerlink" title="1.新的节段和提纲标签：section, article, nav, header, footer, aside, hgroup等"></a>1.新的节段和提纲标签：section, article, nav, header, footer, aside, hgroup等</h4><h4 id="2-表单控件："><a href="#2-表单控件：" class="headerlink" title="2.表单控件："></a>2.表单控件：</h4><p>calendar，input type属性（如color，date，datetime，datetime-local，email，tel，url，search，month，week，number，range），output等</p>
-<h4 id="3-HTML5拖放（Drag，Drop）"><a href="#3-HTML5拖放（Drag，Drop）" class="headerlink" title="3.HTML5拖放（Drag，Drop）"></a>3.HTML5拖放（Drag，Drop）</h4><p>浏览器支持：IE9+，Firefox，Opera12+，Chrome，Safari5+（Safari5.1.2不支持）<br><strong>draggable</strong> 要将允许拖动的元素的该属性设置为true；<br><strong>ondragstart</strong> 事件调用函数drag(event)，它规定了被拖动的数据，用event.dataTransfer.setData(datatype, value)方法设置被拖动数据的数据类型和值；<br><strong>ondragover</strong> 事件规定在什么地方放置被拖动的数据，默认是无法将数据／元素放置到其他元素中的，如果要允许，必须阻止对元素的默认处理（调用event.preventDefault()阻止默认操作）；<br><strong>ondrop</strong> 放置拖放数据时触发，首先要阻止事件默认行为（event.preventDefault()），然后通过event.dataTransfer.getData(datatype)获取被拖放的元素的value，最后把被拖放的元素加到目标元素中（event.target.appendChild(ele)）</p>
-<h2 id="多媒体"><a href="#多媒体" class="headerlink" title="多媒体"></a>多媒体</h2><h4 id="1-视频标签：video"><a href="#1-视频标签：video" class="headerlink" title="1.视频标签：video"></a>1.视频标签：video</h4><p><strong>1.video支持的三种视频格式以及浏览器支持情况</strong><br>Ogg（带有Theora视频编码和Vorbis音频编码的Ogg文件）：Firefox3.5+，Opera10.5+，Chrome5.0+支持，Safari和IE不支持；<br>MPEG4（带有H.264视频编码和AAC音频编码的MPEG4文件）：IE9+，Chorme5+，Safari3+支持，Firefox和Opera不支持；<br>WebM（带有VP8视频编码和Vorbis音频编码的WebM文件）：Firefox4+，Opera10.6+，Chorme6+支持，IE和Safari不支持<br><strong>实例：</strong></p>
-<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">width</span>=<span class="string">"320"</span>, <span class="attr">height</span>=<span class="string">"240"</span> <span class="attr">controls</span>=<span class="string">"controls"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"movie.ogg"</span> <span class="attr">type</span>=<span class="string">"video/ogg"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"movie.mp4"</span> <span class="attr">type</span>=<span class="string">"video/mp4"</span>&gt;</span></div><div class="line">Your browser does not support the video tag.</div><div class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre><p><strong>2.一些属性</strong><br>autoplay，controls，height，width，loop（是否在视频播放完毕后返回开头），preload（若使用了autoplay属性则这个忽略属性），src等<br><strong>3.DOM方法，属性和事件</strong><br>方法：play(), pause(), load(), canPlayType等<br>属性：currentSrc, currentTime, videoWidth, videoHeight, duration, ended, error, paused, muted, seeking, volume, height, width等<br>事件：play, pause, progress, error, timeupdate, ended, abort, emptied, waiting, loadedmetadata等</p>
-<h4 id="2-音频标签audio"><a href="#2-音频标签audio" class="headerlink" title="2.音频标签audio"></a>2.音频标签audio</h4><p><strong>1.音频标签支持的三种音频格式</strong><br>Ogg Vorbis：Firefox3.5+，Opera10.5+，Chrome3+支持，IE9和Safari3.0不支持<br>MP3：IE9+，Chrome3+，Safari3+支持，Firefox3.5和Opera10.5不支持<br>Wav：Firefox3.5+，Opera10.5+，Safari3.0+支持，IE9和Chrome3.0不支持<br><strong>实例：</strong></p>
-<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">audio</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"song.ogg"</span> <span class="attr">type</span>=<span class="string">"audio/ogg"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"song.mp3"</span> <span class="attr">type</span>=<span class="string">"audio/mpeg"</span>&gt;</span></div><div class="line">Your browser does not support the audio tag.</div><div class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre><p><strong>2.属性</strong><br>autoplay, controls, loop, preload, src等</p>
-<p><strong>track</strong> 元素支持字幕和章节<br><strong>WebRTC</strong> 能即时通信，允许连接到其他人，在浏览器中直接控制视频会议而不需要一个插件或者外部的应用程序<br><strong>Camera API</strong> 操作计算机摄像头，并从中存储图像</p>
-<h2 id="2d／3d绘图"><a href="#2d／3d绘图" class="headerlink" title="2d／3d绘图"></a>2d／3d绘图</h2><h4 id="1-SVG（2d）"><a href="#1-SVG（2d）" class="headerlink" title="1. SVG（2d）"></a>1. SVG（2d）</h4><pre><code>SVG 指可伸缩矢量图形 (Scalable Vector Graphics)
-SVG 用来定义用于网络的基于矢量的图形
-SVG 使用 XML 格式定义图形
-SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失
-SVG 是万维网联盟的标准
-SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体
-</code></pre><p><strong>与其他图像格式相比，使用 SVG 的优势在于</strong>：<br>SVG 可被非常多的工具读取和修改（比如记事本）<br>SVG 与 JPEG 和 GIF 图像比起来，尺寸更小，且可压缩性更强。<br>    SVG 是可伸缩的<br>SVG 图像可在任何的分辨率下被高质量地打印<br>SVG 可在图像质量不下降的情况下被放大<br>SVG 图像中的文本是可选的，同时也是可搜索的（很适合制作地图）<br>SVG 可以与 Java 技术一起运行<br>SVG 是开放的标准<br>SVG 文件是纯粹的 XML<br>SVG 的主要竞争者是 Flash。<br>与 Flash 相比，SVG 最大的优势是与其他标准（比如 XSL 和 DOM）相兼容。而 Flash 则是未开源的私有技术。<br>支持DOM事件处理等</p>
-<h4 id="2-Canvas"><a href="#2-Canvas" class="headerlink" title="2.Canvas"></a>2.Canvas</h4><p>依赖分辨率<br>不支持事件处理器<br>弱的文本渲染能力<br>能够以 .png 或 .jpg 格式保存结果图像<br>最适合图像密集型的游戏，其中的许多对象会被频繁重绘</p>
-<h2 id="离线缓存和Web存储"><a href="#离线缓存和Web存储" class="headerlink" title="离线缓存和Web存储"></a>离线缓存和Web存储</h2><h4 id="1-sessionStorage和localStorage"><a href="#1-sessionStorage和localStorage" class="headerlink" title="1. sessionStorage和localStorage"></a>1. sessionStorage和localStorage</h4><p>sessionStorage 和 localStorage 是 HTML5 Web Storage API 提供的，可以方便的在 web 请求之间保存数据。有了本地数据，就可以避免数据在浏览器和服务器间不必要地来回传递。<br><br>sessionStorage、 localStorage 、 cookie 都是在浏览器端存储的数据，其中 sessionStorage 的概念很特别，引入了一个“浏览器窗口”的概念。 sessionStorage 是在同源的同窗口（或 tab ）中，始终存在的数据。也就是说只要这个浏览器窗口没有关闭，即使刷新页面或进入同源另一页面，数据仍然存在。关闭窗口后， sessionStorage 即被销毁。同时“独立”打开的不同窗口，即使是同一页面， sessionStorage 对象也是不同的。cookies会发送到服务器端，其余两个不会。 <br><br>Microsoft 指出 Internet Explorer 8 增加 cookie 限制为每个域名 50 个，但 IE7 似乎也允许每个域名 50 个 cookie 。 Firefox 每个域名 cookie 限制为 50 个。 Opera 每个域名 cookie 限制为 30 个。 Firefox 和 Safari 允许 cookie 多达 4097 个字节，包括名（ name ）、值（ value ）和等号。 Opera 许 cookie 多达 4096 个字节，包括：名（ name ）、值（ value ）和等号。 Internet Explorer 允许 cookie 多达 4095 个字节，包括：名（ name ）、值（ value ）和等号。 </p>
-<p><strong>区别：</strong> </p>
-<p><strong>- Cookie</strong> <br></p>
-<ul>
-<li>每个域名存储量比较小（各浏览器不同，大致 4K ） <br></li>
-<li>所有域名的存储量有限制（各浏览器不同，大致 4K ）<br> </li>
-<li>有个数限制（各浏览器不同）<br> </li>
-<li>会随请求发送到服务器 <br><br><strong>- LocalStorage</strong> <br></li>
-<li>永久存储 <br></li>
-<li>单个域名存储量比较大（推荐 5MB ，各浏览器不同） <br></li>
-<li>总体数量无限制 <br><br><strong>- SessionStorage</strong> <br></li>
-<li>只在 Session 内有效 <br></li>
-<li>存储量更大（推荐没有限制，但是实际上各浏览器也不同）</li>
-</ul>
-<p><strong>sessionStorage和localStorage用法</strong> <br><br>setItem( key, value)  <br><br>getItem( key ) <br><br>removeItem(key) <br><br>clear() <br><br>用.和[]获取键值 <br><br>storage事件: 当键值改变或者clear的时候，就可以触发</p>
-<h4 id="2-应用程序缓存"><a href="#2-应用程序缓存" class="headerlink" title="2.应用程序缓存"></a>2.应用程序缓存</h4><p>HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问。除了IE，所有主流浏览器都支持<br><strong>应用程序缓存为应用带来三个优势</strong>：<br>离线浏览 - 用户可在应用离线时使用它们<br>速度 - 已缓存资源加载得更快<br>减少服务器负载 - 浏览器将只从服务器下载更新过或更改过的资源。<br><strong>用法：</strong><br>必须在文档的html标签中包含manifest属性，或者在manifest文件中配置</p>
-<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">manifest</span>=<span class="string">"demo.appcache"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    The content of the document......</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre><p>完整的manifest文件：</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">CACHE MANIFEST</div><div class="line">   # 2012-02-21 v1.0.0</div><div class="line">   /theme.css</div><div class="line">   /logo.gif</div><div class="line">   /main.js</div><div class="line">   </div><div class="line">   NETWORK:</div><div class="line">   login.asp</div><div class="line">   </div><div class="line">   FALLBACK:</div><div class="line">   /html5/ /404.html</div></pre></td></tr></table></figure>
-</code></pre><p>manifest 文件可分为三个部分：<br><strong>CACHE MANIFEST</strong> - 在此标题下列出的文件将在首次下载后进行缓存<br><strong>NETWORK</strong> - 在此标题下列出的文件需要与服务器的连接，且不会被缓存<br><strong>FALLBACK</strong> - 在此标题下列出的文件规定当页面无法访问时的回退页面（比如 404 页面）<br>manifest 文件需要配置正确的 MIME-type，即 “text/cache-manifest”。必须在 web 服务器上进行配置<br>一旦文件被缓存，则浏览器会继续展示已缓存的版本，即使您修改了服务器上的文件。为了确保浏览器更新缓存，您需要更新 manifest 文件。</p>
-<h2 id="性能-amp-集成"><a href="#性能-amp-集成" class="headerlink" title="性能&amp;集成"></a>性能&amp;集成</h2><h4 id="1-Web-Worker"><a href="#1-Web-Worker" class="headerlink" title="1. Web Worker"></a>1. Web Worker</h4><p>能够把 JavaScript 计算委托给后台线程，通过允许这些活动以防止使交互型事件变得缓慢<br>实例：实现一个定时计数的功能，不影响用户在该页面操作交互</p>
-<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Count numbers: <span class="tag">&lt;<span class="name">output</span> <span class="attr">id</span>=<span class="string">"result"</span>&gt;</span><span class="tag">&lt;/<span class="name">output</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"startWorker()"</span>&gt;</span>Start Worker<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"stopWorker()"</span>&gt;</span>Stop Worker<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="javascript">        <span class="keyword">var</span> w;</span></div><div class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">startWorker</span>(<span class="params"></span>)</span></span></div><div class="line"><span class="undefined">        &#123;</span></div><div class="line"><span class="javascript">            <span class="keyword">if</span>(<span class="keyword">typeof</span>(Worker)!==<span class="string">"undefined"</span>)</span></div><div class="line"><span class="undefined">            &#123;</span></div><div class="line"><span class="javascript">                <span class="keyword">if</span>(<span class="keyword">typeof</span>(w)==<span class="string">"undefined"</span>)</span></div><div class="line"><span class="undefined">                &#123;</span></div><div class="line"><span class="javascript">                    w=<span class="keyword">new</span> Worker(<span class="string">"demo_workers.js"</span>);</span></div><div class="line"><span class="undefined">                &#125;</span></div><div class="line"><span class="javascript">                w.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span></div><div class="line"><span class="javascript">                    <span class="built_in">document</span>.getElementById(<span class="string">"result"</span>).innerHTML=event.data;</span></div><div class="line"><span class="undefined">                &#125;;</span></div><div class="line"><span class="undefined">            &#125;</span></div><div class="line"><span class="javascript">            <span class="keyword">else</span></span></div><div class="line"><span class="undefined">            &#123;</span></div><div class="line"><span class="javascript">                    <span class="built_in">document</span>.getElementById(<span class="string">"result"</span>).innerHTML=<span class="string">"Sorry, your browser does not support Web Workers..."</span>;</span></div><div class="line"><span class="undefined">            &#125;</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">stopWorker</span>(<span class="params"></span>)</span></span></div><div class="line"><span class="undefined">        &#123;</span></div><div class="line"><span class="undefined">            w.terminate();</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre><p>其中demo_workers.js代码如下：</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> i=<span class="number">0</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">timedCount</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;   </div><div class="line">    i=i+<span class="number">1</span>;</div><div class="line">    postMessage(i);</div><div class="line">    setTimeout(<span class="string">"timedCount()"</span>,<span class="number">500</span>);</div><div class="line">&#125;</div><div class="line">timedCount();</div></pre></td></tr></table></figure>
-</code></pre><p>由于 web worker 位于外部文件中，它们无法访问下例 JavaScript 对象：<br>window 对象，document 对象，parent 对象</p>
-<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><h4 id="1-WebSocket"><a href="#1-WebSocket" class="headerlink" title="1.WebSocket"></a>1.WebSocket</h4><h2 id="设备访问"><a href="#设备访问" class="headerlink" title="设备访问"></a>设备访问</h2><h4 id="1-使用Camera-API"><a href="#1-使用Camera-API" class="headerlink" title="1.使用Camera API"></a>1.使用Camera API</h4><h4 id="2-触控事件"><a href="#2-触控事件" class="headerlink" title="2.触控事件"></a>2.触控事件</h4><h4 id="3-使用地理位置定位"><a href="#3-使用地理位置定位" class="headerlink" title="3.使用地理位置定位"></a>3.使用地理位置定位</h4><pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (navigator.geolocation)</div><div class="line">&#123;</div><div class="line">    navigator.geolocation.getCurrentPosition(showPosition);</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span>&#123;</div><div class="line">    x.innerHTML=<span class="string">"Geolocation is not supported by this browser."</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>有getCurrentPosition()，watchPosition()，clearWatch(watchele)方法</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> watchID = navigator.geolocation.watchPosition(<span class="function"><span class="keyword">function</span>(<span class="params">position</span>) </span>&#123;</div><div class="line">    do_something(position.coords.latitude, position.coords.longitude);</div><div class="line">&#125;);</div><div class="line">navigator.geolocation.clearWatch(watchID);</div></pre></td></tr></table></figure>
-</code></pre><h4 id="4-检测设备方向"><a href="#4-检测设备方向" class="headerlink" title="4.检测设备方向"></a>4.检测设备方向</h4><p>要接收设备方向变化信息，要注意监听deviceorientation事件</p>
-<blockquote>
-<p>window.addEventListener(“deviceorientation”, handleOrientation, true);</p>
-</blockquote>
-<p>方向事件对象包含四个值：<br><strong>event.absolute</strong><br><strong>event.alpha</strong>: 表示设备沿z轴上的旋转角度，范围为0~360。<br><strong>event.beta</strong>: 表示设备在x轴上的旋转角度，范围为-180~180。它描述的是设备由前向后旋转的情况。<br><strong>event.gamma</strong>: 表示设备在y轴上的旋转角度，范围为-90~90。它描述的是设备由左向右旋转的情况。</p>
-<h4 id="5-指针锁定API"><a href="#5-指针锁定API" class="headerlink" title="5.指针锁定API"></a>5.指针锁定API</h4><h2 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h2><p>css3: border-radius, box-shadow, transform(translate), transition, animation, @font-face等</p>
-
-          
+          html5简介html5是html最新的修订版本，2014年10月由万维网（W3C）完成标准制定。希望能减少网页浏览器对于如flash等丰富性网络应用服务(Plug-in-Based Rich Internet Application, RIA)的依赖，并提供更多能加强网络应用的标准集。
+html5
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/12/html5新特性/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1457,31 +1290,15 @@ SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体
       
         
           
-            <p>CORS是一个W3C标准，全称是”跨域资源共享”（Cross-origin resource sharing）。<br>它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。<br>CORS需要浏览器和服务器的同时支持，目前，所有浏览器都支持该功能，IE浏览器不能低于IE10。<br>CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。因此，实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。</p>
-<h2 id="两种请求"><a href="#两种请求" class="headerlink" title="两种请求"></a>两种请求</h2><p>浏览器将CORS请求分成两类：简单请求（simple request）和非简单请求（not-so-simple request）。</p>
-<h3 id="1-简单请求"><a href="#1-简单请求" class="headerlink" title="1. 简单请求"></a>1. 简单请求</h3><blockquote>
-<p>（1) 请求方法是以下三种方法之一：<br>    HEAD<br>    GET<br>    POST<br>（2）HTTP的头信息不超出以下几种字段：<br>    Accept<br>    Accept-Language<br>    Content-Language<br>    Last-Event-ID<br>    Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain</p>
-</blockquote>
-<p>对于简单请求，浏览器直接发出CORS请求，就是在头信息之中，增加一个Origin字段。Origin字段用来说明，本次请求来自哪个源（协议 + 域名 + 端口）。服务器根据这个值，决定是否同意这次请求。</p>
-<ul>
-<li>如果Origin指定的源，不在许可范围内，服务器会返回一个正常的HTTP回应。浏览器发现，这个回应的头信息没有包含<strong>Access-Control-Allow-Origin</strong>字段，就知道出错了，从而抛出一个错误。注意，这种错误无法通过状态码识别，因为HTTP回应的状态码有可能是200。</li>
-<li><p>如果Origin指定的域名在许可范围内，服务器返回的响应，会多出几个头信息字段。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Access-Control-Allow-Origin: http://api.bob.com</div><div class="line">Access-Control-Allow-Credentials: true</div><div class="line">Access-Control-Expose-Headers: FooBar</div><div class="line">Content-Type: text/html; charset=utf-8</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>1）Access-Control-Allow-Origin</strong><br>该字段是必须的。它的值要么是请求时Origin字段的值，要么是一个<em>，表示接受任意域名的请求。<br><strong>2）Access-Control-Allow-Credentials</strong><br>该字段可选。它的值是一个布尔值，表示是否允许发送Cookie。<br>默认情况下，Cookie不包括在CORS请求之中。设为true，即表示服务器明确许可，Cookie可以包含在请求中，一起发给服务器。这个值也只能设为true，如果服务器不要浏览器发送Cookie，删除该字段即可。<br><strong>3）Access-Control-Expose-Headers</strong><br>该字段可选。CORS请求时，XHR对象的getResponseHeader()方法只能拿到6个基本字段：Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma。如果想拿到其他字段，就必须在Access-Control-Expose-Headers里面指定。上面的例子指定，getResponseHeader(‘FooBar’)可以返回FooBar字段的值。<br><em>*使用cookie</em></em><br>浏览器要向服务器端上传cookie，不仅服务器端的Access-Control-Allow-Credentials值要设置为true，开发者必须在AJAX请求中设置withCredentials属性为true。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">xhr.withCredentials = <span class="literal">true</span>;</div></pre></td></tr></table></figure>
-</code></pre><p>如果省略withCredentials设置，有的浏览器还是会一起发送Cookie。这时，可以显式关闭withCredentials，设置其值为false。<br>如果要发送Cookie，Access-Control-Allow-Origin就不能设为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的document.cookie也无法读取服务器域名下的Cookie。</p>
-<h3 id="2-非简单请求"><a href="#2-非简单请求" class="headerlink" title="2. 非简单请求"></a>2. 非简单请求</h3><p>非简单请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json的请求。<br>非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为”预检”请求（preflight）。</p>
-<h4 id="预检请求"><a href="#预检请求" class="headerlink" title="预检请求"></a>预检请求</h4><p>浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错。<br>浏览器会自动判断请求是否为简单请求，若为非简单请求，浏览器自动发出“预检”请求。<br>“预检”请求用的请求方法是OPTIONS，表示这个请求是用来询问的。头信息里面，关键字段是Origin，表示请求来自哪个源。除了Origin字段，”预检”请求的头信息包括两个特殊字段。<br><strong>1）Access-Control-Request-Method</strong><br>该字段是必须的，用来列出浏览器的CORS请求会用到哪些HTTP方法，上例是PUT。<br><strong>2）Access-Control-Request-Headers</strong><br>该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段。</p>
-<h4 id="预检请求的回应"><a href="#预检请求的回应" class="headerlink" title="预检请求的回应"></a>预检请求的回应</h4><p>服务器收到”预检”请求以后，检查了Origin、Access-Control-Request-Method和Access-Control-Request-Headers字段以后，确认允许跨源请求，就可以做出回应。<br>如果浏览器否定了”预检”请求，会返回一个正常的HTTP回应，但是没有任何CORS相关的头信息字段<br>浏览器确认了“预检”请求，回应中会包括以下字段：</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Access-Control-Allow-Origin: http://api.bob.com</div><div class="line">Access-Control-Allow-Methods: GET, POST, PUT</div><div class="line">Access-Control-Allow-Headers: X-Custom-Header</div><div class="line">Access-Control-Allow-Credentials: true</div><div class="line">Access-Control-Max-Age: 1728000</div></pre></td></tr></table></figure>
-</code></pre><p><strong>1）Access-Control-Allow-Methods</strong><br>该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次”预检”请求。<br><strong>2）Access-Control-Allow-Headers</strong><br>如果浏览器请求包括Access-Control-Request-Headers字段，则Access-Control-Allow-Headers字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在”预检”中请求的字段。<br><strong>3）Access-Control-Allow-Credentials</strong><br>该字段与简单请求时的含义相同，即是否允许发送cookie。<br><strong>4）Access-Control-Max-Age</strong><br>该字段可选，用来指定本次预检请求的有效期，单位为秒。上面结果中，有效期是20天（1728000秒），即允许缓存该条回应1728000秒（即20天），在此期间，不用发出另一条预检请求。</p>
-<p><strong>“预检”通过后，正常请求</strong><br>一旦服务器通过了”预检”请求，以后每次浏览器正常的CORS请求，就都跟简单请求一样，会有一个Origin头信息字段。服务器的回应，也都会有一个Access-Control-Allow-Origin头信息字段。</p>
-<h3 id="3-与JSONP对比"><a href="#3-与JSONP对比" class="headerlink" title="3. 与JSONP对比"></a>3. 与JSONP对比</h3><p>CORS与JSONP的使用目的相同，但是比JSONP更强大。<br>JSONP只支持GET请求，CORS支持所有类型的HTTP请求。JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据。</p>
-<p>参考链接：<br><a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="external">阮一峰CORS详解</a></p>
-
-          
+          CORS是一个W3C标准，全称是”跨域资源共享”（Cross-origin resource sharing）。它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。CORS需要浏览器和服务器的同时支持，目前，所有浏览器都支持该功能，IE浏览器不能低于
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/09/跨域资源共享CORS/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1643,54 +1460,22 @@ SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体
       
         
           
-            <h3 id="一、含义"><a href="#一、含义" class="headerlink" title="一、含义"></a>一、含义</h3><p>最初的含义：A网页设置的cookie，B网页不能打开，除非这两个网页同源。（提交表单不受同源策略的限制）<br><strong>同源定义：</strong></p>
-<blockquote>
-<p>协议相同<br>域名相同<br>端口相同</p>
-</blockquote>
-<p><strong>非同源的限制：</strong></p>
-<blockquote>
-<p>Cookie、LocalStorage 和 IndexDB 无法读取<br>DOM无法获得<br>ajax无法发送（要跨域）</p>
-<h3 id="二、cookie"><a href="#二、cookie" class="headerlink" title="二、cookie"></a>二、cookie</h3><p>对于cookie来说：两个网页一级域名相同，只是二级域名不同，浏览器允许通过设置document.domain共享 Cookie。<br>举例来说，A网页是<a href="http://w1.example.com/a.html，B网页是http://w2.example.com/b.html，那么只要设置相同的document.domain，两个网页就可以共享Cookie。" target="_blank" rel="external">http://w1.example.com/a.html，B网页是http://w2.example.com/b.html，那么只要设置相同的document.domain，两个网页就可以共享Cookie。</a></p>
-</blockquote>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.domain = <span class="string">'example.com'</span>;</div><div class="line"><span class="comment">//A网页设置cookie</span></div><div class="line"><span class="built_in">document</span>.cookie = <span class="string">"test1=hello"</span>;</div><div class="line"><span class="comment">//B网页读取cookie</span></div><div class="line"><span class="keyword">var</span> allCookie = <span class="built_in">document</span>.cookie;</div></pre></td></tr></table></figure>
-</code></pre><p>服务器也可以在设置Cookie的时候，指定Cookie的所属域名为一级域名，这样二级域名和三级域名不用做任何设置，都可以读取这个Cookie。</p>
-<h3 id="三、iframe"><a href="#三、iframe" class="headerlink" title="三、iframe"></a>三、iframe</h3><p>如果两个网页不同源，就无法拿到对方的DOM。典型的例子是iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信。<br>如果两个窗口一级域名相同，只是二级域名不同，那么设置上一节介绍的document.domain属性，就可以规避同源政策，拿到DOM。<br>对于完全不同源的网站，存在一下3种方法：</p>
-<blockquote>
-<p>片段识别符（fragment identifier）<br>window.name<br>跨文档通信API（Cross-document messaging）</p>
-</blockquote>
-<h4 id="1-片段识别符"><a href="#1-片段识别符" class="headerlink" title="1. 片段识别符"></a>1. 片段识别符</h4><p>片段标识符（fragment identifier）指的是，URL的#号后面的部分，比如<a href="http://example.com/x.html#fragment的#fragment。如果只是改变片段标识符，页面不会重新刷新。" target="_blank" rel="external">http://example.com/x.html#fragment的#fragment。如果只是改变片段标识符，页面不会重新刷新。</a><br>父窗口可以把信息，写入子窗口的片段标识符，子窗口通过监听hashchange事件得到通知。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//父窗口</span></div><div class="line"><span class="keyword">var</span> src = originURL + <span class="string">'#'</span> + data;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">'myIFrame'</span>).src = src;</div><div class="line"><span class="comment">//子窗口</span></div><div class="line"><span class="built_in">window</span>.onhashchange = checkMessage;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkMessage</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> message = <span class="built_in">window</span>.location.hash;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>同样的，子窗口也可以改变父窗口的片段标识符。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">parent.location.href= target + <span class="string">"#"</span> + hash;</div></pre></td></tr></table></figure>
-</code></pre><h4 id="2-window-name"><a href="#2-window-name" class="headerlink" title="2. window.name"></a>2. window.name</h4><p>浏览器窗口有window.name属性。这个属性的最大特点是，无论是否同源，只要在同一个窗口里，前一个网页设置了这个属性，后一个网页可以读取它。<br>父窗口先打开一个子窗口，载入一个不同源的网页，该网页将信息写入window.name属性，接着，子窗口跳回一个与主窗口同域的网址，然后，主窗口就可以读取子窗口的window.name了。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//子窗口设置window.name</span></div><div class="line"><span class="built_in">window</span>.name = data;</div><div class="line"><span class="comment">//子窗口跳到一个与父窗口同源的网站</span></div><div class="line">location = <span class="string">'http://parent.url.com/xxx.html'</span>;</div><div class="line"><span class="comment">//父窗口读取</span></div><div class="line"><span class="keyword">var</span> data = <span class="built_in">document</span>.getElementById(<span class="string">'myFrame'</span>).contentWindow.name;</div></pre></td></tr></table></figure>
-</code></pre><p>这种方法的优点是，window.name容量很大，可以放置非常长的字符串；缺点是必须监听子窗口window.name属性的变化，影响网页性能。</p>
-<h4 id="3-window-postMessage"><a href="#3-window-postMessage" class="headerlink" title="3. window.postMessage"></a>3. window.postMessage</h4><p>HTML5为了解决同源策略问题，引入了一个全新的API：跨文档通信 API（Cross-document messaging）。<br>这个API为window对象新增了一个window.postMessage方法，允许跨窗口通信，不论这两个窗口是否同源。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">otherWindow.postMessage(message, targetOrigin, [transfer]);</div></pre></td></tr></table></figure>
-</code></pre><p>otherWindow：其他窗口的一个引用；message：将要发送到其他 window的数据；targetOrigin：通过窗口的origin属性来指定哪些窗口能接收到消息事件，其值可以是字符串”<em>“（表示无限制）或者一个URI；transfer（可选）：是一串和message 同时传递的 Transferable 对象。这些对象的所有权将被转移给消息的接收方，而发送一方将不再保有所有权。<br><em>*其他window可以监听派遣的message</em></em></p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"message"</span>, receiveMessage, <span class="literal">false</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveMessage</span>(<span class="params">event</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line"><span class="comment">// For Chrome, the origin property is in the event.originalEvent</span></div><div class="line"><span class="comment">// object.</span></div><div class="line">    <span class="keyword">var</span> origin = event.origin || event.originalEvent.origin;</div><div class="line">    <span class="keyword">if</span> (origin !== <span class="string">"http://example.org:8080"</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>message事件的事件对象event，提供以下三个属性。<br>data：从其他 window 中传递过来的对象；origin：调用 postMessage 时消息发送方窗口的 origin；source：对发送消息的窗口对象的引用。<br><strong>示例</strong><br>A窗口：</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">* In window A's scripts, with A being on &lt;http://example.com:8080&gt;:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">var</span> popup = <span class="built_in">window</span>.open(...popup details...);</div><div class="line"><span class="comment">// When the popup has fully loaded, if not blocked by a popup blocker:</span></div><div class="line"><span class="comment">// This does nothing, assuming the window hasn't changed its location.</span></div><div class="line"></div><div class="line">popup.postMessage(<span class="string">"The user is 'bob' and the password is 'secret'"</span>, <span class="string">"https://secure.example.net"</span>);</div><div class="line"></div><div class="line"><span class="comment">// This will successfully queue a message to be sent to the popup, assuming</span></div><div class="line"><span class="comment">// the window hasn't changed its location.</span></div><div class="line">popup.postMessage(<span class="string">"hello there!"</span>, <span class="string">"http://example.org"</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveMessage</span>(<span class="params">event</span>)</span></div><div class="line"><span class="function"></span>&#123;   </div><div class="line"><span class="comment">// Do we trust the sender of this message?  (might be</span></div><div class="line"><span class="comment">// different from what we originally opened, for example).</span></div><div class="line">    <span class="keyword">if</span> (event.origin !== <span class="string">"http://example.org"</span>)</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// event.source is popup</span></div><div class="line">    <span class="comment">// event.data is "hi there yourself!  the secret response is: rheeeeet!"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>另一个窗口：</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">* In the popup's scripts, running on &lt;http://example.org&gt;:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="comment">// Called sometime after postMessage is called</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveMessage</span>(<span class="params">event</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">// Do we trust the sender of this message?</span></div><div class="line">    <span class="keyword">if</span> (event.origin !== <span class="string">"http://example.com:8080"</span>)</div><div class="line">    <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="comment">// event.source is window.opener</span></div><div class="line">    <span class="comment">// event.data is "hello there!"</span></div><div class="line"></div><div class="line">    <span class="comment">// Assuming you've verified the origin of the received message (which</span></div><div class="line">    <span class="comment">// you must do in any case), a convenient idiom for replying to a</span></div><div class="line">    <span class="comment">// message is to call postMessage on event.source and provide</span></div><div class="line">    <span class="comment">// event.origin as the targetOrigin.</span></div><div class="line">    event.source.postMessage(<span class="string">"hi there yourself! the secret response "</span> + <span class="string">"is: rheeeeet!"</span>, event.origin);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>安全问题：用于接收消息的任何事件监听器必须首先使用origin和source属性来检查消息的发送者的身份。</p>
-<h4 id="4-localStorage"><a href="#4-localStorage" class="headerlink" title="4. localStorage"></a>4. localStorage</h4><p>将接受到的message的data存入localStorage，同时可以将自己的localStorage作为信息发送出去。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//子窗口</span></div><div class="line"><span class="built_in">window</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (e.origin !== <span class="string">'http://bbb.com'</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">var</span> payload = <span class="built_in">JSON</span>.parse(e.data);</div><div class="line">    <span class="keyword">switch</span> (payload.method) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'set'</span>:</div><div class="line">            localStorage.setItem(payload.key, <span class="built_in">JSON</span>.stringify(payload.data));</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">'get'</span>:</div><div class="line">            <span class="keyword">var</span> parent = <span class="built_in">window</span>.parent;</div><div class="line">            <span class="keyword">var</span> data = localStorage.getItem(payload.key);</div><div class="line">            parent.postMessage(data, <span class="string">'http://aaa.com'</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">'remove'</span>:</div><div class="line">            localStorage.removeItem(payload.key);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//父窗口</span></div><div class="line"><span class="keyword">var</span> win = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'iframe'</span>)[<span class="number">0</span>].contentWindow;</div><div class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">name</span>: <span class="string">'Jack'</span> &#125;;</div><div class="line"><span class="comment">// 存入对象</span></div><div class="line">win.postMessage(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">key</span>: <span class="string">'storage'</span>, <span class="attr">method</span>: <span class="string">'set'</span>, <span class="attr">data</span>: obj&#125;), <span class="string">'http://bbb.com'</span>);</div><div class="line"><span class="comment">// 读取对象</span></div><div class="line">win.postMessage(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">key</span>: <span class="string">'storage'</span>, <span class="attr">method</span>: <span class="string">"get"</span>&#125;), <span class="string">"*"</span>);</div><div class="line"><span class="built_in">window</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (e.origin != <span class="string">'http://aaa.com'</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// "Jack"</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(e.data).name);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</code></pre><h3 id="四、Ajax"><a href="#四、Ajax" class="headerlink" title="四、Ajax"></a>四、Ajax</h3><p>同源政策规定，AJAX请求只能发给同源的网址，否则就报错。<br>除了架设服务器代理（浏览器请求同源服务器，再由后者请求外部服务），有三种方法规避这个限制。</p>
-<blockquote>
-<p>JSONP<br>WebSocket<br>CORS</p>
-</blockquote>
-<h4 id="1-JSONP"><a href="#1-JSONP" class="headerlink" title="1. JSONP"></a>1. JSONP</h4><p>与服务器端进行跨域通信的常用方法，只能应用于GET请求。<br><strong>基本思想</strong>：通过添加一个script文件请求数据，服务器将数据放置在一个回调函数中。</p>
-<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    addScriptTag(<span class="string">'http://example.com/ip?callback=foo'</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">//定义foo函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Your public IP address is: '</span> + data.ip);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</code></pre><h4 id="2-WebSocket"><a href="#2-WebSocket" class="headerlink" title="2. WebSocket"></a>2. WebSocket</h4><p>WebSocket是一种通信协议，使用ws://（非加密）和wss://（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。<br>WebSocket请求的头信息中有个origin字段，该字段规定了请求的请求源，服务器端可以根据这个字段判断是否接受请求。</p>
-<h4 id="3-CORS"><a href="#3-CORS" class="headerlink" title="3. CORS"></a>3. CORS</h4><p>CORS是跨源资源分享（Cross-Origin Resource Sharing）的缩写。它是W3C标准，是跨源AJAX请求的根本解决方法。相比JSONP只能发GET请求，CORS允许任何类型的请求。</p>
-<p>参考：</p>
-<ol>
-<li>MDN window.postMessage<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage</a></li>
-<li><a href="http://www.techug.com/post/same-origin-policy.html" target="_blank" rel="external">http://www.techug.com/post/same-origin-policy.html</a></li>
-</ol>
+          一、含义最初的含义：A网页设置的cookie，B网页不能打开，除非这两个网页同源。（提交表单不受同源策略的限制）同源定义：
 
-          
+协议相同域名相同端口相同
+
+非同源的限制：
+
+Cookie、LocalStorage 和 IndexDB 无法读取DOM无法获得ajax无法发送（要跨域）
+二、cookie对
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/08/浏览器同源策略/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1852,39 +1637,16 @@ SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体
       
         
           
-            <p>web语义化其实是让大家按照一定的规范描述web内容，从而让机器能够更好的理解我们发布的内容，对内容进行处理与挖掘。同时，在团队开发的时候，使开发者们能够更好地互相理解。</p>
-<p>###一、语义化的构成<br>网页的语义构成：元素(html标签)+属性+属性值(+文档结构)<br>html网页类似于一个word文档，也要有标题，章节，图表等，每个元素及属性都表达不同的语义。</p>
-<p>####1. html标签的语义<br><strong>(1) sections元素</strong><br><strong>article：</strong>独立的文档、页面、应用、站点，可以是一篇贴子、一篇文章、一条评论等。<br><strong>section：</strong>按主题内容分组，通常会有标题(heading)<br>并非语义化的div<br>使用时机：当你希望这个元素内容体现在文档的提纲中时使用<br><strong>nav：</strong>页面导航<br><strong>aside：</strong>侧边栏，表示与周围内容不太密切相关的内容<br><strong>h1～h6：</strong>各级标题<br><strong>header：</strong>用来描述最近父级区域的头部，一组介绍性描述或导航信息(目录／搜索框／logo／标题等)，不影响文档提纲的生成<br><strong>footer：</strong>用来描述最近父级区域的尾部，一般介绍作者信息／相关文档／版权信息等，不影响文档提纲的生成<br><strong>address：</strong>代表与最近父级article或整个文档关联的联系人信息</p>
-<p><strong>(2) 分组内容</strong><br><strong>p：</strong>段落，但不优先考虑使用，如果有其他语义更明确的标签则用其他标签如address<br><strong>hr：</strong>html5中将它重定义为不同主题内容间的分隔符，区块内容之间不需要用hr来分隔<br><strong>pre：</strong>表示已排版的内容，如代码片段等<br><strong>blockquote：</strong>表示引用其他来源的内容，署名必须放在blockquote标签外，cite标签用来标示该引用来源的url<br><strong>ol／ul／li：</strong>有序／无序列表，ol下li元素的value属性表示该li的序号值</p>
-<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span>                           //   18. a</div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">value</span>=<span class="string">"18"</span>&gt;</span>a<span class="tag">&lt;/<span class="name">li</span>&gt;</span>      //   20. b</div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">value</span>=<span class="string">"20"</span>&gt;</span>b<span class="tag">&lt;/<span class="name">li</span>&gt;</span>      //   21. c</div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>c<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre><p><strong>dl／dt／dd：</strong>名值对的列表，一般用于术语定义表／元数据／FAQ等<br><strong>figure：</strong>一般用来表示插图／图表／照片／代码等，通常会有一个标题(figcaption)<br><strong>div：</strong>本身无语义，可以和class、lang、title等属性结合，为一系列连续的内容增加语义，不优先考虑使用<br><strong>main：</strong>文档的主内容／应用的核心功能，在文档中唯一出现</p>
-<p><strong>(3)文本级语义元素</strong><br><strong>em：</strong> 表示侧重点的强调，在浏览器上一般渲染为斜体，根据em位置不同，文本语义可能不同，例如：</p>
-<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>Bats<span class="tag">&lt;/<span class="name">em</span>&gt;</span> can fly.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Bats <span class="tag">&lt;<span class="name">em</span>&gt;</span>can<span class="tag">&lt;/<span class="name">em</span>&gt;</span> fly.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Bats can <span class="tag">&lt;<span class="name">em</span>&gt;</span>fly<span class="tag">&lt;/<span class="name">em</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre><p><strong>strong：</strong> 表示内容的重要性，在浏览器上一般渲染为粗体，strong位置不同，文本本身含义不变<br><strong>i：</strong> 表示另一种叙述方式，如画外音／分类学名词／外来语／舞台指示／船名等等，建议与class／lang属性搭配使用<br><strong>b：</strong> 表示某种需要引起注意但又没有其他额外语义的内容，如摘要中的关键词／评价中的产品名称／文章的开篇内容等，建议与class搭配使用<br><strong>small：</strong> 通常是免责声明／许可证声明／注意事项等<br><strong>s：</strong> 表示不再准确或不再相关的内容，与del元素含义不同，渲染为带删除线的文字<br><strong>u：</strong>表示用非文本进行的标注的内容，如中文专名(人名、地名、朝代、国名、机构等)／拼写检查的错误内容等<br><strong>cite：</strong>引用的内容的标题(书／l论文／散文／电影／歌曲等)<br><strong>q：</strong>引用的来自其他来源的段内内容，这里cite属性表示该来源的url(blockquote是整段，q可以是段内ji即在p标签内)，可以直接使用引号<br><strong>abbr：</strong>表示缩写，其title属性的值为全称，建议在第一次使用缩写词汇时用abbr+title属性<br><strong>dfn：</strong>表示一个术语的定义实例(使搜索引擎容易搜到特定术语)<br><strong>time：</strong>表示一个机器可读的时间，其datetime属性必须是预定义的几种时间格式之一，如果不含datetime属性，则会解析其文本内容值<br><strong>code：</strong>代码片段<br><strong>samp：</strong>计算机程序的输出<br><strong>kbd：</strong>用户输入的内容／按键<br><strong>ins／del：</strong>表示对当前文档内容进行的增添与修改，cite指向某个修改的说明文档的url，datetime属性表示修给发生的时间<br><strong>span：</strong>本身无语义，可以与class、lang属性结合<br><strong>track：</strong>为多媒体元素指定文本轨，其kind属性用来描述文本轨的类型(subtitles／captions／descriptions等)</p>
-<p><strong>(4) 表格元素</strong><br><strong>table</strong><br><strong>caption：</strong>表格的标题，当table是外部figure元素的唯一子元素，应首选figcaption<br><strong>tbody、thead、tfoot</strong><br><strong>col、colgroup、tr</strong><br><strong>td、th</strong></p>
-<p>####2. 全局属性<br><strong>id：</strong>标识符，不应依赖其语义处理相应元素<br><strong>class：</strong>应该命名为能描述元素内容的名称<br><strong>tilte：</strong>链接 - 描述目标信息；图片  - 版权／描述；引用 - 来源信息；交互元素 - 操作指南等<br><strong>lang：</strong>内容的语言</p>
-<p>####3. 元数据<br>(1)head元素：里面包括一组元数据，title属性表示文档对外的标题<br>(2)meta元素：name／http-equiv／charset。name属性决定种类，content属性表示内容</p>
-<p>####4. 链接<br>link、a等<br>(1)link元素：描述文档与其他资源的关系，必须包含rel和href属性<br>(2)a元素：存在href时为超链接，缺少href时为链接占位符，也有rel属性</p>
-<p>###二、语义化的好处</p>
-<p>####1. 利于搜索引擎优化（SEO）<br>各大搜索引擎如Google、Yahoo、Bing等约定对对 <a href="http://schema.org" target="_blank" rel="external">schema.org</a>上所列出来的标签进行解析。网页上把不同的资源用搜索引擎容易识别的标签给标记出来，利于搜索引擎对资源进行分类，并在搜索结果中更好的呈现出来。<br>搜索引擎根据语义标签能更快更准确的获取到信息，就能更快的展示给用户想要的信息，这就是它有利于搜索引擎优化的一个方面。</p>
-<p>####2. 清晰的页面结构<br>让文档能在去除样式或样式丢失时也呈现出清晰的结构。</p>
-<p>####3. 利于机器识别<br>屏幕阅读器等机器能够更好地识别含有语义的标签，这样对于某些特殊用户也更加方便。</p>
-<p>####4. 更好地处理在不同设备上的渲染<br>使用语义标记可以确保手机、pad等设备以一种有意义的方式来渲染网页。</p>
-<p>####5. 利于团队开发和代码维护</p>
-<p>###语义化与常见SEO优化操作</p>
-<ul>
-<li>head标签放网页的标题，每个页面的title不同。 </li>
-<li>meta keywords列举出几个重要的关键词。 </li>
-<li>meta description网页内容的高度概括。</li>
-<li>每个页面只能出现一次H1标签，H2标签可以多次：H1权重很高，普遍认为仅次于title，一般资讯详情页的标题、商品详情页的标题，都放在H1里。</li>
-<li>图片一定要添加alt属性，title属性可选：搜索引擎不认识图片上的内容，只能通过alt属性来判断，如果是商品列表页，所有商品都加了alt和title的话，容易造成堆砌关键词，所以我一般是只加alt属性。</li>
-<li>换行标签只用来在文本间进行换行，标签间的换行通过margin等等。</li>
-<li>搜索引擎抓取seo内容是从上到下，重要内容html代码放在最前面</li>
-<li>搜索引擎看不懂js， 重要内容不要用js输出 尽量少使用iframe框架</li>
-<li>谨慎使用display：none，搜索引擎会过滤掉这里面的内容 不断精简代码</li>
-</ul>
-
-          
+          web语义化其实是让大家按照一定的规范描述web内容，从而让机器能够更好的理解我们发布的内容，对内容进行处理与挖掘。同时，在团队开发的时候，使开发者们能够更好地互相理解。
+###一、语义化的构成网页的语义构成：元素(html标签)+属性+属性值(+文档结构)html网页类似于一个word文档，也要有
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/06/web语义化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2046,33 +1808,17 @@ SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体
       
         
           
-            <p>position是用来定位的属性，其取值包括：static、relative、absolute、fixed、sticky</p>
-<h4 id="static："><a href="#static：" class="headerlink" title="static："></a>static：</h4><p>默认值，该关键字指定元素使用正常的布局行为，即元素在文档流中当前的布局位置。此时 top, right, bottom, left 和 z-index 属性无效。</p>
-<h3 id="相对定位"><a href="#相对定位" class="headerlink" title="相对定位"></a>相对定位</h3><h4 id="relative："><a href="#relative：" class="headerlink" title="relative："></a>relative：</h4><p>该关键字下，元素先放置在未添加定位时的位置，再在不改变页面布局的前提下调整元素位置（因此会在此元素未添加定位时所在位置留下空白）。</p>
-<p>position:relative 未定义对 table-*-group, table-row, table-column, table-cell, table-caption 元素应用的效果<br>。<br>相对定位的元素并没有脱离文档流。</p>
-<h3 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h3><h4 id="absolute："><a href="#absolute：" class="headerlink" title="absolute："></a>absolute：</h4><p>不为元素预留空间，通过指定元素相对于最近的非 static 定位祖先元素的偏移，来确定元素位置。当这样的祖先元素不存在时，则相对于根级容器定位。</p>
-<p>绝对定位的元素可以设置外边距（margins），且不会与其他边距合并。</p>
-<p>绝对定位的元素脱离了文档流。</p>
-<p>若同时给定了left、right、top、bottom的值，会自动计算出元素的宽和高；若给定了width、height值，则以width、height值为宽高，忽略right和bottom的值，定位由left和top值而定（在direction 为 ltr的情况下）。</p>
-<h3 id="固定定位"><a href="#固定定位" class="headerlink" title="固定定位"></a>固定定位</h3><h4 id="fixed："><a href="#fixed：" class="headerlink" title="fixed："></a>fixed：</h4><p>不为元素预留空间，而是通过指定元素相对于屏幕视口（viewport）的位置来指定元素位置。元素的位置在屏幕滚动时不会改变。打印时，元素会出现在的每页的固定位置。</p>
-<p>fixed 属性会创建新的层叠上下文。当元素祖先的 transform  属性非 none 时，相对元素则由viewport改为该祖先。</p>
-<p>该定位方式常用于创建在滚动屏幕时仍固定在相同位置的元素。</p>
-<p>固定定位的元素脱离了文档流。</p>
-<p>其宽高和定位的取值方式同absolute一样。</p>
-<h3 id="粘性定位"><a href="#粘性定位" class="headerlink" title="粘性定位"></a>粘性定位</h3><h4 id="sticky-css3新增-："><a href="#sticky-css3新增-：" class="headerlink" title="sticky(css3新增)："></a>sticky(css3新增)：</h4><p>效果类似于相对定位和固定定位的混合。它的定位取决于：1. 其在文档流中应该在的位置 2. 其最近的块级祖先元素的边界。</p>
-<p>取值left或right，top或bottom，当元素距离父容器大于给定的（left、right、top、bottom）值时，为相对定位；当元素滚动距离父容器到达给定值时变为固定定位，之后会一直固定在这个距离不变。</p>
-<p>元素固定的相对偏移是相对于离它最近的具有滚动框的祖先元素，如果祖先元素都不可以滚动，那么是相对于viewport来计算元素的偏移量。</p>
-<p>当元素 B 被粘性定位时，后续元素的位置仍按照 B 未定位时的位置来确定。position: sticky 对 table 元素的效果与 position: relative 相同。</p>
-<p>须指定 top, right, bottom 或 left 四个阈值其中之一，才可使粘性定位生效。否则其行为与相对定位相同。</p>
-<p>粘性定位的元素并不脱离文档流。</p>
-<p>粘性定位常用于定位字母列表的头部元素。标示 B 部分开始的头部元素在滚动 A 部分时，始终处于 A 的下方。而在开始滚动 B 部分时，B 的头部会固定在屏幕顶部，直到所有 B 的项均完成滚动后，才被 C 的头部替代</p>
-<h3 id="定位取值"><a href="#定位取值" class="headerlink" title="定位取值"></a>定位取值</h3><p>除了static，每个定位方式都有left、right、top、right这四个取值。</p>
-<h4 id="当取值冲突时："><a href="#当取值冲突时：" class="headerlink" title="当取值冲突时："></a>当取值冲突时：</h4><ul>
-<li>如果同时指定 top 和 bottom（非 auto），优先采用 top。</li>
-<li>如果同时指定 left 和 right，若 direction 为 ltr（英语、汉语等），则优先采用 left；若 direction 为 rtl（阿拉伯语、希伯来语等），则优先采用 right。</li>
-</ul>
+          position是用来定位的属性，其取值包括：static、relative、absolute、fixed、sticky
+static：默认值，该关键字指定元素使用正常的布局行为，即元素在文档流中当前的布局位置。此时 top, right, bottom, left 和 z-index 属性无效。
 
-          
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/01/css position/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2234,16 +1980,15 @@ SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体
       
         
           
-            <p>网页设计中常听的属性名：内容(content)、填充(padding)、边框(border)、边界(margin)， CSS盒子模式都具备这些属性。<br>这些属性我们可以用日常生活中的常见事物——盒子作一个比喻来理解，所以叫它盒子模式。<br>css盒子模型有两种：W3C标准盒子模型（标准模式）和IE标准盒子模型（怪异模式）</p>
-<h3 id="W3C标准盒子模型"><a href="#W3C标准盒子模型" class="headerlink" title="W3C标准盒子模型"></a>W3C标准盒子模型</h3><p>一个块的总宽度= width + margin(左右) + padding(左右) + border(左右)</p>
-<h3 id="IE标准盒子模型"><a href="#IE标准盒子模型" class="headerlink" title="IE标准盒子模型"></a>IE标准盒子模型</h3><p>一个块的总宽度= width + margin(左右)（即width已经包含了padding和border值）</p>
-<h3 id="怪异模式触发方式"><a href="#怪异模式触发方式" class="headerlink" title="怪异模式触发方式"></a>怪异模式触发方式</h3><ol>
-<li>怪异模式主要表现在IE内核的浏览器</li>
-<li>不对doctype进行定义</li>
-<li>设置box-sizing: border-box</li>
-</ol>
-
-          
+          网页设计中常听的属性名：内容(content)、填充(padding)、边框(border)、边界(margin)， CSS盒子模式都具备这些属性。这些属性我们可以用日常生活中的常见事物——盒子作一个比喻来理解，所以叫它盒子模式。css盒子模型有两种：W3C标准盒子模型（标准模式）和IE标准盒子模型
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/20/css盒子模型/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
